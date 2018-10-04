@@ -7,23 +7,22 @@ package model;
 
 /**
  *
- * @author ruyneto
+ * @author sandr
  */
-public class Materia {
-    private int id;
-    private String nome;
+public class Monitor {
+    private String cpf, nome;
     
-    public Materia(int id, String nome){
-        this.id = id;
+    public Monitor(String cpf, String nome){
+        this.cpf = cpf;
         this.nome = nome;
     }
 
-    public int getId() {
-        return id;
+    public String getCpf() {
+        return cpf;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public void setCpf(String cpf) {
+        this.cpf = cpf;
     }
 
     public String getNome() {
@@ -33,4 +32,5 @@ public class Materia {
     public void setNome(String nome) {
         this.nome = nome;
     }
+    
 }

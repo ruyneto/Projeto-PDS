@@ -10,16 +10,34 @@ package model;
  * @author ruyneto
  */
 public class Monitoria {
+    private int id;
+    private Materia materia;
+    //private Monitor monitor;
+    private DiaDaSemana dia;
+    private Horario hora;
+    private Sala sala;
 
-    public Monitoria(Materia materia,String horarioInicial,String horarioFinal) {
+    public Monitoria(Materia materia, DiaDaSemana dia, Horario hora, Sala sala) {
         this.materia = materia;
-        this.horarioInicial = horarioInicial;
-        this.horarioFinal = horarioFinal;
+        //this.monitor = monitor;
+        this.dia = dia;
+        this.hora = hora;
+        this.sala = sala;
     }
     
-    private Materia materia;
-    private String horarioInicial;
-    private String horarioFinal;
+    public Monitoria(){
+        
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+    
+    
 
     public Materia getMateria() {
         return materia;
@@ -29,19 +47,37 @@ public class Monitoria {
         this.materia = materia;
     }
 
-    public String getHorarioInicial() {
-        return horarioInicial;
+    /*public Monitor getMonitor() {
+        return monitor;
     }
 
-    public void setHorarioInicial(String horarioInicial) {
-        this.horarioInicial = horarioInicial;
+    public void setMonitor(Monitor monitor) {
+        this.monitor = monitor;
+    }*/
+
+    public DiaDaSemana getDia() {
+        return dia;
     }
 
-    public String getHorarioFinal() {
-        return horarioFinal;
+    public void setDia(DiaDaSemana dia) {
+        this.dia = dia;
     }
 
-    public void setHorarioFinal(String horarioFinal) {
-        this.horarioFinal = horarioFinal;
+    public Horario getHora() {
+        return hora;
     }
+
+    public void setHora(Horario hora) {
+        this.hora = hora;
+    }
+
+    public Sala getSala() {
+        return sala;
+    }
+
+    public void setSala(Sala sala) {
+        this.sala = sala;
+    }
+    
+    
 }

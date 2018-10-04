@@ -7,13 +7,13 @@ package model;
 
 /**
  *
- * @author ruyneto
+ * @author sandr
  */
-public class Materia {
+public class Sala {
     private int id;
     private String nome;
-    
-    public Materia(int id, String nome){
+
+    public Sala(int id, String nome) {
         this.id = id;
         this.nome = nome;
     }
@@ -33,4 +33,6 @@ public class Materia {
     public void setNome(String nome) {
         this.nome = nome;
     }
+    
+    
 }
