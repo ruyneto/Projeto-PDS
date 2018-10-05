@@ -16,11 +16,6 @@ public class PROJETOPDS {
      */
     public static void main(String[] args) {
         // TODO code application logic here
-        
-        System.out.println("Izaltino!!!!!!!");
-        System.out.println("Sandro!!!!!!!");
-        System.out.println("Ruy lindo");
-        System.out.println("teste de comit: Izaltino");
     }
     
 }
