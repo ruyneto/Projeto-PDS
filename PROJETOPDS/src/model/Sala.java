@@ -34,5 +34,8 @@ public class Sala {
         this.nome = nome;
     }
     
+    public String toString(){
+        return nome;
+    }
     
 }

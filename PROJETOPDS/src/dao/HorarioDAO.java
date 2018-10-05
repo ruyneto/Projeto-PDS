@@ -1,0 +1,51 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package dao;
+
+import connection.FabricaConexao;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.Vector;
+import model.DiaDaSemana;
+import model.Horario;
+import model.Sala;
+
+/**
+ *
+ * @author sandr
+ */
+public class HorarioDAO {
+    private Connection connection;
+    
+    public HorarioDAO(){
+        this.connection = FabricaConexao.getConnection();
+    }
+    
+    public Vector<Horario> consultarHora(Sala s, DiaDaSemana d){
+        try{
+            String sql = "SELECT * FROM horario "+
+                          "where horinicio not in (select miahorinicio from monitoria "+
+                                                    "inner join sala on salid = miasalid "+
+                                                    "inner join diadasemana on diaid = miadiaid "+
+                                                    "where salnome = ? and dianome = ?);";
+            PreparedStatement instrucao = connection.prepareStatement(sql);
+            instrucao.setString(1, s.getNome());
+            instrucao.setString(2, d.getNome());
+            ResultSet resultado = instrucao.executeQuery();
+            Vector<Horario> horarios = new Vector<>();
+            while(resultado.next()){
+                Horario hora = new Horario(resultado.getString("horinicio"));
+                horarios.add(hora);
+            }
+            return horarios;
+        }catch(SQLException ex){
+            System.out.println(ex);
+            return null;
+        }
+    }
+}

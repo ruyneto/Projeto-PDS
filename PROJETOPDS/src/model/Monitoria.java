@@ -17,6 +17,15 @@ public class Monitoria {
     private Horario hora;
     private Sala sala;
 
+    public Monitoria(int id, Materia materia, DiaDaSemana dia, Horario hora, Sala sala) {
+        this.materia = materia;
+        //this.monitor = monitor;
+        this.dia = dia;
+        this.hora = hora;
+        this.sala = sala;
+        this.id = id;
+    }
+    
     public Monitoria(Materia materia, DiaDaSemana dia, Horario hora, Sala sala) {
         this.materia = materia;
         //this.monitor = monitor;

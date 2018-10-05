@@ -9,16 +9,18 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 
-
+/**
+ *
+ * @author sandr
+ */
 public class FabricaConexao {
-    
-   public static Connection getConnection(){
-       try{
-          
-            return DriverManager.getConnection("jdbc:mysql://localhost/sigem", "root", "root");
-           
-       }catch(SQLException e){
-           throw new RuntimeException(e);
-       } 
-   }
+    public static Connection getConnection(){
+        try{
+            return DriverManager.getConnection("jdbc:mysql://localhost:3306/sigem",
+                "root", "root");
+        }
+        catch(SQLException exc){
+            throw new RuntimeException(exc);
+        }
+    }
 }

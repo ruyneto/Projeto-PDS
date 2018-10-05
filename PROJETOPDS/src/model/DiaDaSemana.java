@@ -34,5 +34,7 @@ public class DiaDaSemana {
         this.nome = nome;
     }
     
-    
+    public String toString(){
+        return nome;
+    }
 }
