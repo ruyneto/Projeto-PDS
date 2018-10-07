@@ -33,4 +33,8 @@ public class Monitor {
         this.nome = nome;
     }
     
+    public String toString(){
+        return nome;
+    }
+    
 }

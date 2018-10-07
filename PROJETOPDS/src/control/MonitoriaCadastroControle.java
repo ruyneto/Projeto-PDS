@@ -15,7 +15,6 @@ import java.awt.event.ActionListener;
 import javax.swing.JOptionPane;
 import model.DiaDaSemana;
 import model.Horario;
-import model.Materia;
 import model.Monitoria;
 import model.Sala;
 import view.MonitoriaCadastrarTela;
@@ -30,7 +29,6 @@ public class MonitoriaCadastroControle {
 
     public MonitoriaCadastroControle(MonitoriaCadastrarTela tela) {
         this.tela = tela;
-        carregarComboMateria();
         carregarComboSala();
         carregarComboDia();
         carregarComboHorario((Sala)tela.getCbSala().getSelectedItem(),
@@ -39,13 +37,15 @@ public class MonitoriaCadastroControle {
         tela.getBtnCadastrar().addActionListener(new addListenerBtSalvar());
     }
     
-    public void carregarComboMateria(){
+    
+    //Recortar para a classe Cadastrar 
+    /*public void carregarComboMateria(){
         MateriaDAO dao = new MateriaDAO();
         tela.getCbMateria().removeAllItems();
         for(Materia m: dao.consultarMateria("_")){
             tela.getCbMateria().addItem(m);
         }
-    }
+    }*/
     
     public void carregarComboSala(){
         SalaDAO dao = new SalaDAO();
@@ -88,12 +88,11 @@ public class MonitoriaCadastroControle {
         @Override
         public void actionPerformed(ActionEvent ae) {
             MonitoriaDAO dao = new MonitoriaDAO();
-            Materia materia = (Materia)tela.getCbMateria().getSelectedItem();
             Sala sala = (Sala)tela.getCbSala().getSelectedItem();
             DiaDaSemana dia = (DiaDaSemana)tela.getCbDia().getSelectedItem();
             Horario hora = (Horario)tela.getCbHora().getSelectedItem();
             
-            Monitoria monitoria = new Monitoria(materia, dia, hora, sala);
+            Monitoria monitoria = new Monitoria(dia, hora, sala);
             
             boolean cadastrou = dao.inserirMonitoria(monitoria);
             

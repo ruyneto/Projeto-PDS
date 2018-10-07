@@ -12,8 +12,9 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.util.Vector;
 import javax.swing.table.DefaultTableModel;
-import model.Horario;
 import model.Monitoria;
+import view.AgendamentoTableModel;
+import view.AgendarPesquisaTela;
 import view.MonitoriaCadastrarTela;
 import view.MonitoriaPesquisaTela;
 import view.MonitoriaTableModel;
@@ -22,23 +23,28 @@ import view.MonitoriaTableModel;
  *
  * @author Izaltino
  */
-public class MonitoriaControle {
-    private MonitoriaPesquisaTela tela;
+public class AgendamentoControle {
+    private AgendarPesquisaTela tela;
     private Monitoria modelo;
     private Vector<Monitoria> monitorias;
+    private Boolean[] check;
 
-    public MonitoriaControle(MonitoriaPesquisaTela tela, Monitoria modelo) {
+    public AgendamentoControle (AgendarPesquisaTela tela, Monitoria modelo) {
         this.tela = tela;
         this.modelo = modelo;
+        check = new Boolean[new MonitoriaDAO().consultarMonitoria("_", 2).size()];
+        for(int i=0; i<check.length; i++){
+            check[i]=new Boolean(false);
+        }
+        System.out.println(check[0]);
         listar("_");
         tela.getCpPesquisa().addKeyListener(new PesquisaAutomatica());
-        tela.getBtCadastar().addActionListener(new BtSalvar());
+        tela.getBtInscrever().addActionListener(new BtInscricao());
     }
     
     public void listar(String str){
         MonitoriaDAO dao = new MonitoriaDAO();
-        monitorias = dao.consultarMonitoria(str,1);
-        Vector linhas = new Vector();
+        monitorias = dao.consultarMonitoria(str,2);
         System.out.println(monitorias.size());
         
         tela.getTabela().setModel(new MonitoriaTableModel(monitorias));
@@ -50,11 +56,11 @@ public class MonitoriaControle {
         }
     }
     
-    class BtSalvar implements ActionListener{
+    class BtInscricao implements ActionListener{
 
         @Override
         public void actionPerformed(ActionEvent ae) {
-            new MonitoriaCadastroControle(new MonitoriaCadastrarTela());
+            tela.getTabela().setModel(new AgendamentoTableModel(monitorias, check));
         }
         
     }

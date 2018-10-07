@@ -23,17 +23,19 @@ public class MonitoriaTableModel extends AbstractTableModel{
 
     @Override
     public int getColumnCount() {
-        return 4;
+        return 6;
     }
 
     @Override
     public Object getValueAt(int i, int i1) {
         Monitoria m = monitorias.get(i);
         switch(i1){
-            case 0: return m.getMateria().toString();
-            case 1: return m.getDia().toString();
-            case 2: return m.getSala().toString();
-            case 3: return m.getHora().toString();
+            case 0: return (m.getMateria().getId()==1)? null: m.getMateria().toString();
+            case 1: return (m.getMonitor().getCpf().equals(""))? null: m.getMonitor().toString();
+            case 2: return m.getDia().toString();
+            case 3: return m.getSala().toString();
+            case 4: return m.getHora().toString();
+            case 5: return m.getVagas();
         }
         return null;
     }
@@ -41,9 +43,11 @@ public class MonitoriaTableModel extends AbstractTableModel{
     public String getColumnName(int i){
         switch(i){
             case 0: return "Matéria";
-            case 1: return "Dia";
-            case 2: return "Sala";
-            case 3: return "Horário";
+            case 1: return "Monitor";
+            case 2: return "Dia";
+            case 3: return "Sala";
+            case 4: return "Horário";
+            case 5: return "Vagas";
         }
         return null;
     }

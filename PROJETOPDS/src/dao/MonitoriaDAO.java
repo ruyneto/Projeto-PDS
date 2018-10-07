@@ -14,6 +14,7 @@ import java.util.Vector;
 import model.DiaDaSemana;
 import model.Horario;
 import model.Materia;
+import model.Monitor;
 import model.Monitoria;
 import model.Sala;
 
@@ -46,16 +47,26 @@ public class MonitoriaDAO {
         }
     }
     
-    public Vector<Monitoria> consultarMonitoria(String str){
+    public Vector<Monitoria> consultarMonitoria(String str, int opc){
         String sql = "SELECT * FROM monitoria "+
                     "INNER JOIN sala ON salid = miasalid "+
                     "INNER JOIN horario ON horinicio = miahorinicio "+
-                    "INNER JOIN materia ON matid = miamatid "+
                     "INNER JOIN diadasemana ON diaid = miadiaid "+
+                    "INNER JOIN materia ON matid = miamatid "+
+                    "INNER JOIN monitor ON moncpf = miamoncpf "+
                     "WHERE matnome LIKE ? "+
                     "order by diaid asc, matnome asc, horinicio asc";
+        
+        String sql2 = "SELECT * FROM monitoria "+
+                    "INNER JOIN sala ON salid = miasalid "+
+                    "INNER JOIN horario ON horinicio = miahorinicio "+
+                    "INNER JOIN diadasemana ON diaid = miadiaid "+
+                    "INNER JOIN materia ON matid = miamatid "+
+                    "INNER JOIN monitor ON moncpf = miamoncpf "+
+                    "WHERE matnome LIKE ? AND matid != 1 "+
+                    "order by diaid asc, matnome asc, horinicio asc";
         try{
-            PreparedStatement instrucao = connection.prepareStatement(sql);
+            PreparedStatement instrucao = connection.prepareStatement((opc==1)?sql:sql2);
             instrucao.setString(1, "%"+str+"%");
             ResultSet resultado = instrucao.executeQuery();
             Vector<Monitoria> monitorias = new Vector<>();
@@ -64,8 +75,9 @@ public class MonitoriaDAO {
                 Horario hora = new Horario(resultado.getString("horinicio"));
                 Materia materia = new Materia(resultado.getInt("matid"), resultado.getString("matnome"));
                 DiaDaSemana dia = new DiaDaSemana(resultado.getInt("diaid"), resultado.getString("dianome"));
-                
-                Monitoria monitoria = new Monitoria(resultado.getInt("miaid"), materia, dia, hora, sala);
+                Monitor monitor = new Monitor(resultado.getString("moncpf"), resultado.getString("monnome"));
+                Monitoria monitoria = new Monitoria(resultado.getInt("miaid"), resultado.getInt("miavagas"),
+                                                    materia, monitor, dia, hora, sala);
                 
                 monitorias.add(monitoria);
             }
@@ -74,4 +86,5 @@ public class MonitoriaDAO {
             throw new RuntimeException(e);
         }
     }
+    
 }

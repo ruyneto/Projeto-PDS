@@ -11,24 +11,24 @@ package model;
  */
 public class Monitoria {
     private int id;
+    private int vagas;
     private Materia materia;
-    //private Monitor monitor;
+    private Monitor monitor;
     private DiaDaSemana dia;
     private Horario hora;
     private Sala sala;
 
-    public Monitoria(int id, Materia materia, DiaDaSemana dia, Horario hora, Sala sala) {
+    public Monitoria(int id, int vagas, Materia materia, Monitor monitor, DiaDaSemana dia, Horario hora, Sala sala) {
         this.materia = materia;
-        //this.monitor = monitor;
+        this.monitor = monitor;
         this.dia = dia;
         this.hora = hora;
         this.sala = sala;
         this.id = id;
+        this.vagas = vagas;
     }
     
-    public Monitoria(Materia materia, DiaDaSemana dia, Horario hora, Sala sala) {
-        this.materia = materia;
-        //this.monitor = monitor;
+    public Monitoria(DiaDaSemana dia, Horario hora, Sala sala) {
         this.dia = dia;
         this.hora = hora;
         this.sala = sala;
@@ -56,13 +56,13 @@ public class Monitoria {
         this.materia = materia;
     }
 
-    /*public Monitor getMonitor() {
+    public Monitor getMonitor() {
         return monitor;
     }
 
     public void setMonitor(Monitor monitor) {
         this.monitor = monitor;
-    }*/
+    }
 
     public DiaDaSemana getDia() {
         return dia;
@@ -87,6 +87,13 @@ public class Monitoria {
     public void setSala(Sala sala) {
         this.sala = sala;
     }
-    
-    
+
+    public int getVagas() {
+        return vagas;
+    }
+
+    public void setVagas(int vagas) {
+        this.vagas = vagas;
+    }
+        
 }
