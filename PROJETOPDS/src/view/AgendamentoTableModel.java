@@ -60,7 +60,8 @@ public class AgendamentoTableModel extends AbstractTableModel{
     }
     
     public boolean isCellEditable(int i, int i1){
-        return true;
+        if(i1==5)return true;
+        return false;
     }
 
     public AgendamentoTableModel(List<Monitoria> monitorias, Boolean[] check) {
