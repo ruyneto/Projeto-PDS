@@ -73,6 +73,7 @@ public class AgendamentoTableModel extends AbstractTableModel{
         System.out.println(check[rowIndex]);
         check[rowIndex]=(ColumnIndex==5 && check[rowIndex].booleanValue()==Boolean.FALSE)?Boolean.TRUE:Boolean.FALSE;
         System.out.println(check[rowIndex]);
+        System.out.println(check[rowIndex]);
         fireTableCellUpdated(rowIndex, ColumnIndex);
     }
        
