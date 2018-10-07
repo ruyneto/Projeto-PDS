@@ -30,7 +30,7 @@ public class MonitoriaDAO {
      }
      
     public boolean inserirMonitoria(Monitoria monitoria){
-        String sql = "INSERT INTO monitoria (miasalid, miamatid, miadiaid, miahorinicio) VALUES (?, ?, ?, ?)";        
+        String sql = "INSERT INTO monitoria (miasalid, miamatid, miadiaid, miahorhora) VALUES (?, ?, ?, ?)";        
         try {
             PreparedStatement ps = connection.prepareStatement(sql);
             ps.setInt(1, monitoria.getSala().getId());
@@ -50,21 +50,21 @@ public class MonitoriaDAO {
     public Vector<Monitoria> consultarMonitoria(String str, int opc){
         String sql = "SELECT * FROM monitoria "+
                     "INNER JOIN sala ON salid = miasalid "+
-                    "INNER JOIN horario ON horinicio = miahorinicio "+
+                    "INNER JOIN horario ON horhora = miahorhora "+
                     "INNER JOIN diadasemana ON diaid = miadiaid "+
                     "INNER JOIN materia ON matid = miamatid "+
                     "INNER JOIN monitor ON moncpf = miamoncpf "+
                     "WHERE matnome LIKE ? "+
-                    "order by diaid asc, matnome asc, horinicio asc";
+                    "order by diaid asc, matnome asc, horhora asc";
         
         String sql2 = "SELECT * FROM monitoria "+
                     "INNER JOIN sala ON salid = miasalid "+
-                    "INNER JOIN horario ON horinicio = miahorinicio "+
+                    "INNER JOIN horario ON horhora = miahorhora "+
                     "INNER JOIN diadasemana ON diaid = miadiaid "+
                     "INNER JOIN materia ON matid = miamatid "+
                     "INNER JOIN monitor ON moncpf = miamoncpf "+
                     "WHERE matnome LIKE ? AND matid != 1 "+
-                    "order by diaid asc, matnome asc, horinicio asc";
+                    "order by diaid asc, matnome asc, horhora asc";
         try{
             PreparedStatement instrucao = connection.prepareStatement((opc==1)?sql:sql2);
             instrucao.setString(1, "%"+str+"%");
@@ -72,7 +72,7 @@ public class MonitoriaDAO {
             Vector<Monitoria> monitorias = new Vector<>();
             while(resultado.next()){
                 Sala sala = new Sala(resultado.getInt("salid"), resultado.getString("salnome"));
-                Horario hora = new Horario(resultado.getString("horinicio"));
+                Horario hora = new Horario(resultado.getString("horhora"));
                 Materia materia = new Materia(resultado.getInt("matid"), resultado.getString("matnome"));
                 DiaDaSemana dia = new DiaDaSemana(resultado.getInt("diaid"), resultado.getString("dianome"));
                 Monitor monitor = new Monitor(resultado.getString("moncpf"), resultado.getString("monnome"));

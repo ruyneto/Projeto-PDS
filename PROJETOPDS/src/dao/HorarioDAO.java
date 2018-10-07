@@ -30,7 +30,7 @@ public class HorarioDAO {
     public Vector<Horario> consultarHora(Sala s, DiaDaSemana d){
         try{
             String sql = "SELECT * FROM horario "+
-                          "where horinicio not in (select miahorinicio from monitoria "+
+                          "where horhora not in (select miahorhora from monitoria "+
                                                     "inner join sala on salid = miasalid "+
                                                     "inner join diadasemana on diaid = miadiaid "+
                                                     "where salnome = ? and dianome = ?);";
@@ -40,7 +40,7 @@ public class HorarioDAO {
             ResultSet resultado = instrucao.executeQuery();
             Vector<Horario> horarios = new Vector<>();
             while(resultado.next()){
-                Horario hora = new Horario(resultado.getString("horinicio"));
+                Horario hora = new Horario(resultado.getString("horhora"));
                 horarios.add(hora);
             }
             return horarios;
