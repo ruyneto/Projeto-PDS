@@ -6,7 +6,7 @@
 package mvc;
 
 import control.MonitoriaCadastroControle;
-import view.MonitoriaCadastrarTela;
+import view.CoordenadorMonitoriaCadastrarTela;
 
 /**
  *
@@ -18,7 +18,7 @@ public class MonitoriaCadastroMVC {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        MonitoriaCadastrarTela tela = new MonitoriaCadastrarTela();
+        CoordenadorMonitoriaCadastrarTela tela = new CoordenadorMonitoriaCadastrarTela();
         MonitoriaCadastroControle controle = new MonitoriaCadastroControle(tela);
         tela.setVisible(true);
     }

@@ -14,8 +14,8 @@ import java.util.Vector;
 import javax.swing.table.DefaultTableModel;
 import model.Horario;
 import model.Monitoria;
-import view.MonitoriaCadastrarTela;
-import view.MonitoriaPesquisaTela;
+import view.CoordenadorMonitoriaCadastrarTela;
+import view.CoordenadorMonitoriaPesquisarTela;
 import view.MonitoriaTableModel;
 
 /**
@@ -23,11 +23,11 @@ import view.MonitoriaTableModel;
  * @author Izaltino
  */
 public class MonitoriaControle {
-    private MonitoriaPesquisaTela tela;
+    private CoordenadorMonitoriaPesquisarTela tela;
     private Monitoria modelo;
     private Vector<Monitoria> monitorias;
 
-    public MonitoriaControle(MonitoriaPesquisaTela tela, Monitoria modelo) {
+    public MonitoriaControle(CoordenadorMonitoriaPesquisarTela tela, Monitoria modelo) {
         this.tela = tela;
         this.modelo = modelo;
         listar("_");
@@ -54,7 +54,7 @@ public class MonitoriaControle {
 
         @Override
         public void actionPerformed(ActionEvent ae) {
-            new MonitoriaCadastroControle(new MonitoriaCadastrarTela());
+            new MonitoriaCadastroControle(new CoordenadorMonitoriaCadastrarTela());
         }
         
     }

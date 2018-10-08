@@ -13,12 +13,12 @@ import javax.swing.JTextField;
  *
  * @author sandr
  */
-public class MonitoriaPesquisaTela extends javax.swing.JFrame {
+public class CoordenadorMonitoriaPesquisarTela extends javax.swing.JFrame {
 
     /**
      * Creates new form MonitoriaPesquisaTela
      */
-    public MonitoriaPesquisaTela() {
+    public CoordenadorMonitoriaPesquisarTela() {
         initComponents();
     }
 
@@ -116,20 +116,21 @@ public class MonitoriaPesquisaTela extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(MonitoriaPesquisaTela.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(CoordenadorMonitoriaPesquisarTela.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(MonitoriaPesquisaTela.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(CoordenadorMonitoriaPesquisarTela.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(MonitoriaPesquisaTela.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(CoordenadorMonitoriaPesquisarTela.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(MonitoriaPesquisaTela.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(CoordenadorMonitoriaPesquisarTela.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new MonitoriaPesquisaTela().setVisible(true);
+                new CoordenadorMonitoriaPesquisarTela().setVisible(true);
             }
         });
     }

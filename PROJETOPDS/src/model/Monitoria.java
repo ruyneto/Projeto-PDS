@@ -95,5 +95,5 @@ public class Monitoria {
     public void setVagas(int vagas) {
         this.vagas = vagas;
     }
-        
+    
 }

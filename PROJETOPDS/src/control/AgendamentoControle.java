@@ -5,18 +5,17 @@
  */
 package control;
 
+import dao.MateriaDAO;
 import dao.MonitoriaDAO;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.util.Vector;
-import javax.swing.table.DefaultTableModel;
+import model.Materia;
 import model.Monitoria;
 import view.AgendamentoTableModel;
-import view.AgendarPesquisaTela;
-import view.MonitoriaCadastrarTela;
-import view.MonitoriaPesquisaTela;
+import view.AlunoVisuliazarTela;
 import view.MonitoriaTableModel;
 
 /**
@@ -24,43 +23,45 @@ import view.MonitoriaTableModel;
  * @author Izaltino
  */
 public class AgendamentoControle {
-    private AgendarPesquisaTela tela;
-    private Monitoria modelo;
+    private AlunoVisuliazarTela tela;
     private Vector<Monitoria> monitorias;
-    private Boolean[] check;
 
-    public AgendamentoControle (AgendarPesquisaTela tela, Monitoria modelo) {
+    public AgendamentoControle (AlunoVisuliazarTela tela) {
         this.tela = tela;
-        this.modelo = modelo;
-        check = new Boolean[new MonitoriaDAO().consultarMonitoria("_", 2).size()];
-        for(int i=0; i<check.length; i++){
-            check[i]=new Boolean(false);
-        }
-        System.out.println(check[0]);
         listar("_");
-        tela.getCpPesquisa().addKeyListener(new PesquisaAutomatica());
         tela.getBtInscrever().addActionListener(new BtInscricao());
+        preencherComboMateria();
+        tela.getCbMateria().addActionListener(new ComboMateria());
+    }
+    
+    public void preencherComboMateria(){
+        MateriaDAO dao = new MateriaDAO();
+        tela.getCbMateria().removeAllItems();
+        for(Materia m: dao.consultarMateriaAluno()){
+            tela.getCbMateria().addItem(m);
+        }
     }
     
     public void listar(String str){
         MonitoriaDAO dao = new MonitoriaDAO();
-        monitorias = dao.consultarMonitoria(str,2);
-        System.out.println(monitorias.size());
-        
+        monitorias = dao.consultarMonitoria(str, 2);
         tela.getTabela().setModel(new MonitoriaTableModel(monitorias));
-    }
-    
-    class PesquisaAutomatica extends KeyAdapter{
-        public void keyReleased(KeyEvent ke){
-            listar(tela.getCpPesquisa().getText());
-        }
     }
     
     class BtInscricao implements ActionListener{
 
         @Override
         public void actionPerformed(ActionEvent ae) {
-            tela.getTabela().setModel(new AgendamentoTableModel(monitorias, check));
+            tela.getBtInscrever().setVisible(false);
+            tela.getTabela().setModel(new AgendamentoTableModel(monitorias));
+        }
+    }
+    
+    class ComboMateria implements ActionListener{
+
+        @Override
+        public void actionPerformed(ActionEvent ae) {
+            listar(((Materia)tela.getCbMateria().getSelectedItem()).toString());
         }
         
     }

@@ -40,4 +40,21 @@ public class MateriaDAO {
             return null;
         }
     }
+    
+    public Vector<Materia> consultarMateriaAluno(){
+        try{
+            String sql = "SELECT * FROM materia where matid!=1";
+            PreparedStatement instrucao = connection.prepareStatement(sql);
+            ResultSet resultado = instrucao.executeQuery();
+            Vector<Materia> materias = new Vector<>();
+            while(resultado.next()){
+                Materia materia = new Materia(resultado.getInt("matid"), resultado.getString("matnome"));
+                materias.add(materia);
+            }
+            return materias;
+        }catch(SQLException ex){
+            System.out.println(ex);
+            return null;
+        }
+    }
 }

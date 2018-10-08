@@ -17,17 +17,17 @@ import model.DiaDaSemana;
 import model.Horario;
 import model.Monitoria;
 import model.Sala;
-import view.MonitoriaCadastrarTela;
+import view.CoordenadorMonitoriaCadastrarTela;
 
 /**
  *
  * @author sandr
  */
 public class MonitoriaCadastroControle {
-    private MonitoriaCadastrarTela tela;
+    private CoordenadorMonitoriaCadastrarTela tela;
     private ActionListener combo;
 
-    public MonitoriaCadastroControle(MonitoriaCadastrarTela tela) {
+    public MonitoriaCadastroControle(CoordenadorMonitoriaCadastrarTela tela) {
         this.tela = tela;
         carregarComboSala();
         carregarComboDia();

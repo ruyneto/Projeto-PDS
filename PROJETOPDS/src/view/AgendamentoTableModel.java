@@ -6,6 +6,7 @@
 package view;
 
 import java.util.List;
+import javax.swing.JCheckBox;
 import javax.swing.table.AbstractTableModel;
 import model.Monitoria;
 
@@ -15,8 +16,7 @@ import model.Monitoria;
  */
 public class AgendamentoTableModel extends AbstractTableModel{
     List<Monitoria> monitorias;
-    Boolean[] check;
-
+    
     @Override
     public int getRowCount() {
         return monitorias.size();
@@ -32,12 +32,12 @@ public class AgendamentoTableModel extends AbstractTableModel{
         Monitoria m = monitorias.get(i);
         
         switch(i1){
-            case 0: return (m.getMonitor().getCpf().equals(""))? null: m.getMonitor().toString();
-            case 1: return (m.getMateria().getId()==1)? null: m.getMateria().toString();
+            case 0: return (m.getMateria().getId()==1)? null: m.getMateria().toString();
+            case 1: return (m.getMonitor().getCpf().equals(""))? null: m.getMonitor().toString();
             case 2: return m.getDia().toString();
             case 3: return m.getSala().toString();
             case 4: return m.getHora().toString();
-            case 5: return check[i];
+            case 5: return null;
         }
         return null;
     }
@@ -55,7 +55,7 @@ public class AgendamentoTableModel extends AbstractTableModel{
     }
     
     public Class getColumnClass(int i){
-        if(i==5)return Boolean.class;
+        if(i==5)return JCheckBox.class;
         return String.class;
     }
     
@@ -64,18 +64,12 @@ public class AgendamentoTableModel extends AbstractTableModel{
         return false;
     }
 
-    public AgendamentoTableModel(List<Monitoria> monitorias, Boolean[] check) {
+    public AgendamentoTableModel(List<Monitoria> monitorias) {
         this.monitorias = monitorias;
-        this.check = check;
     }
     
-    public void setValueAt(Object aValue, int rowIndex, int ColumnIndex){
-        System.out.println(rowIndex+", "+ColumnIndex);
-        System.out.println(check[rowIndex]);
-        check[rowIndex]=(ColumnIndex==5 && check[rowIndex].booleanValue()==Boolean.FALSE)?Boolean.TRUE:Boolean.FALSE;
-        System.out.println(check[rowIndex]);
-        System.out.println(check[rowIndex]);
-        fireTableCellUpdated(rowIndex, ColumnIndex);
+    public void setValueAt(JCheckBox aValue, int rowIndex, int ColumnIndex){
+        
     }
        
 }

@@ -52,9 +52,9 @@ public class MonitoriaDAO {
                     "INNER JOIN sala ON salid = miasalid "+
                     "INNER JOIN horario ON horhora = miahorhora "+
                     "INNER JOIN diadasemana ON diaid = miadiaid "+
-                    "INNER JOIN materia ON matid = miamatid "+
-                    "INNER JOIN monitor ON moncpf = miamoncpf "+
-                    "WHERE matnome LIKE ? "+
+                    "LEFT OUTER JOIN materia ON matid = miamatid "+
+                    "LEFT OUTER JOIN monitor ON moncpf = miamoncpf "+
+                    "WHERE salnome LIKE ? "+
                     "order by diaid asc, matnome asc, horhora asc";
         
         String sql2 = "SELECT * FROM monitoria "+
@@ -63,7 +63,7 @@ public class MonitoriaDAO {
                     "INNER JOIN diadasemana ON diaid = miadiaid "+
                     "INNER JOIN materia ON matid = miamatid "+
                     "INNER JOIN monitor ON moncpf = miamoncpf "+
-                    "WHERE matnome LIKE ? AND matid != 1 "+
+                    "WHERE matnome LIKE ? AND matid != 1 AND miavagas>0 "+
                     "order by diaid asc, matnome asc, horhora asc";
         try{
             PreparedStatement instrucao = connection.prepareStatement((opc==1)?sql:sql2);
