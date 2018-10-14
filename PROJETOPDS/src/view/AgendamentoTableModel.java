@@ -6,7 +6,6 @@
 package view;
 
 import java.util.List;
-import javax.swing.JCheckBox;
 import javax.swing.table.AbstractTableModel;
 import model.Monitoria;
 
@@ -37,7 +36,7 @@ public class AgendamentoTableModel extends AbstractTableModel{
             case 2: return m.getDia().toString();
             case 3: return m.getSala().toString();
             case 4: return m.getHora().toString();
-            case 5: return null;
+            case 5: return m.isInscrito();
         }
         return null;
     }
@@ -55,7 +54,7 @@ public class AgendamentoTableModel extends AbstractTableModel{
     }
     
     public Class getColumnClass(int i){
-        if(i==5)return JCheckBox.class;
+        if(i==5)return Boolean.class;
         return String.class;
     }
     
@@ -68,8 +67,10 @@ public class AgendamentoTableModel extends AbstractTableModel{
         this.monitorias = monitorias;
     }
     
-    public void setValueAt(JCheckBox aValue, int rowIndex, int ColumnIndex){
-        
+    public void setValueAt(Object aValue, int rowIndex, int ColumnIndex){
+        System.out.println(monitorias.get(rowIndex).isInscrito());
+        monitorias.get(rowIndex).setInscrito(!monitorias.get(rowIndex).isInscrito());
+        System.out.println(monitorias.get(rowIndex).isInscrito());
     }
        
 }

@@ -17,8 +17,9 @@ public class Monitoria {
     private DiaDaSemana dia;
     private Horario hora;
     private Sala sala;
+    private boolean inscrito;
 
-    public Monitoria(int id, int vagas, Materia materia, Monitor monitor, DiaDaSemana dia, Horario hora, Sala sala) {
+    public Monitoria(int id, int vagas, boolean inscrito, Materia materia, Monitor monitor, DiaDaSemana dia, Horario hora, Sala sala) {
         this.materia = materia;
         this.monitor = monitor;
         this.dia = dia;
@@ -26,6 +27,7 @@ public class Monitoria {
         this.sala = sala;
         this.id = id;
         this.vagas = vagas;
+        this.inscrito = inscrito;
     }
     
     public Monitoria(DiaDaSemana dia, Horario hora, Sala sala) {
@@ -95,5 +97,12 @@ public class Monitoria {
     public void setVagas(int vagas) {
         this.vagas = vagas;
     }
-    
+
+    public boolean isInscrito() {
+        return inscrito;
+    }
+
+    public void setInscrito(boolean inscrito) {
+        this.inscrito = inscrito;
+    }
 }

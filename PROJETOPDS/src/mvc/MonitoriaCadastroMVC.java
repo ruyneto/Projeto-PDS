@@ -22,5 +22,4 @@ public class MonitoriaCadastroMVC {
         MonitoriaCadastroControle controle = new MonitoriaCadastroControle(tela);
         tela.setVisible(true);
     }
-    
 }

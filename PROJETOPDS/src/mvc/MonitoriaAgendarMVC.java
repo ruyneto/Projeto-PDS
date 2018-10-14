@@ -6,8 +6,9 @@
 package mvc;
 
 import control.AgendamentoControle;
+import model.Aluno;
 import model.Monitoria;
-import view.AlunoVisuliazarTela;
+import view.AlunoVisualiazarTela;
 
 /**
  *
@@ -19,8 +20,9 @@ public class MonitoriaAgendarMVC {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        AlunoVisuliazarTela tela = new AlunoVisuliazarTela();
-        AgendamentoControle controle = new AgendamentoControle(tela);
+        Aluno aluno = new Aluno("111.111.111-11", "Sandro");
+        AlunoVisualiazarTela tela = new AlunoVisualiazarTela();
+        AgendamentoControle controle = new AgendamentoControle(aluno, tela);
         tela.setVisible(true);
     }
 }

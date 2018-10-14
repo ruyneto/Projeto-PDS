@@ -11,6 +11,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Vector;
+import model.Aluno;
 import model.DiaDaSemana;
 import model.Horario;
 import model.Materia;
@@ -28,6 +29,25 @@ public class MonitoriaDAO {
      public MonitoriaDAO(){
          this.connection = FabricaConexao.getConnection();
      }
+     
+    public int verificaConflito(Monitoria m, Aluno a){
+        String sql = "SELECT f_verificaconflito(?,?,?) as resp";
+        int resp=0;
+        try{
+            PreparedStatement instrucao = connection.prepareStatement(sql);
+            instrucao.setInt(1, m.getDia().getId());
+            instrucao.setString(2, m.getHora().getHoraInicio());
+            instrucao.setString(3, a.getCpf());
+            ResultSet resultado = instrucao.executeQuery();
+            while(resultado.next()){
+                resp = resultado.getInt("resp");
+            }
+            return resp;
+        }catch(SQLException ex){
+            System.out.println(ex);
+            return -1;
+        }
+    }
      
     public boolean inserirMonitoria(Monitoria monitoria){
         String sql = "INSERT INTO monitoria (miasalid, miamatid, miadiaid, miahorhora) VALUES (?, ?, ?, ?)";        
@@ -63,10 +83,36 @@ public class MonitoriaDAO {
                     "INNER JOIN diadasemana ON diaid = miadiaid "+
                     "INNER JOIN materia ON matid = miamatid "+
                     "INNER JOIN monitor ON moncpf = miamoncpf "+
+                    "LEFT OUTER JOIN inscricao ON miaid = insmiaid "+
                     "WHERE matnome LIKE ? AND matid != 1 AND miavagas>0 "+
                     "order by diaid asc, matnome asc, horhora asc";
+        
+        String sql3 = "SELECT * FROM monitoria "+
+                    "INNER JOIN sala ON salid = miasalid "+
+                    "INNER JOIN horario ON horhora = miahorhora "+
+                    "INNER JOIN diadasemana ON diaid = miadiaid "+
+                    "INNER JOIN materia ON matid = miamatid "+
+                    "INNER JOIN monitor ON moncpf = miamoncpf "+
+                    "INNER JOIN inscricao ON miaid = insmiaid "+
+                    "WHERE matnome LIKE ? AND matid != 1 "+
+                    "order by diaid asc, matnome asc, horhora asc";
         try{
-            PreparedStatement instrucao = connection.prepareStatement((opc==1)?sql:sql2);
+            PreparedStatement instrucao;
+            switch(opc){
+                case 1:
+                    instrucao = connection.prepareStatement(sql);
+                break;
+                case 2:
+                    instrucao = connection.prepareStatement(sql2);
+                break;
+                case 3:
+                    instrucao = connection.prepareStatement(sql3);
+                break;
+                default:
+                    instrucao = connection.prepareStatement(sql);
+                break;
+                
+            }
             instrucao.setString(1, "%"+str+"%");
             ResultSet resultado = instrucao.executeQuery();
             Vector<Monitoria> monitorias = new Vector<>();
@@ -77,7 +123,7 @@ public class MonitoriaDAO {
                 DiaDaSemana dia = new DiaDaSemana(resultado.getInt("diaid"), resultado.getString("dianome"));
                 Monitor monitor = new Monitor(resultado.getString("moncpf"), resultado.getString("monnome"));
                 Monitoria monitoria = new Monitoria(resultado.getInt("miaid"), resultado.getInt("miavagas"),
-                                                    materia, monitor, dia, hora, sala);
+                                                    resultado.getString("insalucpf")!=null, materia, monitor, dia, hora, sala);
                 
                 monitorias.add(monitoria);
             }
