@@ -5,24 +5,25 @@
  */
 package mvc;
 
-import control.AgendamentoControle;
-import model.Aluno;
+import control.MonitoriaControle;
 import model.Monitoria;
-import view.AlunoVisualiazarTela;
+import view.CoordenadorMonitoriaPesquisarTela;
 
 /**
  *
  * @author sandr
  */
-public class MonitoriaAgendarMVC {
+public class CoordenadorMonitoriaPesquisaMVC {
 
     /**
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        Aluno aluno = new Aluno("111.111.111-11", "Sandro");
-        AlunoVisualiazarTela tela = new AlunoVisualiazarTela();
-        AgendamentoControle controle = new AgendamentoControle(aluno, tela);
+        Monitoria modelo = new Monitoria();
+        CoordenadorMonitoriaPesquisarTela tela = new CoordenadorMonitoriaPesquisarTela();
+        MonitoriaControle controle = new MonitoriaControle(tela, modelo);
         tela.setVisible(true);
+        
     }
+    
 }

@@ -17,7 +17,7 @@ import model.Aluno;
 import model.Materia;
 import model.Monitoria;
 import view.AgendamentoTableModel;
-import view.AlunoVisualiazarTela;
+import view.AlunoVisualizarTela;
 import view.MonitoriaTableModel;
 
 /**
@@ -26,12 +26,12 @@ import view.MonitoriaTableModel;
  */
 public class AgendamentoControle {
     private Aluno aluno;
-    private AlunoVisualiazarTela tela;
+    private AlunoVisualizarTela tela;
     private Vector<Monitoria> monitorias;
     private AcaoVoltar av = new AcaoVoltar();
     private AcaoVerIncricoes avi = new AcaoVerIncricoes();
 
-    public AgendamentoControle (Aluno aluno, AlunoVisualiazarTela tela) {
+    public AgendamentoControle (Aluno aluno, AlunoVisualizarTela tela) {
         this.tela = tela;
         this.aluno = aluno;
         preencherComboMateria();
