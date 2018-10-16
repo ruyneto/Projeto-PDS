@@ -30,6 +30,12 @@ public class InscricaoDAO {
             instrucao.setString(1, a.getCpf());
             instrucao.setInt(2, m.getId());
             instrucao.execute();
+            instrucao.clearParameters();
+            sql = "UPDATE monitoria SET miavagas = miavagas-1 WHERE miaid = ?";
+            instrucao = connection.prepareStatement(sql);
+            instrucao.setInt(1, m.getId());
+            instrucao.execute();
+       
             return true;
         }catch(SQLException ex){
             System.out.println(ex);
@@ -44,6 +50,11 @@ public class InscricaoDAO {
             PreparedStatement instrucao = connection.prepareStatement(sql);
             instrucao.setString(1, a.getCpf());
             instrucao.setInt(2, m.getId());
+            instrucao.execute();
+            instrucao.clearParameters();
+            sql = "UPDATE monitoria SET miavagas = miavagas+1 WHERE miaid = ?";
+            instrucao = connection.prepareStatement(sql);
+            instrucao.setInt(1, m.getId());
             instrucao.execute();
             return true;
         }catch(SQLException ex){

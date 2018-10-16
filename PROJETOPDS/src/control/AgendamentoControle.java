@@ -146,10 +146,8 @@ public class AgendamentoControle {
             tela.getBtInscrever().setVisible(true);
             String str = tela.getCbMateria().getSelectedItem().toString();
             MonitoriaDAO dao = new MonitoriaDAO();
-            if(tela.getTabela().getModel() instanceof AgendamentoTableModel){
-                monitorias = dao.consultarMonitoria(str, 2);
-                tela.getTabela().setModel(new MonitoriaTableModel(monitorias));
-            }
+            monitorias = dao.consultarMonitoria(str, 2);
+            tela.getTabela().setModel(new MonitoriaTableModel(monitorias));
             tela.getBtFinalizar().removeActionListener(this);
             tela.getBtFinalizar().addActionListener(avi);
         }
