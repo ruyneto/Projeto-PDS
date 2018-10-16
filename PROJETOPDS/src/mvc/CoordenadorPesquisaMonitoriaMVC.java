@@ -13,7 +13,7 @@ import view.CoordenadorMonitoriaPesquisarTela;
  *
  * @author sandr
  */
-public class MonitoriaPesquisaMVC {
+public class CoordenadorPesquisaMonitoriaMVC {
 
     /**
      * @param args the command line arguments

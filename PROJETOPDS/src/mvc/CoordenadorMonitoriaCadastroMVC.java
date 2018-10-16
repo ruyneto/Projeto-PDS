@@ -5,25 +5,21 @@
  */
 package mvc;
 
-import control.MonitoriaControle;
-import model.Monitoria;
-import view.CoordenadorMonitoriaPesquisarTela;
+import control.MonitoriaCadastroControle;
+import view.CoordenadorMonitoriaCadastrarTela;
 
 /**
  *
  * @author sandr
  */
-public class PesquisaMonitoriaMVC {
+public class CoordenadorMonitoriaCadastroMVC {
 
     /**
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        Monitoria modelo = new Monitoria();
-        CoordenadorMonitoriaPesquisarTela tela = new CoordenadorMonitoriaPesquisarTela();
-        MonitoriaControle controle = new MonitoriaControle(tela, modelo);
+        CoordenadorMonitoriaCadastrarTela tela = new CoordenadorMonitoriaCadastrarTela();
+        MonitoriaCadastroControle controle = new MonitoriaCadastroControle(tela);
         tela.setVisible(true);
-        
     }
-    
 }
