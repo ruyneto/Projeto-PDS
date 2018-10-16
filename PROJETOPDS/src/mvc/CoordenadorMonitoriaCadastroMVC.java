@@ -5,7 +5,7 @@
  */
 package mvc;
 
-import control.MonitoriaCadastroControle;
+import control.CoordenadorCadastroMonitoriaControle;
 import view.CoordenadorMonitoriaCadastrarTela;
 
 /**
@@ -19,7 +19,7 @@ public class CoordenadorMonitoriaCadastroMVC {
      */
     public static void main(String[] args) {
         CoordenadorMonitoriaCadastrarTela tela = new CoordenadorMonitoriaCadastrarTela();
-        MonitoriaCadastroControle controle = new MonitoriaCadastroControle(tela);
+        CoordenadorCadastroMonitoriaControle controle = new CoordenadorCadastroMonitoriaControle(tela);
         tela.setVisible(true);
     }
 }

@@ -8,62 +8,63 @@ package control;
 import dao.InscricaoDAO;
 import dao.MateriaDAO;
 import dao.MonitoriaDAO;
+import dao.SalaDAO;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.util.Vector;
 import javax.swing.JOptionPane;
-import model.Aluno;
 import model.Materia;
+import model.Monitor;
 import model.Monitoria;
 import view.AgendamentoTableModel;
-import view.AlunoVisualizarTela;
+import view.MonitorVisualizarTela;
 import view.MonitoriaTableModel;
 
 /**
  *
  * @author Izaltino
  */
-public class AgendamentoControle {
-    private Aluno aluno;
-    private AlunoVisualizarTela tela;
+public class MonitorCadastroMonitoriaControle {
+    private Monitor monitor;
+    private MonitorVisualizarTela tela;
     private Vector<Monitoria> monitorias;
     private AcaoVoltar av = new AcaoVoltar();
     private AcaoVerIncricoes avi = new AcaoVerIncricoes();
 
-    public AgendamentoControle (Aluno aluno, AlunoVisualizarTela tela) {
+    public MonitorCadastroMonitoriaControle (Monitor monitor, MonitorVisualizarTela tela) {
         this.tela = tela;
-        this.aluno = aluno;
-        preencherComboMateria();
-        listar(tela.getCbMateria().getSelectedItem().toString());
+        this.monitor = monitor;
+        preencherComboSala();
+        listar(tela.getCbSala().getSelectedItem().toString());
         tela.getBtInscrever().addActionListener(new BtInscricao());
-        tela.getCbMateria().addActionListener(new ComboMateria());
+        tela.getCbSala().addActionListener(new ComboMateria());
         tela.getTabela().addMouseListener(new Acao());
         tela.getBtFinalizar().addActionListener(avi);
     }
     
-    public void preencherComboMateria(){
-        MateriaDAO dao = new MateriaDAO();
-        tela.getCbMateria().removeAllItems();
-        dao.consultarMateriaAluno().forEach((m) -> {
-            tela.getCbMateria().addItem(m);
+    public void preencherComboSala(){
+        SalaDAO dao = new SalaDAO();
+        tela.getCbSala().removeAllItems();
+        dao.consultarSala("_").forEach((m) -> {
+            tela.getCbSala().addItem(m);
         });
     }
     
     public void listar(String str){
         MonitoriaDAO dao = new MonitoriaDAO();
         if(tela.getTabela().getModel() instanceof AgendamentoTableModel){
-            monitorias = dao.consultarMonitoria(str, 2);
-            tela.getTabela().setModel(new AgendamentoTableModel(monitorias));
+            /*monitorias = dao.consultarMonitoria(str, 2);
+            tela.getTabela().setModel(new AgendamentoTableModel(monitorias));*/
         }
         else{
             if(tela.getBtInscrever().isVisible()){
-                monitorias = dao.consultarMonitoria(str, 2);
-                tela.getTabela().setModel(new MonitoriaTableModel(monitorias));
+                /*monitorias = dao.consultarMonitoria(str, 2);
+                tela.getTabela().setModel(new MonitoriaTableModel(monitorias));*/
             }
             else{
-                monitorias = dao.consultarMonitoria(str, 3);
-                tela.getTabela().setModel(new MonitoriaTableModel(monitorias));
+                /*monitorias = dao.consultarMonitoria(str, 3);
+                tela.getTabela().setModel(new MonitoriaTableModel(monitorias));*/
             }
         }
         if(monitorias.isEmpty())
@@ -89,7 +90,7 @@ public class AgendamentoControle {
 
         @Override
         public void actionPerformed(ActionEvent ae) {
-            listar(((Materia)tela.getCbMateria().getSelectedItem()).toString());
+            listar(((Materia)tela.getCbSala().getSelectedItem()).toString());
         }   
     }
     
@@ -102,11 +103,11 @@ public class AgendamentoControle {
             
             if(tela.getTabela().getModel() instanceof AgendamentoTableModel){
                 if(!monitorias.get(i).isInscrito() && tela.getTabela().getSelectedColumn()==5){
-                    dao.removerInscricao(aluno, monitorias.get(i));
+                    dao.removerMonitor(monitor, monitorias.get(i));
                 }
-                if(new MonitoriaDAO().verificaConflito(monitorias.get(i), aluno)==0){
+                if(new MonitoriaDAO().verificaConflitoMonitor(monitorias.get(i), monitor)==0){
                     if(monitorias.get(i).isInscrito() && tela.getTabela().getSelectedColumn()==5){
-                        dao.inserirInscricao(aluno, monitorias.get(i));
+                        dao.inserirMonitor(monitor, monitorias.get(i));
                     }
                 }
                 else{
@@ -127,7 +128,7 @@ public class AgendamentoControle {
         @Override
         public void actionPerformed(ActionEvent ae) {
             MonitoriaDAO dao = new MonitoriaDAO();
-            Materia m = (Materia)tela.getCbMateria().getSelectedItem();
+            Materia m = (Materia)tela.getCbSala().getSelectedItem();
             tela.getBtFinalizar().setText("Voltar");
             tela.getBtInscrever().setVisible(false);
             tela.getTabela().setModel(new MonitoriaTableModel(dao.consultarMonitoria(m.getNome(), 3)));
@@ -141,10 +142,10 @@ public class AgendamentoControle {
 
         @Override
         public void actionPerformed(ActionEvent ae) {
-            Materia m = (Materia)tela.getCbMateria().getSelectedItem();
+            Materia m = (Materia)tela.getCbSala().getSelectedItem();
             tela.getBtFinalizar().setText("Ver Inscrições");
             tela.getBtInscrever().setVisible(true);
-            String str = tela.getCbMateria().getSelectedItem().toString();
+            String str = tela.getCbSala().getSelectedItem().toString();
             MonitoriaDAO dao = new MonitoriaDAO();
             monitorias = dao.consultarMonitoria(str, 2);
             tela.getTabela().setModel(new MonitoriaTableModel(monitorias));

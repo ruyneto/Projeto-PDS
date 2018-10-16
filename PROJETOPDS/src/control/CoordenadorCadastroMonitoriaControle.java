@@ -7,7 +7,6 @@ package control;
 
 import dao.DiaDAO;
 import dao.HorarioDAO;
-import dao.MateriaDAO;
 import dao.MonitoriaDAO;
 import dao.SalaDAO;
 import java.awt.event.ActionEvent;
@@ -23,11 +22,11 @@ import view.CoordenadorMonitoriaCadastrarTela;
  *
  * @author sandr
  */
-public class MonitoriaCadastroControle {
+public class CoordenadorCadastroMonitoriaControle {
     private CoordenadorMonitoriaCadastrarTela tela;
     private ActionListener combo;
 
-    public MonitoriaCadastroControle(CoordenadorMonitoriaCadastrarTela tela) {
+    public CoordenadorCadastroMonitoriaControle(CoordenadorMonitoriaCadastrarTela tela) {
         this.tela = tela;
         carregarComboSala();
         carregarComboDia();

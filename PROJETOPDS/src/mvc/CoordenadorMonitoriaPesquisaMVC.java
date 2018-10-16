@@ -5,7 +5,7 @@
  */
 package mvc;
 
-import control.MonitoriaControle;
+import control.CoordenadorPesquisaMonitoriaControle;
 import model.Monitoria;
 import view.CoordenadorMonitoriaPesquisarTela;
 
@@ -21,7 +21,7 @@ public class CoordenadorMonitoriaPesquisaMVC {
     public static void main(String[] args) {
         Monitoria modelo = new Monitoria();
         CoordenadorMonitoriaPesquisarTela tela = new CoordenadorMonitoriaPesquisarTela();
-        MonitoriaControle controle = new MonitoriaControle(tela, modelo);
+        CoordenadorPesquisaMonitoriaControle controle = new CoordenadorPesquisaMonitoriaControle(tela, modelo);
         tela.setVisible(true);
         
     }
