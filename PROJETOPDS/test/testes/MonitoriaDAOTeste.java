@@ -129,7 +129,7 @@ public class MonitoriaDAOTeste {
                 Horario hora = new Horario(resultado.getString("horhora"));
                 Materia materia = new Materia(resultado.getInt("matid"), resultado.getString("matnome"));
                 DiaDaSemana dia = new DiaDaSemana(resultado.getInt("diaid"), resultado.getString("dianome"));
-                Monitor monitor = new Monitor(resultado.getString("moncpf"), resultado.getString("monnome"));
+                Monitor monitor = new Monitor(resultado.getString("moncpf"), resultado.getString("monnome"), materia);
                 Monitoria monitoria = new Monitoria(resultado.getInt("miaid"), resultado.getInt("miavagas"),
                                                     false, materia, monitor, dia, hora, sala);
                 

@@ -11,12 +11,14 @@ package model;
  */
 public class Monitor {
     private String cpf, nome;
-    
-    public Monitor(String cpf, String nome){
+    private Materia materia;
+
+    public Monitor(String cpf, String nome, Materia materia) {
         this.cpf = cpf;
         this.nome = nome;
+        this.materia = materia;
     }
-
+    
     public String getCpf() {
         return cpf;
     }
@@ -31,6 +33,14 @@ public class Monitor {
 
     public void setNome(String nome) {
         this.nome = nome;
+    }
+
+    public Materia getMateria() {
+        return materia;
+    }
+
+    public void setMateria(Materia materia) {
+        this.materia = materia;
     }
     
     public String toString(){
