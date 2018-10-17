@@ -101,7 +101,7 @@ public class MonitorCadastroMonitoriaControle {
             Monitoria m = monitorias.get(i);
             InscricaoDAO dao = new InscricaoDAO();
             
-            if(tela.getTabela().getModel() instanceof AgendamentoTableModel){
+            /*if(tela.getTabela().getModel() instanceof AgendamentoTableModel){
                 if(!monitorias.get(i).isInscrito() && tela.getTabela().getSelectedColumn()==5){
                     dao.removerMonitor(monitor, monitorias.get(i));
                 }
@@ -119,7 +119,7 @@ public class MonitorCadastroMonitoriaControle {
                                                          "-"+m.getDia().getNome()+
                                                          "-"+m.getHora().getHoraInicio());
                 }
-            }
+            }*/
         }
     }
     

@@ -53,16 +53,16 @@ public class AlunoAgendamentoMonitoriaControle {
     public void listar(String str){
         MonitoriaDAO dao = new MonitoriaDAO();
         if(tela.getTabela().getModel() instanceof AgendamentoTableModel){
-            monitorias = dao.consultarMonitoria(str, 2);
+            monitorias = dao.consultarMonitoriasDisponiveis(str);
             tela.getTabela().setModel(new AgendamentoTableModel(monitorias));
         }
         else{
             if(tela.getBtInscrever().isVisible()){
-                monitorias = dao.consultarMonitoria(str, 2);
+                monitorias = dao.consultarMonitoriasDisponiveis(str);
                 tela.getTabela().setModel(new MonitoriaTableModel(monitorias));
             }
             else{
-                monitorias = dao.consultarMonitoria(str, 3);
+                monitorias = dao.consultarMonitoriasInscrito(str, aluno);
                 tela.getTabela().setModel(new MonitoriaTableModel(monitorias));
             }
         }
@@ -130,7 +130,7 @@ public class AlunoAgendamentoMonitoriaControle {
             Materia m = (Materia)tela.getCbMateria().getSelectedItem();
             tela.getBtFinalizar().setText("Voltar");
             tela.getBtInscrever().setVisible(false);
-            tela.getTabela().setModel(new MonitoriaTableModel(dao.consultarMonitoria(m.getNome(), 3)));
+            tela.getTabela().setModel(new MonitoriaTableModel(dao.consultarMonitoriasInscrito(m.getNome(),aluno)));
             tela.getBtFinalizar().removeActionListener(this);
             tela.getBtFinalizar().addActionListener(av);
         }
@@ -146,7 +146,7 @@ public class AlunoAgendamentoMonitoriaControle {
             tela.getBtInscrever().setVisible(true);
             String str = tela.getCbMateria().getSelectedItem().toString();
             MonitoriaDAO dao = new MonitoriaDAO();
-            monitorias = dao.consultarMonitoria(str, 2);
+            monitorias = dao.consultarMonitoriasDisponiveis(str);
             tela.getTabela().setModel(new MonitoriaTableModel(monitorias));
             tela.getBtFinalizar().removeActionListener(this);
             tela.getBtFinalizar().addActionListener(avi);

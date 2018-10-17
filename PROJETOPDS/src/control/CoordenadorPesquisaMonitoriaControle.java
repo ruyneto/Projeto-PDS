@@ -28,15 +28,14 @@ public class CoordenadorPesquisaMonitoriaControle {
     public CoordenadorPesquisaMonitoriaControle(CoordenadorMonitoriaPesquisarTela tela, Monitoria modelo) {
         this.tela = tela;
         this.modelo = modelo;
-        listar("_");
+        listar("%_%");
         tela.getCpPesquisa().addKeyListener(new PesquisaAutomatica());
         tela.getBtCadastar().addActionListener(new BtSalvar());
     }
     
     public void listar(String str){
         MonitoriaDAO dao = new MonitoriaDAO();
-        monitorias = dao.consultarMonitoria(str,1);
-        Vector linhas = new Vector();
+        monitorias = dao.consultarMonitoriaCoord(str);
         System.out.println(monitorias.size());
         
         tela.getTabela().setModel(new MonitoriaTableModel(monitorias));

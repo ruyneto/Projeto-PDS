@@ -30,6 +30,16 @@ public class Monitoria {
         this.inscrito = inscrito;
     }
     
+    public Monitoria(int id, int vagas, Materia materia, Monitor monitor, DiaDaSemana dia, Horario hora, Sala sala) {
+        this.materia = materia;
+        this.monitor = monitor;
+        this.dia = dia;
+        this.hora = hora;
+        this.sala = sala;
+        this.id = id;
+        this.vagas = vagas;
+    }
+    
     public Monitoria(DiaDaSemana dia, Horario hora, Sala sala) {
         this.dia = dia;
         this.hora = hora;
