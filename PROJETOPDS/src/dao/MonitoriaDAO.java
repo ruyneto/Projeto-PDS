@@ -49,6 +49,25 @@ public class MonitoriaDAO {
         }
     }
     
+    public int verificaConflitoMonitor(Monitoria m, Monitor mon){
+        String sql = "SELECT f_verificaconflitomonitor(?,?,?) as resp";
+        int resp=0;
+        try{
+            PreparedStatement instrucao = connection.prepareStatement(sql);
+            instrucao.setInt(1, m.getDia().getId());
+            instrucao.setString(2, m.getHora().getHoraInicio());
+            instrucao.setString(3, mon.getCpf());
+            ResultSet resultado = instrucao.executeQuery();
+            while(resultado.next()){
+                resp = resultado.getInt("resp");
+            }
+            return resp;
+        }catch(SQLException ex){
+            System.out.println(ex);
+            return -1;
+        }
+    }
+    
     public Monitoria consultarMonitoria(int miaid){
         try{
             String sql = "CALL p_consultamonitoria(?)";
@@ -243,7 +262,7 @@ public class MonitoriaDAO {
                 DiaDaSemana dia = new DiaDaSemana(resultado.getInt("diaid"), resultado.getString("dianome"));
                 Monitor monitor = new Monitor(resultado.getString("moncpf"), resultado.getString("monnome"), materia);
                 Monitoria monitoria = new Monitoria(resultado.getInt("miaid"), resultado.getInt("miavagas"),
-                                                    resultado.getString("insalucpf")!=null, materia, monitor, dia, hora, sala);
+                                                    false, materia, monitor, dia, hora, sala);
                 
                 monitorias.add(monitoria);
             }

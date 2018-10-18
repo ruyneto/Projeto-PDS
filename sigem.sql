@@ -78,6 +78,7 @@ foreign key (miahorhora) references horario(horhora)
 insert into monitoria(miasalid,miadiaid,miausucpf,miahorhora) values
 (1, 1, '', '11:00-12:00'),
 (1, 1, '', '12:00-13:00'),
+(1, 2, '', '11:00-12:00'),
 (2, 2, '555.555.555-55', '11:00-12:00'),
 (2, 2, '555.555.555-55', '12:00-13:00'),
 (1, 2, '444.444.444-44', '12:00-13:00');
@@ -116,6 +117,23 @@ begin
 end#
 delimiter ;
 select f_verificaconflito(2, '11:00-12:00', '111.111.111-11');
+
+delimiter #
+create function f_verificaconflitomonitor(p_miadiaid int, p_miahorhora varchar(15), p_moncpf varchar(15))returns int
+begin
+	declare v_retorno int default 0;
+    
+    set v_retorno=(select miaid from monitoria
+					where miadiaid = p_miadiaid
+                    AND miahorhora = p_miahorhora
+                    AND miausucpf = p_moncpf);
+	if(v_retorno is null)then
+		set v_retorno=0;
+	end if;
+	return v_retorno;
+end#
+delimiter ;
+select f_verificaconflitomonitor(2, '11:00-12:00', '555.555.555-55');
 
 delimiter #
 create procedure p_consultamonitoria(p_miaid int)
