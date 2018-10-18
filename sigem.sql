@@ -136,6 +136,14 @@ delimiter ;
 select f_verificaconflitomonitor(2, '11:00-12:00', '555.555.555-55');
 
 delimiter #
+create function f_contmonitorias(moncpf varchar(15)) returns int
+begin
+	return (SELECT count(*) FROM monitoria WHERE miausucpf = moncpf);
+end #
+delimiter ;
+select f_contmonitorias('555.555.555-55');
+
+delimiter #
 create procedure p_consultamonitoria(p_miaid int)
 begin
     SELECT salid, salnome, horhora, diaid, dianome,
@@ -249,7 +257,7 @@ begin
     LEFT OUTER JOIN funcao ON fcoid = tusfcoid
     LEFT OUTER JOIN materia on matid = tusmatid
     LEFT OUTER JOIN inscricao ON miaid = insmiaid
-	WHERE salnome LIKE concat('%', p_salnome,'%')
+	WHERE salnome LIKE concat(p_salnome)
     AND monitor.usucpf = ''
 	order by diaid asc, matnome asc, horhora asc;
 end#

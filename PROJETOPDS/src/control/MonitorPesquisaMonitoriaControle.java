@@ -87,7 +87,9 @@ public class MonitorPesquisaMonitoriaControle {
             Monitoria m = monitorias.get(i);
             
             int num = new MonitoriaDAO().verificaConflitoMonitor(monitorias.get(i), monitor);
-            if(num!=0){
+            System.out.println(num);
+            if(num!=0 &&
+                    tela.getBtInscrever().getActionListeners()[0] instanceof AcaoBtSalvar){
                 m=new MonitoriaDAO().consultarMonitoria(num);
                 tela.getTabela().getModel().setValueAt(false, i, 5);
                 JOptionPane.showMessageDialog(null, "Você não pode ser monitor"+
@@ -244,7 +246,6 @@ public class MonitorPesquisaMonitoriaControle {
             tela.getBtInscrever().addActionListener(aalt);
             tela.getTabela().setModel(new MonitoriaTableModel(monitorias));
             tela.getBtVerInscricoes().removeActionListener(avolalt);
-            //tela.getBtVerInscricoes().setText("Voltar");
             tela.getBtVerInscricoes().addActionListener(avolver);
         }
     }
