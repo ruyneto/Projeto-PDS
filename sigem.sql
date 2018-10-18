@@ -96,17 +96,6 @@ insert into inscricao values
 
 select * from inscricao;
 
-/*create table materiamonitor(
-mmtusucpf varchar(15) not null,
-mmtmatid int,
-mmtativo boolean default true,
-foreign key (mmtusucpf) references usuario(usucpf),
-foreign key (mmtmatid) references materia(matid),
-primary key(mmtusucpf, mmtmatid)
-);
-insert into materiamonitor(mmtusucpf, mmtmatid)values
-('444.444.444-44', 3), ('555.555.555-55', 2);*/
-
 
 -- Procedure que retorna o ID da aula da monitoria que está gerando conflito de horário durante a inscrição
 -- MonitoriaDAO >>>> verificaConflito()
@@ -128,11 +117,29 @@ end#
 delimiter ;
 select f_verificaconflito(2, '11:00-12:00', '111.111.111-11');
 
+delimiter #
+create procedure p_consultamonitoria(p_miaid int)
+begin
+    SELECT salid, salnome, horhora, diaid, dianome,
+    monitor.usucpf 'moncpf', monitor.usunome 'monnome',
+    matid, matnome, miaid, miavagas
+    FROM monitoria
+	INNER JOIN sala ON salid = miasalid
+	INNER JOIN horario ON horhora = miahorhora
+	INNER JOIN diadasemana ON diaid = miadiaid
+	INNER JOIN usuario monitor ON monitor.usucpf = miausucpf
+    INNER JOIN tipousuario ON tususucpf = monitor.usucpf
+    INNER JOIN materia ON matid = tusmatid
+	WHERE miaid = p_miaid
+	order by diaid asc, matnome asc, horhora asc;
+end#
+delimiter ;
+
 
 -- Procedure para consultar por sala quais aulas de monitorias existem
 -- MonitoriaDAO >>>> consultarMonitoria() utilizando a sql
 delimiter #
-create procedure p_consultamonitoriacoord(p_salnome varchar(20))
+create procedure p_consultamonitoriascoord(p_salnome varchar(20))
 begin
 	SELECT salid, salnome, horhora, diaid, dianome,
     monitor.usucpf 'moncpf', monitor.usunome 'monnome',
@@ -152,7 +159,7 @@ begin
 	order by diaid asc, matnome asc, horhora asc;
 end#
 delimiter ;
-call p_consultamonitoriacoord('LAB V');
+call p_consultamonitoriascoord('LAB V');
 
 
 -- Procedure para consultar por matéria quais aulas de monitorias estão disponíveis para inscrição
@@ -230,6 +237,53 @@ begin
 end#
 delimiter ;
 call p_consultamonitoriaslivres('LAB V');
+
+delimiter #
+create procedure p_consultamonitoriasmonitor(p_salnome varchar(20), p_moncpf varchar(15))
+begin
+	SELECT salid, salnome, horhora, diaid, dianome,
+    monitor.usucpf 'moncpf', monitor.usunome 'monnome',
+    matid, matnome, miaid, miavagas
+    FROM monitoria
+	INNER JOIN sala ON salid = miasalid
+	INNER JOIN horario ON horhora = miahorhora
+	INNER JOIN diadasemana ON diaid = miadiaid
+	INNER JOIN usuario monitor ON monitor.usucpf = miausucpf
+    INNER JOIN tipousuario ON tususucpf = monitor.usucpf
+    INNER JOIN funcao ON fcoid = tusfcoid
+    INNER JOIN materia ON matid = tusmatid
+	WHERE salnome LIKE concat('%', p_salnome,'%')
+    AND monitor.usucpf = p_moncpf    
+	order by diaid asc, matnome asc, horhora asc;
+end#
+delimiter ;
+CALL  p_consultamonitoriasmonitor('LAB VII', '555.555.555-55');
+
+delimiter #
+create procedure p_monitorcheckboxmarcado(p_miaid int, p_moncpf varchar(15))
+begin
+	declare v_moncpf varchar(15);
+    
+    set v_moncpf = (SELECT miausucpf FROM monitoria WHERE miaid = p_miaid);
+    
+    if v_moncpf != p_moncpf then
+		UPDATE monitoria SET miausucpf = p_moncpf WHERE miaid = p_miaid;
+	end if;
+end#
+delimiter ;
+
+delimiter #
+create procedure p_monitorcheckboxdesmarcado(p_miaid int, p_moncpf varchar(15))
+begin
+	declare v_moncpf varchar(15);
+    
+    set v_moncpf = (SELECT miausucpf FROM monitoria WHERE miaid = p_miaid);
+    
+    if v_moncpf = p_moncpf then
+		UPDATE monitoria SET miausucpf = '' WHERE miaid = p_miaid;
+	end if;
+end#
+delimiter ;
 
 
 -- Procedure para consultar as horas disponíveis para uma sala em um determinado dia
