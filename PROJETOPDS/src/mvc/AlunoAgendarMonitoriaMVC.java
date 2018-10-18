@@ -5,21 +5,23 @@
  */
 package mvc;
 
-import control.CoordenadorCadastroMonitoriaControle;
-import view.CoordenadorMonitoriaCadastrarTela;
+import control.AlunoAgendamentoMonitoriaControle;
+import model.Aluno;
+import view.AlunoVisualizarTela;
 
 /**
  *
  * @author sandr
  */
-public class CoordenadorMonitoriaCadastroMVC {
+public class AlunoAgendarMonitoriaMVC {
 
     /**
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        CoordenadorMonitoriaCadastrarTela tela = new CoordenadorMonitoriaCadastrarTela();
-        CoordenadorCadastroMonitoriaControle controle = new CoordenadorCadastroMonitoriaControle(tela);
+        Aluno aluno = new Aluno("111.111.111-11", "Sandro");
+        AlunoVisualizarTela tela = new AlunoVisualizarTela();
+        AlunoAgendamentoMonitoriaControle controle = new AlunoAgendamentoMonitoriaControle(aluno, tela);
         tela.setVisible(true);
     }
 }

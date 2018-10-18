@@ -32,7 +32,7 @@
                       <Group type="102" alignment="0" attributes="0">
                           <Component id="btInscrever" min="-2" max="-2" attributes="0"/>
                           <EmptySpace max="32767" attributes="0"/>
-                          <Component id="btFinalizar" min="-2" max="-2" attributes="0"/>
+                          <Component id="btVerInscricoes" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <Component id="jScrollPane1" alignment="0" min="-2" pref="375" max="-2" attributes="0"/>
                   </Group>
@@ -53,7 +53,7 @@
               <EmptySpace pref="49" max="32767" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
                   <Component id="btInscrever" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="btFinalizar" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="btVerInscricoes" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace max="-2" attributes="0"/>
           </Group>
@@ -107,7 +107,7 @@
         <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;Object&gt;"/>
       </AuxValues>
     </Component>
-    <Component class="javax.swing.JButton" name="btFinalizar">
+    <Component class="javax.swing.JButton" name="btVerInscricoes">
       <Properties>
         <Property name="text" type="java.lang.String" value="Ver Inscri&#xe7;&#xf5;es"/>
       </Properties>

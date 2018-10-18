@@ -6,7 +6,6 @@
 package control;
 
 import dao.InscricaoDAO;
-import dao.MateriaDAO;
 import dao.MonitoriaDAO;
 import dao.SalaDAO;
 import java.awt.event.ActionEvent;
@@ -17,6 +16,7 @@ import javax.swing.JOptionPane;
 import model.Materia;
 import model.Monitor;
 import model.Monitoria;
+import model.Sala;
 import view.AgendamentoTableModel;
 import view.MonitorVisualizarTela;
 import view.MonitoriaTableModel;
@@ -25,22 +25,24 @@ import view.MonitoriaTableModel;
  *
  * @author Izaltino
  */
-public class MonitorCadastroMonitoriaControle {
+public class MonitorPesquisaMonitoriaControle {
     private Monitor monitor;
     private MonitorVisualizarTela tela;
     private Vector<Monitoria> monitorias;
-    private AcaoVoltar av = new AcaoVoltar();
-    private AcaoVerIncricoes avi = new AcaoVerIncricoes();
+    private AcaoBtVoltar av = new AcaoBtVoltar();
+    private AcaoBtVerInscricoes avi = new AcaoBtVerInscricoes();
+    private AcaoBtInscricao ains = new AcaoBtInscricao();
+    private AcaoBtSalvar asal = new AcaoBtSalvar();
 
-    public MonitorCadastroMonitoriaControle (Monitor monitor, MonitorVisualizarTela tela) {
+    public MonitorPesquisaMonitoriaControle (Monitor monitor, MonitorVisualizarTela tela) {
         this.tela = tela;
         this.monitor = monitor;
         preencherComboSala();
         listar(tela.getCbSala().getSelectedItem().toString());
-        tela.getBtInscrever().addActionListener(new BtInscricao());
+        tela.getBtInscrever().addActionListener(new AcaoBtInscricao());
         tela.getCbSala().addActionListener(new ComboMateria());
         tela.getTabela().addMouseListener(new Acao());
-        tela.getBtFinalizar().addActionListener(avi);
+        tela.getBtVerInscricoes().addActionListener(avi);
     }
     
     public void preencherComboSala(){
@@ -54,13 +56,13 @@ public class MonitorCadastroMonitoriaControle {
     public void listar(String str){
         MonitoriaDAO dao = new MonitoriaDAO();
         if(tela.getTabela().getModel() instanceof AgendamentoTableModel){
-            /*monitorias = dao.consultarMonitoria(str, 2);
-            tela.getTabela().setModel(new AgendamentoTableModel(monitorias));*/
+            monitorias = dao.consultarMonitoriasLivre(str);
+            tela.getTabela().setModel(new AgendamentoTableModel(monitorias));
         }
         else{
             if(tela.getBtInscrever().isVisible()){
-                /*monitorias = dao.consultarMonitoria(str, 2);
-                tela.getTabela().setModel(new MonitoriaTableModel(monitorias));*/
+                monitorias = dao.consultarMonitoriasLivre(str);
+                tela.getTabela().setModel(new MonitoriaTableModel(monitorias));
             }
             else{
                 /*monitorias = dao.consultarMonitoria(str, 3);
@@ -69,19 +71,20 @@ public class MonitorCadastroMonitoriaControle {
         }
         if(monitorias.isEmpty())
             JOptionPane.showMessageDialog(null, "Não há nenhuma monitoria" +
-                                                "\npara essa matéria");
+                                                "\nlivre para essa sala");
     }
     
-    class BtInscricao implements ActionListener{
+    class AcaoBtInscricao implements ActionListener{
 
         @Override
         public void actionPerformed(ActionEvent ae) {
-            tela.getBtInscrever().setVisible(false);
+            tela.getBtInscrever().setText("Salvar");
             tela.getTabela().setModel(new AgendamentoTableModel(monitorias));
-            
-            tela.getBtFinalizar().removeActionListener(avi);
-            tela.getBtFinalizar().setText("Voltar");
-            tela.getBtFinalizar().addActionListener(av);
+            tela.getBtVerInscricoes().removeActionListener(avi);
+            tela.getBtVerInscricoes().setText("Voltar");
+            tela.getBtVerInscricoes().addActionListener(av);
+            tela.getBtInscrever().removeActionListener(this);
+            tela.getBtInscrever().addActionListener(asal);
         }
     }
     
@@ -90,7 +93,7 @@ public class MonitorCadastroMonitoriaControle {
 
         @Override
         public void actionPerformed(ActionEvent ae) {
-            listar(((Materia)tela.getCbSala().getSelectedItem()).toString());
+            listar((tela.getCbSala().getSelectedItem()).toString());
         }   
     }
     
@@ -123,34 +126,53 @@ public class MonitorCadastroMonitoriaControle {
         }
     }
     
-    class AcaoVerIncricoes implements ActionListener{
+    class AcaoBtVerInscricoes implements ActionListener{
 
         @Override
         public void actionPerformed(ActionEvent ae) {
+            tela.getBtVerInscricoes().setText("Voltar");
+            tela.getBtVerInscricoes().removeActionListener(this);
+            tela.getBtVerInscricoes().addActionListener(av);
+            tela.getBtInscrever().setText("Alterar");
+            String str = tela.getCbSala().getSelectedItem().toString();
             MonitoriaDAO dao = new MonitoriaDAO();
-            Materia m = (Materia)tela.getCbSala().getSelectedItem();
-            tela.getBtFinalizar().setText("Voltar");
-            tela.getBtInscrever().setVisible(false);
-            tela.getTabela().setModel(new MonitoriaTableModel(dao.consultarMonitoria(m.getNome(), 3)));
-            tela.getBtFinalizar().removeActionListener(this);
-            tela.getBtFinalizar().addActionListener(av);
+            monitorias = dao.consultarMonitoriasMonitor(str, monitor);
+            tela.getTabela().setModel(new MonitoriaTableModel(monitorias));
         }
         
     }
     
-    class AcaoVoltar implements ActionListener{
+    class AcaoBtVoltar implements ActionListener{
 
         @Override
         public void actionPerformed(ActionEvent ae) {
-            Materia m = (Materia)tela.getCbSala().getSelectedItem();
-            tela.getBtFinalizar().setText("Ver Inscrições");
-            tela.getBtInscrever().setVisible(true);
-            String str = tela.getCbSala().getSelectedItem().toString();
             MonitoriaDAO dao = new MonitoriaDAO();
-            monitorias = dao.consultarMonitoria(str, 2);
+            String str = tela.getCbSala().getSelectedItem().toString();
+            monitorias=dao.consultarMonitoriasLivre(str);
             tela.getTabela().setModel(new MonitoriaTableModel(monitorias));
-            tela.getBtFinalizar().removeActionListener(this);
-            tela.getBtFinalizar().addActionListener(avi);
+            tela.getBtVerInscricoes().setText("Ver Inscrições");
+            tela.getBtInscrever().setText("Inscrever-se");
+            tela.getBtVerInscricoes().removeActionListener(this);
+            tela.getBtVerInscricoes().addActionListener(avi);
+        }
+        
+    }
+    
+    class AcaoBtSalvar implements ActionListener{
+
+        @Override
+        public void actionPerformed(ActionEvent ae) {
+            MonitoriaDAO dao = new MonitoriaDAO();
+            dao.AcaoSalvarDoMonitor(monitorias, monitor);
+            String str = tela.getCbSala().getSelectedItem().toString();
+            monitorias=dao.consultarMonitoriasLivre(str);
+            tela.getTabela().setModel(new MonitoriaTableModel(monitorias));
+            tela.getBtVerInscricoes().setText("Ver Inscrições");
+            tela.getBtVerInscricoes().removeActionListener(av);
+            tela.getBtVerInscricoes().addActionListener(avi);
+            tela.getBtInscrever().setText("Inscrever-se");
+            tela.getBtInscrever().removeActionListener(asal);
+            tela.getBtInscrever().addActionListener(ains);
         }
         
     }

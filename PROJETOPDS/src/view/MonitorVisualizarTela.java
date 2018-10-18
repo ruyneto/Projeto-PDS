@@ -33,17 +33,12 @@ public class MonitorVisualizarTela extends javax.swing.JFrame {
 
     public JButton getBtInscrever() {
         return btInscrever;
-    }
+    }   
 
-    public JButton getBtFinalizar() {
-        return btFinalizar;
-    }
-
-    public void setBtFinalizar(JButton btFinalizar) {
-        this.btFinalizar = btFinalizar;
+    public JButton getBtVerInscricoes() {
+        return btVerInscricoes;
     }
     
-
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -58,7 +53,7 @@ public class MonitorVisualizarTela extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         btInscrever = new javax.swing.JButton();
         cbSala = new javax.swing.JComboBox<>();
-        btFinalizar = new javax.swing.JButton();
+        btVerInscricoes = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -81,7 +76,7 @@ public class MonitorVisualizarTela extends javax.swing.JFrame {
 
         cbSala.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
-        btFinalizar.setText("Ver Inscrições");
+        btVerInscricoes.setText("Ver Inscrições");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -96,7 +91,7 @@ public class MonitorVisualizarTela extends javax.swing.JFrame {
                         .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
                             .addComponent(btInscrever)
                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(btFinalizar))
+                            .addComponent(btVerInscricoes))
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 375, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(15, Short.MAX_VALUE))
         );
@@ -112,7 +107,7 @@ public class MonitorVisualizarTela extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 49, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btInscrever)
-                    .addComponent(btFinalizar))
+                    .addComponent(btVerInscricoes))
                 .addContainerGap())
         );
 
@@ -186,8 +181,8 @@ public class MonitorVisualizarTela extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btFinalizar;
     private javax.swing.JButton btInscrever;
+    private javax.swing.JButton btVerInscricoes;
     private javax.swing.JComboBox<Object> cbSala;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane1;

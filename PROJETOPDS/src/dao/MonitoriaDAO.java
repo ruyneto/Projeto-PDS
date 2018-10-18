@@ -48,15 +48,36 @@ public class MonitoriaDAO {
             return -1;
         }
     }
+    
+    public Monitoria consultarMonitoria(int miaid){
+        try{
+            String sql = "CALL p_consultamonitoria(?)";
+            PreparedStatement instrucao = connection.prepareStatement(sql);
+            instrucao.setInt(1, miaid);
+            ResultSet resultado = instrucao.executeQuery();
+            Monitoria monitoria = new Monitoria();
+            while(resultado.next()){
+                Sala sala = new Sala(resultado.getInt("salid"), resultado.getString("salnome"));
+                Horario hora = new Horario(resultado.getString("horhora"));
+                Materia materia = new Materia(resultado.getInt("matid"), resultado.getString("matnome"));
+                DiaDaSemana dia = new DiaDaSemana(resultado.getInt("diaid"), resultado.getString("dianome"));
+                Monitor monitor = new Monitor(resultado.getString("moncpf"), resultado.getString("monnome"), materia);
+                monitoria = new Monitoria(resultado.getInt("miaid"), resultado.getInt("miavagas"),
+                                                    true, materia, monitor, dia, hora, sala);
+            }
+            return monitoria;
+        }catch(SQLException ex){
+            throw new RuntimeException(ex);
+        }
+    }
      
     public boolean inserirMonitoria(Monitoria monitoria){
-        String sql = "INSERT INTO monitoria (miasalid, miamatid, miadiaid, miahorhora) VALUES (?, ?, ?, ?)";        
+        String sql = "INSERT INTO monitoria (miasalid, miadiaid, miahorhora) VALUES (?, ?, ?, ?)";        
         try {
             PreparedStatement ps = connection.prepareStatement(sql);
             ps.setInt(1, monitoria.getSala().getId());
-            ps.setInt(2, monitoria.getMateria().getId());
-            ps.setInt(3, monitoria.getDia().getId());
-            ps.setString(4, monitoria.getHora().getHoraInicio());
+            ps.setInt(2, monitoria.getDia().getId());
+            ps.setString(3, monitoria.getHora().getHoraInicio());
             ps.execute();
             
             connection.close();
@@ -158,11 +179,12 @@ public class MonitoriaDAO {
         }
     }
     
-    public Vector<Monitoria> consultarMonitoriasDisponiveis(String str){
+    public Vector<Monitoria> consultarMonitoriasDisponiveis(String str, Aluno a){
         try{
-            String sql = "CALL p_consultamonitoriasdisponiveis(?)";
+            String sql = "CALL p_consultamonitoriasdisponiveis(?, ?)";
             PreparedStatement instrucao = connection.prepareStatement(sql);
             instrucao.setString(1, str);
+            instrucao.setString(2, a.getCpf());
             ResultSet resultado = instrucao.executeQuery();
             Vector<Monitoria> monitorias = new Vector<>();
             while(resultado.next()){
@@ -202,6 +224,82 @@ public class MonitoriaDAO {
                 monitorias.add(monitoria);
             }
             return monitorias;
+        }catch(SQLException ex){
+            throw new RuntimeException(ex);
+        }
+    }
+    
+    public Vector<Monitoria> consultarMonitoriasLivre(String str){
+        try{
+            String sql = "CALL p_consultamonitoriaslivres(?)";
+            PreparedStatement instrucao = connection.prepareStatement(sql);
+            instrucao.setString(1, str);
+            ResultSet resultado = instrucao.executeQuery();
+            Vector<Monitoria> monitorias = new Vector<>();
+            while(resultado.next()){
+                Sala sala = new Sala(resultado.getInt("salid"), resultado.getString("salnome"));
+                Horario hora = new Horario(resultado.getString("horhora"));
+                Materia materia = new Materia(resultado.getInt("matid"), resultado.getString("matnome"));
+                DiaDaSemana dia = new DiaDaSemana(resultado.getInt("diaid"), resultado.getString("dianome"));
+                Monitor monitor = new Monitor(resultado.getString("moncpf"), resultado.getString("monnome"), materia);
+                Monitoria monitoria = new Monitoria(resultado.getInt("miaid"), resultado.getInt("miavagas"),
+                                                    resultado.getString("insalucpf")!=null, materia, monitor, dia, hora, sala);
+                
+                monitorias.add(monitoria);
+            }
+            return monitorias;
+        }catch(SQLException ex){
+            throw new RuntimeException(ex);
+        }
+    }
+    
+    public Vector<Monitoria> consultarMonitoriasMonitor(String str, Monitor m){
+        try{
+            String sql = "CALL p_consultamonitoriasmonitor(?,?)";
+            PreparedStatement instrucao = connection.prepareStatement(sql);
+            instrucao.setString(1, str);
+            instrucao.setString(2, m.getCpf());
+            ResultSet resultado = instrucao.executeQuery();
+            Vector<Monitoria> monitorias = new Vector<>();
+            while(resultado.next()){
+                Sala sala = new Sala(resultado.getInt("salid"), resultado.getString("salnome"));
+                Horario hora = new Horario(resultado.getString("horhora"));
+                Materia materia = new Materia(resultado.getInt("matid"), resultado.getString("matnome"));
+                DiaDaSemana dia = new DiaDaSemana(resultado.getInt("diaid"), resultado.getString("dianome"));
+                Monitor monitor = new Monitor(resultado.getString("moncpf"), resultado.getString("monnome"), materia);
+                Monitoria monitoria = new Monitoria(resultado.getInt("miaid"), resultado.getInt("miavagas"),
+                                                    true, materia, monitor, dia, hora, sala);
+                
+                monitorias.add(monitoria);
+            }
+            return monitorias;
+        }catch(SQLException ex){
+            throw new RuntimeException(ex);
+        }
+    }
+    
+    public void AcaoSalvarDoMonitor(Vector<Monitoria> mia, Monitor mon){
+        try{
+            PreparedStatement instrucao;
+            for(Monitoria monitoria: mia ){
+                if(monitoria.isInscrito()){
+                    String sql = "CALL p_monitorcheckboxmarcado(?,?)";
+                    instrucao=connection.prepareStatement(sql);
+                    instrucao.setInt(1, monitoria.getId());
+                    instrucao.setString(2, mon.getCpf());
+                    instrucao.execute();
+                    instrucao.clearParameters();
+                }
+                else{
+                    String sql = "CALL p_monitorcheckboxdesmarcado(?,?)";
+                    instrucao=connection.prepareStatement(sql);
+                    instrucao.setInt(1, monitoria.getId());
+                    instrucao.setString(2, mon.getCpf());
+                    instrucao.execute();
+                    instrucao.clearParameters();
+                }
+                    
+            }
         }catch(SQLException ex){
             throw new RuntimeException(ex);
         }

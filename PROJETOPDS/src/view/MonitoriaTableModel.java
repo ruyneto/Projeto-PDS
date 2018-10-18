@@ -30,8 +30,8 @@ public class MonitoriaTableModel extends AbstractTableModel{
     public Object getValueAt(int i, int i1) {
         Monitoria m = monitorias.get(i);
         switch(i1){
-            case 0: return (m.getMateria().getId()==1)? null: m.getMateria().toString();
-            case 1: return (m.getMonitor().getCpf().equals(""))? null: m.getMonitor().toString();
+            case 0: return (m.getMateria().getId()==1)? "": m.getMateria().toString();
+            case 1: return (m.getMonitor().getCpf().equals(""))? "": m.getMonitor().toString();
             case 2: return m.getDia().toString();
             case 3: return m.getSala().toString();
             case 4: return m.getHora().toString();

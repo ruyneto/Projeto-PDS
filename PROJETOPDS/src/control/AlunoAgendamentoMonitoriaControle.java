@@ -53,12 +53,12 @@ public class AlunoAgendamentoMonitoriaControle {
     public void listar(String str){
         MonitoriaDAO dao = new MonitoriaDAO();
         if(tela.getTabela().getModel() instanceof AgendamentoTableModel){
-            monitorias = dao.consultarMonitoriasDisponiveis(str);
+            monitorias = dao.consultarMonitoriasDisponiveis(str, aluno);
             tela.getTabela().setModel(new AgendamentoTableModel(monitorias));
         }
         else{
             if(tela.getBtInscrever().isVisible()){
-                monitorias = dao.consultarMonitoriasDisponiveis(str);
+                monitorias = dao.consultarMonitoriasDisponiveis(str, aluno);
                 tela.getTabela().setModel(new MonitoriaTableModel(monitorias));
             }
             else{
@@ -110,6 +110,8 @@ public class AlunoAgendamentoMonitoriaControle {
                     }
                 }
                 else{
+                    int num = new MonitoriaDAO().verificaConflito(monitorias.get(i), aluno);
+                    m=new MonitoriaDAO().consultarMonitoria(num);
                     tela.getTabela().getModel().setValueAt(false, i, 5);
                     JOptionPane.showMessageDialog(null, "Você não pode se inscrever"+
                                                          "\nnessa matéria. Há um conflito"+
@@ -146,7 +148,7 @@ public class AlunoAgendamentoMonitoriaControle {
             tela.getBtInscrever().setVisible(true);
             String str = tela.getCbMateria().getSelectedItem().toString();
             MonitoriaDAO dao = new MonitoriaDAO();
-            monitorias = dao.consultarMonitoriasDisponiveis(str);
+            monitorias = dao.consultarMonitoriasDisponiveis(str, aluno);
             tela.getTabela().setModel(new MonitoriaTableModel(monitorias));
             tela.getBtFinalizar().removeActionListener(this);
             tela.getBtFinalizar().addActionListener(avi);
