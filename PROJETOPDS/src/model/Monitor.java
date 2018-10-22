@@ -19,6 +19,10 @@ public class Monitor {
         this.materia = materia;
     }
     
+    public Monitor(){
+        
+    }
+    
     public String getCpf() {
         return cpf;
     }
@@ -43,6 +47,7 @@ public class Monitor {
         this.materia = materia;
     }
     
+    @Override
     public String toString(){
         return nome;
     }

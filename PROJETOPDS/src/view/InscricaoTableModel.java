@@ -13,7 +13,7 @@ import model.Monitoria;
  *
  * @author sandr
  */
-public class AgendamentoTableModel extends AbstractTableModel{
+public class InscricaoTableModel extends AbstractTableModel{
     List<Monitoria> monitorias;
     
     @Override
@@ -35,7 +35,7 @@ public class AgendamentoTableModel extends AbstractTableModel{
             case 1: return m.getDia().toString();
             case 2: return m.getSala().toString();
             case 3: return m.getHora().toString();
-            case 4: return m.getVagas();
+            case 4: return m.isInscrito();
         }
         return null;
     }
@@ -46,12 +46,22 @@ public class AgendamentoTableModel extends AbstractTableModel{
             case 1: return "Dia";
             case 2: return "Sala";
             case 3: return "Horário";
-            case 4: return "Vagas";
+            case 4: return "Inscrito ?";
         }
         return null;
     }
+    
+    public Class getColumnClass(int i){
+        if(i==4)return Boolean.class;
+        return String.class;
+    }
+    
+    public boolean isCellEditable(int i, int i1){
+        if(i1==4)return true;
+        return false;
+    }
 
-    public AgendamentoTableModel(List<Monitoria> monitorias) {
+    public InscricaoTableModel(List<Monitoria> monitorias) {
         this.monitorias = monitorias;
     }
     

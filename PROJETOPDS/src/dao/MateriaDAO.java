@@ -24,9 +24,9 @@ public class MateriaDAO {
         this.connection = FabricaConexao.getConnection();
     }
     
-    public Vector<Materia> consultarMateria(String str){
+    public Vector<Materia> consultarMaterias(String str){
         try{
-            String sql = "SELECT * FROM materia";
+            String sql = "sp_consultamaterias()";
             PreparedStatement instrucao = connection.prepareStatement(sql);
             ResultSet resultado = instrucao.executeQuery();
             Vector<Materia> materias = new Vector<>();
@@ -41,9 +41,9 @@ public class MateriaDAO {
         }
     }
     
-    public Vector<Materia> consultarMateriaAluno(){
+    public Vector<Materia> consultaMateriasAtivas(){
         try{
-            String sql = "SELECT * FROM materia where matid!=1";
+            String sql = "CALL sp_consultamateriasativas()";
             PreparedStatement instrucao = connection.prepareStatement(sql);
             ResultSet resultado = instrucao.executeQuery();
             Vector<Materia> materias = new Vector<>();

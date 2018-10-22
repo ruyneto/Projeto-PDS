@@ -17,6 +17,10 @@ public class Materia {
         this.id = id;
         this.nome = nome;
     }
+    
+    public Materia(){
+        
+    }
 
     public int getId() {
         return id;

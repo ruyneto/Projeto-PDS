@@ -8,6 +8,7 @@ package dao;
 import connection.FabricaConexao;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import model.Aluno;
 import model.Monitoria;
@@ -23,30 +24,24 @@ public class InscricaoDAO {
         connection = FabricaConexao.getConnection();
     }
     
-    public boolean inserirInscricao(Aluno a, Monitoria m){
+    public String inserirInscricao(Aluno a, Monitoria m){
         try{
-            String sql = "INSERT INTO inscricao VALUES (?,?)";
+            String sql = "SELECT f_inscreveraluno(?,?) AS resp";
             PreparedStatement instrucao = connection.prepareStatement(sql);
             instrucao.setString(1, a.getCpf());
             instrucao.setInt(2, m.getId());
-            instrucao.execute();
-            instrucao.clearParameters();
-            sql = "UPDATE monitoria SET miavagas = miavagas-1 WHERE miaid = ?";
-            instrucao = connection.prepareStatement(sql);
-            instrucao.setInt(1, m.getId());
-            instrucao.execute();
-       
-            return true;
+            ResultSet resultado = instrucao.executeQuery();
+            return "";//resultado.getString("resp");
         }catch(SQLException ex){
             System.out.println(ex);
+            return "Problema ao inscrever aluno";
         }
-        return false;
     }
     
     public boolean removerInscricao(Aluno a, Monitoria m){
         try{
             String sql = "DELETE FROM inscricao WHERE "+
-                            "insalucpf = ? AND insmiaid = ?";
+                            "insusucpf = ? AND insmiaid = ?";
             PreparedStatement instrucao = connection.prepareStatement(sql);
             instrucao.setString(1, a.getCpf());
             instrucao.setInt(2, m.getId());

@@ -26,7 +26,7 @@
           <Group type="102" attributes="0">
               <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
-                  <Component id="jLabel1" alignment="0" min="-2" max="-2" attributes="0"/>
+                  <Component id="cpSala" alignment="0" min="-2" max="-2" attributes="0"/>
                   <Component id="cbSala" alignment="0" min="-2" pref="120" max="-2" attributes="0"/>
                   <Group type="103" alignment="0" groupAlignment="1" max="-2" attributes="0">
                       <Group type="102" alignment="0" attributes="0">
@@ -45,7 +45,7 @@
       <Group type="103" groupAlignment="0" attributes="0">
           <Group type="102" alignment="0" attributes="0">
               <EmptySpace max="-2" attributes="0"/>
-              <Component id="jLabel1" min="-2" max="-2" attributes="0"/>
+              <Component id="cpSala" min="-2" max="-2" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
               <Component id="cbSala" min="-2" max="-2" attributes="0"/>
               <EmptySpace min="-2" pref="24" max="-2" attributes="0"/>
@@ -82,7 +82,7 @@
         </Component>
       </SubComponents>
     </Container>
-    <Component class="javax.swing.JLabel" name="jLabel1">
+    <Component class="javax.swing.JLabel" name="cpSala">
       <Properties>
         <Property name="text" type="java.lang.String" value="Sala"/>
       </Properties>
@@ -109,7 +109,7 @@
     </Component>
     <Component class="javax.swing.JButton" name="btVerInscricoes">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Ver Inscri&#xe7;&#xf5;es"/>
+        <Property name="text" type="java.lang.String" value="Meus hor&#xe1;rios"/>
       </Properties>
     </Component>
   </SubComponents>

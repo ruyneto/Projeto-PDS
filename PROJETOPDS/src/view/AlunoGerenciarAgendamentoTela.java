@@ -14,12 +14,12 @@ import javax.swing.JTextField;
  *
  * @author sandr
  */
-public class AlunoVisualizarTela extends javax.swing.JFrame {
+public class AlunoGerenciarAgendamentoTela extends javax.swing.JFrame {
 
     /**
      * Creates new form AgendarPesquisaTela
      */
-    public AlunoVisualizarTela() {
+    public AlunoGerenciarAgendamentoTela() {
         initComponents();
         this.setLocationRelativeTo(null);
     }
@@ -82,7 +82,7 @@ public class AlunoVisualizarTela extends javax.swing.JFrame {
 
         cbMateria.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
-        btFinalizar.setText("Ver Inscrições");
+        btFinalizar.setText("Ver meus horários");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -137,14 +137,30 @@ public class AlunoVisualizarTela extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(AlunoVisualizarTela.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(AlunoGerenciarAgendamentoTela.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(AlunoVisualizarTela.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(AlunoGerenciarAgendamentoTela.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(AlunoVisualizarTela.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(AlunoGerenciarAgendamentoTela.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(AlunoVisualizarTela.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(AlunoGerenciarAgendamentoTela.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
         //</editor-fold>
         //</editor-fold>
         //</editor-fold>
@@ -165,7 +181,7 @@ public class AlunoVisualizarTela extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new AlunoVisualizarTela().setVisible(true);
+                new AlunoGerenciarAgendamentoTela().setVisible(true);
             }
         });
     }

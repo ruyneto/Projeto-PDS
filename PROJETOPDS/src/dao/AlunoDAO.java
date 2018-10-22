@@ -1,4 +1,3 @@
-
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -12,34 +11,33 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Vector;
-import model.DiaDaSemana;
-import model.Horario;
-import model.Sala;
+import model.Aluno;
 
 /**
  *
  * @author sandr
  */
-public class HorarioDAO {
+public class AlunoDAO {
     private Connection connection;
     
-    public HorarioDAO(){
-        this.connection = FabricaConexao.getConnection();
+    public AlunoDAO(){
+        connection = FabricaConexao.getConnection();
     }
     
-    public Vector<Horario> consultarHora(Sala s, DiaDaSemana d){
+    public Vector<Aluno> consultaAlunos(){
         try{
-            String sql = "CALL sp_consultarhorasdisponiveis(?,?)";
+            String sql = "CALL sp_consultaalunos()";
             PreparedStatement instrucao = connection.prepareStatement(sql);
-            instrucao.setString(1, s.getNome());
-            instrucao.setString(2, d.getNome());
             ResultSet resultado = instrucao.executeQuery();
-            Vector<Horario> horarios = new Vector<>();
+
+            Vector<Aluno> alunos = new Vector<>();
             while(resultado.next()){
-                Horario hora = new Horario(resultado.getString("horhora"));
-                horarios.add(hora);
+                Aluno aluno = new Aluno();
+                aluno.setCpf(resultado.getString("usucpf"));
+                aluno.setNome(resultado.getString("usunome"));
+                alunos.add(aluno);
             }
-            return horarios;
+            return alunos;
         }catch(SQLException ex){
             System.out.println(ex);
             return null;

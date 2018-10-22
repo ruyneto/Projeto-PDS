@@ -5,23 +5,23 @@
  */
 package mvc;
 
-import control.MonitorPesquisaMonitoriaControle;
+import control.MonitorReservarHorarioControle;
 import model.Monitor;
-import view.MonitorVisualizarTela;
+import view.MonitorReservarHorarioTela;
 
 /**
  *
  * @author sandr
  */
-public class MonitorAgendarMonitoriaMVC {
+public class MonitorReservarHorarioMVC {
 
     /**
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        Monitor monitor = new Monitor("555.555.555-55", "Gustavo", null);
-        MonitorVisualizarTela tela = new MonitorVisualizarTela();
-        MonitorPesquisaMonitoriaControle controle = new MonitorPesquisaMonitoriaControle(monitor, tela);
+        Monitor monitor = new Monitor("111.111.111-11", "Sandro", null);
+        MonitorReservarHorarioTela tela = new MonitorReservarHorarioTela();
+        MonitorReservarHorarioControle controle = new MonitorReservarHorarioControle(monitor, tela);
         tela.setVisible(true);
     }
 }

@@ -24,9 +24,9 @@ public class SalaDAO {
         this.connection = FabricaConexao.getConnection();
     }
     
-    public Vector<Sala> consultarSala(String str){
+    public Vector<Sala> consultarSalasAtivas(String str){
         try{
-            String sql = "SELECT * FROM sala";
+            String sql = "CALL sp_consultasalasativas";
             PreparedStatement instrucao = connection.prepareStatement(sql);
             ResultSet resultado = instrucao.executeQuery();
             Vector<Sala> salas = new Vector<>();

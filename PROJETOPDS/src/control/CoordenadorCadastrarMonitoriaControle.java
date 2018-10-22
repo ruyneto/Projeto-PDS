@@ -16,17 +16,18 @@ import model.DiaDaSemana;
 import model.Horario;
 import model.Monitoria;
 import model.Sala;
-import view.CoordenadorMonitoriaCadastrarTela;
+import mvc.CoordenadorCadastrarMonitoriaMVC;
+import view.CoordenadorCadastrarMonitoriaTela;
 
 /**
  *
  * @author sandr
  */
-public class CoordenadorCadastroMonitoriaControle {
-    private CoordenadorMonitoriaCadastrarTela tela;
+public class CoordenadorCadastrarMonitoriaControle {
+    private CoordenadorCadastrarMonitoriaTela tela;
     private ActionListener combo;
 
-    public CoordenadorCadastroMonitoriaControle(CoordenadorMonitoriaCadastrarTela tela) {
+    public CoordenadorCadastrarMonitoriaControle(CoordenadorCadastrarMonitoriaTela tela) {
         this.tela = tela;
         carregarComboSala();
         carregarComboDia();
@@ -36,20 +37,10 @@ public class CoordenadorCadastroMonitoriaControle {
         tela.getBtnCadastrar().addActionListener(new addListenerBtSalvar());
     }
     
-    
-    //Recortar para a classe Cadastrar 
-    /*public void carregarComboMateria(){
-        MateriaDAO dao = new MateriaDAO();
-        tela.getCbMateria().removeAllItems();
-        for(Materia m: dao.consultarMateria("_")){
-            tela.getCbMateria().addItem(m);
-        }
-    }*/
-    
     public void carregarComboSala(){
         SalaDAO dao = new SalaDAO();
         tela.getCbSala().removeAllItems();
-        for(Sala s: dao.consultarSala("_")){
+        for(Sala s: dao.consultarSalasAtivas("_")){
             tela.getCbSala().addItem(s);
         }
     }
@@ -103,6 +94,7 @@ public class CoordenadorCadastroMonitoriaControle {
                 JOptionPane.showMessageDialog(null, "Err ao cadastrar Aula de monitoria");
             }
             tela.dispose();
+            CoordenadorCadastrarMonitoriaMVC.main(null);
         }
         
     }

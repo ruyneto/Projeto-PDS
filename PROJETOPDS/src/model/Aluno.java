@@ -17,6 +17,10 @@ public class Aluno {
         this.cpf = cpf;
         this.nome = nome;
     }
+    
+    public Aluno(){
+        
+    }
 
     public String getCpf() {
         return cpf;
@@ -34,5 +38,8 @@ public class Aluno {
         this.nome = nome;
     }
     
+    public String toString(){
+        return nome;
+    }
     
 }

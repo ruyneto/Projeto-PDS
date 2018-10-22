@@ -13,12 +13,12 @@ import javax.swing.JTextField;
  *
  * @author sandr
  */
-public class CoordenadorMonitoriaPesquisarTela extends javax.swing.JFrame {
+public class CoordenadorPesquisarMonitoriaTela extends javax.swing.JFrame {
 
     /**
      * Creates new form MonitoriaPesquisaTela
      */
-    public CoordenadorMonitoriaPesquisarTela() {
+    public CoordenadorPesquisarMonitoriaTela() {
         initComponents();
     }
 
@@ -36,8 +36,17 @@ public class CoordenadorMonitoriaPesquisarTela extends javax.swing.JFrame {
         cpPesquisa = new javax.swing.JTextField();
         btCadastar = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
+        btPesquisar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setResizable(false);
+        addWindowFocusListener(new java.awt.event.WindowFocusListener() {
+            public void windowGainedFocus(java.awt.event.WindowEvent evt) {
+                formWindowGainedFocus(evt);
+            }
+            public void windowLostFocus(java.awt.event.WindowEvent evt) {
+            }
+        });
 
         tabela.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -54,7 +63,9 @@ public class CoordenadorMonitoriaPesquisarTela extends javax.swing.JFrame {
 
         btCadastar.setText("Cadastar");
 
-        jLabel1.setText("Matéria:");
+        jLabel1.setText("Sala:");
+
+        btPesquisar.setText("Pesquisar");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -64,7 +75,10 @@ public class CoordenadorMonitoriaPesquisarTela extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 375, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(cpPesquisa, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(cpPesquisa, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(btPesquisar))
                     .addComponent(btCadastar)
                     .addComponent(jLabel1))
                 .addContainerGap(15, Short.MAX_VALUE))
@@ -75,16 +89,22 @@ public class CoordenadorMonitoriaPesquisarTela extends javax.swing.JFrame {
                 .addGap(29, 29, 29)
                 .addComponent(jLabel1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(cpPesquisa, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(cpPesquisa, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btPesquisar))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 141, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 45, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 42, Short.MAX_VALUE)
                 .addComponent(btCadastar)
                 .addContainerGap())
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void formWindowGainedFocus(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowGainedFocus
+        // TODO add your handling code here:
+    }//GEN-LAST:event_formWindowGainedFocus
 
     public JButton getBtCadastar() {
         return btCadastar;
@@ -96,6 +116,10 @@ public class CoordenadorMonitoriaPesquisarTela extends javax.swing.JFrame {
 
     public JTable getTabela() {
         return tabela;
+    }
+
+    public JButton getBtPesquisar() {
+        return btPesquisar;
     }
 
 
@@ -116,27 +140,30 @@ public class CoordenadorMonitoriaPesquisarTela extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(CoordenadorMonitoriaPesquisarTela.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(CoordenadorPesquisarMonitoriaTela.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(CoordenadorMonitoriaPesquisarTela.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(CoordenadorPesquisarMonitoriaTela.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(CoordenadorMonitoriaPesquisarTela.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(CoordenadorPesquisarMonitoriaTela.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(CoordenadorMonitoriaPesquisarTela.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(CoordenadorPesquisarMonitoriaTela.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
+        //</editor-fold>
         //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new CoordenadorMonitoriaPesquisarTela().setVisible(true);
+                new CoordenadorPesquisarMonitoriaTela().setVisible(true);
             }
         });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btCadastar;
+    private javax.swing.JButton btPesquisar;
     private javax.swing.JTextField cpPesquisa;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane1;

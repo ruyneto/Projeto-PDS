@@ -7,18 +7,19 @@ package view;
 
 import javax.swing.JButton;
 import javax.swing.JComboBox;
+import javax.swing.JLabel;
 import javax.swing.JTable;
 
 /**
  *
  * @author sandr
  */
-public class MonitorVisualizarTela extends javax.swing.JFrame {
+public class MonitorReservarHorarioTela extends javax.swing.JFrame {
 
     /**
      * Creates new form AgendarPesquisaTela
      */
-    public MonitorVisualizarTela() {
+    public MonitorReservarHorarioTela() {
         initComponents();
         this.setLocationRelativeTo(null);
     }
@@ -38,6 +39,10 @@ public class MonitorVisualizarTela extends javax.swing.JFrame {
     public JButton getBtVerInscricoes() {
         return btVerInscricoes;
     }
+
+    public JLabel getCpSala() {
+        return cpSala;
+    }
     
     /**
      * This method is called from within the constructor to initialize the form.
@@ -50,7 +55,7 @@ public class MonitorVisualizarTela extends javax.swing.JFrame {
 
         jScrollPane1 = new javax.swing.JScrollPane();
         tabela = new javax.swing.JTable();
-        jLabel1 = new javax.swing.JLabel();
+        cpSala = new javax.swing.JLabel();
         btInscrever = new javax.swing.JButton();
         cbSala = new javax.swing.JComboBox<>();
         btVerInscricoes = new javax.swing.JButton();
@@ -70,13 +75,13 @@ public class MonitorVisualizarTela extends javax.swing.JFrame {
         ));
         jScrollPane1.setViewportView(tabela);
 
-        jLabel1.setText("Sala");
+        cpSala.setText("Sala");
 
         btInscrever.setText("Inscrever-se");
 
         cbSala.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
-        btVerInscricoes.setText("Ver Inscrições");
+        btVerInscricoes.setText("Meus horários");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -85,7 +90,7 @@ public class MonitorVisualizarTela extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel1)
+                    .addComponent(cpSala)
                     .addComponent(cbSala, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                         .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
@@ -99,7 +104,7 @@ public class MonitorVisualizarTela extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabel1)
+                .addComponent(cpSala)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(cbSala, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(24, 24, 24)
@@ -131,14 +136,46 @@ public class MonitorVisualizarTela extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(MonitorVisualizarTela.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(MonitorReservarHorarioTela.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(MonitorVisualizarTela.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(MonitorReservarHorarioTela.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(MonitorVisualizarTela.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(MonitorReservarHorarioTela.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(MonitorVisualizarTela.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(MonitorReservarHorarioTela.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
         //</editor-fold>
         //</editor-fold>
         //</editor-fold>
@@ -175,7 +212,7 @@ public class MonitorVisualizarTela extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new MonitorVisualizarTela().setVisible(true);
+                new MonitorReservarHorarioTela().setVisible(true);
             }
         });
     }
@@ -184,7 +221,7 @@ public class MonitorVisualizarTela extends javax.swing.JFrame {
     private javax.swing.JButton btInscrever;
     private javax.swing.JButton btVerInscricoes;
     private javax.swing.JComboBox<Object> cbSala;
-    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel cpSala;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable tabela;
     // End of variables declaration//GEN-END:variables
