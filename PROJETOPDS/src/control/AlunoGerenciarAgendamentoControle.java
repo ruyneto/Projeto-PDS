@@ -58,7 +58,7 @@ public class AlunoGerenciarAgendamentoControle {
             tela.getTabela().setModel(new MonitoriaDisponivelTableModel(monitorias));
         }
         else{
-            if(tela.getBtInscrever().isVisible()){
+            if(tela.getBtInscrever().getText().equals("Inscrever-se")){
                 monitorias = dao.consultarMonitoriasDisponiveis(str, aluno);
                 tela.getTabela().setModel(new MonitoriaDisponivelTableModel(monitorias));
             }
@@ -77,6 +77,7 @@ public class AlunoGerenciarAgendamentoControle {
         @Override
         public void actionPerformed(ActionEvent ae) {
             tela.getBtInscrever().setVisible(false);
+            tela.getBtInscrever().setText("");
             tela.getCbMateria().setEnabled(false);
             tela.getTabela().setModel(new InscricaoTableModel(monitorias));
             tela.getBtFinalizar().removeActionListener(avi);
@@ -149,6 +150,7 @@ public class AlunoGerenciarAgendamentoControle {
             Materia m = (Materia)tela.getCbMateria().getSelectedItem();
             tela.getBtFinalizar().setText("Ver meus horários");
             tela.getBtInscrever().setVisible(true);
+            tela.getBtInscrever().setText("Inscrever-se");
             tela.getCbMateria().setEnabled(true);
             String str = tela.getCbMateria().getSelectedItem().toString();
             MonitoriaDAO dao = new MonitoriaDAO();
