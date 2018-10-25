@@ -12,6 +12,21 @@ package model;
 public class Materia {
     private int id;
     private String nome;
+    private int ativa;
+
+    public Materia(int id, String nome, int ativa) {
+        this.id = id;
+        this.nome = nome;
+        this.ativa = ativa;
+    }
+
+    public int getAtiva() {
+        return ativa;
+    }
+
+    public void setAtiva(int ativa) {
+        this.ativa = ativa;
+    }
     
     public Materia(int id, String nome){
         this.id = id;

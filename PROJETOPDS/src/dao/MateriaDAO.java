@@ -31,7 +31,7 @@ public class MateriaDAO {
             ResultSet resultado = instrucao.executeQuery();
             Vector<Materia> materias = new Vector<>();
             while(resultado.next()){
-                Materia materia = new Materia(resultado.getInt("matid"), resultado.getString("matnome"));
+                Materia materia = new Materia(resultado.getInt("matid"), resultado.getString("matnome"),resultado.getInt("matativa"));
                 materias.add(materia);
             }
             return materias;
@@ -66,7 +66,7 @@ public class MateriaDAO {
            ResultSet resultado = ps.executeQuery();
             Vector<Materia> materias = new Vector<>();
             while(resultado.next()){
-                Materia materia = new Materia(resultado.getInt("matid"), resultado.getString("matnome"));
+                Materia materia = new Materia(resultado.getInt("matid"), resultado.getString("matnome"), resultado.getInt("matativa"));
                 materias.add(materia);
             }
             return materias; 
@@ -78,10 +78,11 @@ public class MateriaDAO {
     }
     
     public boolean inserirMateria(Materia materia){
-        String sql = "INSERT INTO materia (matnome) VALUES (?)";        
+        String sql = "INSERT INTO materia (matnome,matativa) VALUES (?,?)";        
         try {
             PreparedStatement ps = connection.prepareStatement(sql);
             ps.setString(1, materia.getNome());
+            ps.setInt(2, materia.getAtiva());
             ps.execute();
             
             connection.close();
@@ -93,11 +94,12 @@ public class MateriaDAO {
     } 
     
     public boolean alterarMateria(Materia materia){
-         String sql = "UPDATE materia SET matnome = ? WHERE matid = ?";        
+         String sql = "UPDATE materia SET matnome = ?, matativa = ? WHERE matid = ?";        
         try {
             PreparedStatement ps = connection.prepareStatement(sql);
             ps.setString(1, materia.getNome());
-            ps.setInt(2, materia.getId());
+            ps.setInt(2,materia.getAtiva());
+            ps.setInt(3, materia.getId());
             ps.execute();
             
             connection.close();

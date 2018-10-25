@@ -87,12 +87,16 @@ public class CoordenadorVisualizarMateriasControle {
                      Vector linha = new Vector();
 
                      linha.add(c.getNome());
+                     if(c.getAtiva()==1)
+                        linha.add("SIM");
+                     else linha.add("NÃO");
                      
                      conjuntoLinhas.add(linha);
                 }
                     
             Vector conjuntoColunas = new Vector();
             conjuntoColunas.add("Nome"); 
+            conjuntoColunas.add("Ativa?"); 
             
             DefaultTableModel modeloTabela = 
                     new DefaultTableModel(conjuntoLinhas, conjuntoColunas);

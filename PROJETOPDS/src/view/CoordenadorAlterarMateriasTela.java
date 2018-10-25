@@ -7,6 +7,7 @@ package view;
 
 import javax.swing.JButton;
 import javax.swing.JTextField;
+import javax.swing.JToggleButton;
 
 /**
  *
@@ -23,11 +24,15 @@ public class CoordenadorAlterarMateriasTela extends javax.swing.JFrame {
     
     
     public JTextField getCpNome(){
-    return cpNome;
+        return cpNome;
     }
     
     public JButton getBtSalvar(){
-    return btSalvar;
+        return btSalvar;
+    }
+    
+    public JToggleButton getBtAtiva(){
+        return BtAtiva;
     }
     /**
      * This method is called from within the constructor to initialize the form.
@@ -42,9 +47,11 @@ public class CoordenadorAlterarMateriasTela extends javax.swing.JFrame {
         cpNome = new javax.swing.JTextField();
         btSalvar = new javax.swing.JButton();
         btCancelar = new javax.swing.JButton();
+        BtAtiva = new javax.swing.JToggleButton();
+        jLabel2 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setTitle("Cadastrar Monitoria");
+        setTitle("Alterar Monitoria");
 
         jLabel1.setText("Nome:");
 
@@ -57,6 +64,11 @@ public class CoordenadorAlterarMateriasTela extends javax.swing.JFrame {
             }
         });
 
+        BtAtiva.setSelected(true);
+        BtAtiva.setText("Sim");
+
+        jLabel2.setText("Ativa:");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -66,12 +78,15 @@ public class CoordenadorAlterarMateriasTela extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(cpNome)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel1)
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addGroup(layout.createSequentialGroup()
                         .addComponent(btSalvar)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 173, Short.MAX_VALUE)
-                        .addComponent(btCancelar)))
+                        .addComponent(btCancelar))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(BtAtiva, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel1)
+                            .addComponent(jLabel2))
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -81,11 +96,15 @@ public class CoordenadorAlterarMateriasTela extends javax.swing.JFrame {
                 .addComponent(jLabel1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(cpNome, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(35, 35, 35)
+                .addGap(18, 18, 18)
+                .addComponent(jLabel2)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(BtAtiva, javax.swing.GroupLayout.DEFAULT_SIZE, 25, Short.MAX_VALUE)
+                .addGap(29, 29, 29)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btSalvar)
                     .addComponent(btCancelar))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
         );
 
         pack();
@@ -133,9 +152,11 @@ public class CoordenadorAlterarMateriasTela extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JToggleButton BtAtiva;
     private javax.swing.JButton btCancelar;
     private javax.swing.JButton btSalvar;
     private javax.swing.JTextField cpNome;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
     // End of variables declaration//GEN-END:variables
 }

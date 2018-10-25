@@ -26,18 +26,43 @@ public class CoordenadorAlterarMateriasControle {
         this.tela = tela;
         this.materia = materia;
         this.tela.getCpNome().setText(materia.getNome());
-                
+        
+
+        if(materia.getAtiva()==1) {
+            this.tela.getBtAtiva().setSelected(true);
+            this.tela.getBtAtiva().setText("SIM");
+
+        }
+        else {
+            this.tela.getBtAtiva().setSelected(false);
+            this.tela.getBtAtiva().setText("NÃO");
+        
+        }
         this.tela.getBtSalvar().addActionListener(new listenerBtSalvar());
+        this.tela.getBtAtiva().addActionListener(new listenerBtAtiva());
+        
     }
     
+    class listenerBtAtiva implements ActionListener{
+
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            if(tela.getBtAtiva().isSelected()) tela.getBtAtiva().setText("SIM");
+            else tela.getBtAtiva().setText("NÃO");
+
+            
+        }
     
+    }
     
     class listenerBtSalvar implements ActionListener{
 
         @Override
         public void actionPerformed(ActionEvent e) {
-          
           materia.setNome(tela.getCpNome().getText());
+          if(tela.getBtAtiva().isSelected()) materia.setAtiva(1);
+          else materia.setAtiva(0);
+          
           MateriaDAO dao = new MateriaDAO();
             try {
                 dao.alterarMateria(materia);
