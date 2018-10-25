@@ -19,7 +19,7 @@ import model.Monitoria;
 import view.AgendamentoTableModel;
 import view.InscricaoTableModel;
 import view.AlunoGerenciarAgendamentoTela;
-import view.MonitoriaTableModel;
+import view.MonitoriaDisponivelTableModel;
 
 /**
  *
@@ -55,16 +55,16 @@ public class AlunoGerenciarAgendamentoControle {
         MonitoriaDAO dao = new MonitoriaDAO();
         if(tela.getTabela().getModel() instanceof InscricaoTableModel){
             monitorias = dao.consultarMonitoriasDisponiveis(str, aluno);
-            tela.getTabela().setModel(new InscricaoTableModel(monitorias));
+            tela.getTabela().setModel(new MonitoriaDisponivelTableModel(monitorias));
         }
         else{
-            if(tela.getBtInscrever().isVisible()){
+            if(tela.getBtInscrever().getText().equals("Inscrever-se")){
                 monitorias = dao.consultarMonitoriasDisponiveis(str, aluno);
-                tela.getTabela().setModel(new AgendamentoTableModel(monitorias));
+                tela.getTabela().setModel(new MonitoriaDisponivelTableModel(monitorias));
             }
             else{
                 monitorias = dao.consultarMonitoriasInscrito(str, aluno);
-                tela.getTabela().setModel(new AgendamentoTableModel(monitorias));
+                tela.getTabela().setModel(new InscricaoTableModel(monitorias));
             }
         }
         if(monitorias.isEmpty())
@@ -77,6 +77,7 @@ public class AlunoGerenciarAgendamentoControle {
         @Override
         public void actionPerformed(ActionEvent ae) {
             tela.getBtInscrever().setVisible(false);
+            tela.getBtInscrever().setText("");
             tela.getCbMateria().setEnabled(false);
             tela.getTabela().setModel(new InscricaoTableModel(monitorias));
             tela.getBtFinalizar().removeActionListener(avi);
@@ -112,13 +113,14 @@ public class AlunoGerenciarAgendamentoControle {
                 }
                 else{
                     int num = new MonitoriaDAO().verificaConflito(monitorias.get(i), aluno);
-                    m=new MonitoriaDAO().consultarMonitoria(num);
+                    MonitoriaDAO n = new MonitoriaDAO();
+                    m = n.consultarMonitoria(num);
                     System.out.println(num);
                     tela.getTabela().getModel().setValueAt(false, i, 4);
                     JOptionPane.showMessageDialog(null, "Você não pode se inscrever"+
                                                          "\nnessa matéria. Há um conflito"+
                                                          "\nde horário com a monitoria"+
-                                                         "\n" + m.getMateria().getNome()+
+                                                         "\n" + m.getMonitor().getMateria()+
                                                          "-"+m.getDia().getNome()+
                                                          "-"+m.getHora().getHoraInicio());
                 }
@@ -134,7 +136,7 @@ public class AlunoGerenciarAgendamentoControle {
             Materia m = (Materia)tela.getCbMateria().getSelectedItem();
             tela.getBtFinalizar().setText("Voltar");
             tela.getBtInscrever().setVisible(false);
-            tela.getTabela().setModel(new MonitoriaTableModel(dao.consultarMonitoriasInscrito(m.getNome(),aluno)));
+            tela.getTabela().setModel(new MonitoriaDisponivelTableModel(dao.consultarMonitoriasInscrito(m.getNome(),aluno)));
             tela.getBtFinalizar().removeActionListener(this);
             tela.getBtFinalizar().addActionListener(av);
         }
@@ -148,11 +150,12 @@ public class AlunoGerenciarAgendamentoControle {
             Materia m = (Materia)tela.getCbMateria().getSelectedItem();
             tela.getBtFinalizar().setText("Ver meus horários");
             tela.getBtInscrever().setVisible(true);
+            tela.getBtInscrever().setText("Inscrever-se");
             tela.getCbMateria().setEnabled(true);
             String str = tela.getCbMateria().getSelectedItem().toString();
             MonitoriaDAO dao = new MonitoriaDAO();
             monitorias = dao.consultarMonitoriasDisponiveis(str, aluno);
-            tela.getTabela().setModel(new AgendamentoTableModel(monitorias));
+            tela.getTabela().setModel(new MonitoriaDisponivelTableModel(monitorias));
             tela.getBtFinalizar().removeActionListener(this);
             tela.getBtFinalizar().addActionListener(avi);
         }

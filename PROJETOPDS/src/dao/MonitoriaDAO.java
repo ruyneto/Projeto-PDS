@@ -74,12 +74,16 @@ public class MonitoriaDAO {
             PreparedStatement instrucao = connection.prepareStatement(sql);
             instrucao.setInt(1, miaid);
             ResultSet resultado = instrucao.executeQuery();
-            Monitoria monitoria = new Monitoria();
+            Monitoria monitoria=null;
             while(resultado.next()){
                 Sala sala = new Sala(resultado.getInt("salid"), resultado.getString("salnome"));
+                System.out.println(sala.toString());
                 Horario hora = new Horario(resultado.getString("horhora"));
+                System.out.println(hora.toString());
                 Materia materia = new Materia(resultado.getInt("matid"), resultado.getString("matnome"));
+                System.out.println(materia.toString());
                 DiaDaSemana dia = new DiaDaSemana(resultado.getInt("diaid"), resultado.getString("dianome"));
+                System.out.println(dia.toString());
                 Monitor monitor = new Monitor(resultado.getString("moncpf"), resultado.getString("monnome"), materia);
                 monitoria = new Monitoria(resultado.getInt("miaid"), resultado.getInt("miavagas"),
                                                     true, materia, monitor, dia, hora, sala);
@@ -91,7 +95,7 @@ public class MonitoriaDAO {
     }
      
     public boolean inserirMonitoria(Monitoria monitoria){
-        String sql = "INSERT INTO monitoria (miasalid, miadiaid, miahorhora) VALUES (?, ?, ?)";        
+        String sql = "CALL sp_inserirmonitoria(?, ?, ?)";        
         try {
             PreparedStatement ps = connection.prepareStatement(sql);
             ps.setInt(1, monitoria.getSala().getId());
