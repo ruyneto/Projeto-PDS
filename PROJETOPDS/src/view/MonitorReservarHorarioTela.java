@@ -32,12 +32,12 @@ public class MonitorReservarHorarioTela extends javax.swing.JFrame {
         return tabela;
     }
 
-    public JButton getBtInscrever() {
-        return btInscrever;
+    public JButton getBtEsquerda() {
+        return btEsquerda;
     }   
 
-    public JButton getBtVerInscricoes() {
-        return btVerInscricoes;
+    public JButton getBtDireita() {
+        return btDireita;
     }
 
     public JLabel getCpSala() {
@@ -56,9 +56,9 @@ public class MonitorReservarHorarioTela extends javax.swing.JFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         tabela = new javax.swing.JTable();
         cpSala = new javax.swing.JLabel();
-        btInscrever = new javax.swing.JButton();
+        btEsquerda = new javax.swing.JButton();
         cbSala = new javax.swing.JComboBox<>();
-        btVerInscricoes = new javax.swing.JButton();
+        btDireita = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -77,11 +77,11 @@ public class MonitorReservarHorarioTela extends javax.swing.JFrame {
 
         cpSala.setText("Sala");
 
-        btInscrever.setText("Inscrever-se");
+        btEsquerda.setText("Reservar horário");
 
         cbSala.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
-        btVerInscricoes.setText("Meus horários");
+        btDireita.setText("Meus horários");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -94,9 +94,9 @@ public class MonitorReservarHorarioTela extends javax.swing.JFrame {
                     .addComponent(cbSala, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                         .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                            .addComponent(btInscrever)
+                            .addComponent(btEsquerda)
                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(btVerInscricoes))
+                            .addComponent(btDireita))
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 375, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(15, Short.MAX_VALUE))
         );
@@ -111,8 +111,8 @@ public class MonitorReservarHorarioTela extends javax.swing.JFrame {
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 142, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 49, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btInscrever)
-                    .addComponent(btVerInscricoes))
+                    .addComponent(btEsquerda)
+                    .addComponent(btDireita))
                 .addContainerGap())
         );
 
@@ -218,8 +218,8 @@ public class MonitorReservarHorarioTela extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btInscrever;
-    private javax.swing.JButton btVerInscricoes;
+    private javax.swing.JButton btDireita;
+    private javax.swing.JButton btEsquerda;
     private javax.swing.JComboBox<Object> cbSala;
     private javax.swing.JLabel cpSala;
     private javax.swing.JScrollPane jScrollPane1;

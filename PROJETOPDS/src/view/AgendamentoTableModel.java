@@ -31,24 +31,34 @@ public class AgendamentoTableModel extends AbstractTableModel{
         Monitoria m = monitorias.get(i);
         
         switch(i1){
-            case 0: return (m.getMonitor().getCpf().equals(""))? null: m.getMonitor().toString();
-            case 1: return m.getDia().toString();
-            case 2: return m.getSala().toString();
-            case 3: return m.getHora().toString();
-            case 4: return m.getVagas();
+            case 0: return m.getDia().toString();
+            case 1: return m.getSala().toString();
+            case 2: return m.getHora().toString();
+            case 3: return m.getVagas();
+            case 4: return m.isInscrito();
         }
         return null;
     }
     
     public String getColumnName(int i){
         switch(i){
-            case 0: return "Monitor";
-            case 1: return "Dia";
-            case 2: return "Sala";
-            case 3: return "Horário";
-            case 4: return "Vagas";
+            case 0: return "Dia";
+            case 1: return "Sala";
+            case 2: return "Horário";
+            case 3: return "Vagas";
+            case 4: return "Reservar?";
         }
         return null;
+    }
+    
+    public Class getColumnClass(int i){
+        if(i==4)return Boolean.class;
+        return String.class;
+    }
+    
+    public boolean isCellEditable(int i, int i1){
+        if(i1==4)return true;
+        return false;
     }
 
     public AgendamentoTableModel(List<Monitoria> monitorias) {

@@ -14,10 +14,9 @@ import java.util.Vector;
 import javax.swing.JOptionPane;
 import model.Monitor;
 import model.Monitoria;
-import view.InscricaoTableModel;
+import view.AgendamentoTableModel;
 import view.MonitorReservarHorarioTela;
-import view.MonitoriaTableModel;
-import view.ReservarHorarioTableModel;
+import view.MonitoriasLivresTableModel;
 
 /**
  *
@@ -29,10 +28,10 @@ public class MonitorReservarHorarioControle {
     private Vector<Monitoria> monitorias;
     private final AcaoBtAlterar aalt = new AcaoBtAlterar();
     private final AcaoBtVoltarAlterar avolalt = new AcaoBtVoltarAlterar();
-    private final AcaoBtVoltarVerInscricoes avolver = new AcaoBtVoltarVerInscricoes();
-    private final AcaoBtVoltarInscrever avolins = new AcaoBtVoltarInscrever();
-    private final AcaoBtVerInscricoes averins = new AcaoBtVerInscricoes();
-    private final AcaoBtInscricao ains = new AcaoBtInscricao();
+    private final AcaoBtVoltarVerReservas avolver = new AcaoBtVoltarVerReservas();
+    private final AcaoBtVoltarReservar avolins = new AcaoBtVoltarReservar();
+    private final AcaoBtVerReservas averins = new AcaoBtVerReservas();
+    private final AcaoBtReservar ains = new AcaoBtReservar();
     private final AcaoBtSalvar asal = new AcaoBtSalvar();
     private final AcaoBtSalvarAlterar asalalt = new AcaoBtSalvarAlterar();
 
@@ -41,10 +40,10 @@ public class MonitorReservarHorarioControle {
         this.monitor = monitor;
         preencherComboSala();
         listar(tela.getCbSala().getSelectedItem().toString());
-        tela.getBtInscrever().addActionListener(ains);
+        tela.getBtEsquerda().addActionListener(ains);
         tela.getCbSala().addActionListener(new ComboMateria());
         tela.getTabela().addMouseListener(new Acao());
-        tela.getBtVerInscricoes().addActionListener(averins);
+        tela.getBtDireita().addActionListener(averins);
     }
     
     public void preencherComboSala(){
@@ -57,14 +56,14 @@ public class MonitorReservarHorarioControle {
     
     public void listar(String str){
         MonitoriaDAO dao = new MonitoriaDAO();
-        if(tela.getTabela().getModel() instanceof MonitoriaTableModel
-                && tela.getBtInscrever().getText().equals("Alterar")){
+        if(tela.getTabela().getModel() instanceof MonitoriasLivresTableModel
+                && tela.getBtEsquerda().getText().equals("Alterar")){
             monitorias = dao.consultarMonitoriasMonitor(str, monitor);
-            tela.getTabela().setModel(new ReservarHorarioTableModel(monitorias));
+            tela.getTabela().setModel(new MonitoriasLivresTableModel(monitorias));
         }
         else{
             monitorias = dao.consultarMonitoriasLivre(str);
-            tela.getTabela().setModel(new ReservarHorarioTableModel(monitorias));
+            tela.getTabela().setModel(new MonitoriasLivresTableModel(monitorias));
         }
         if(monitorias.isEmpty())
             JOptionPane.showMessageDialog(null, "Não há nenhuma monitoria" +
@@ -87,9 +86,8 @@ public class MonitorReservarHorarioControle {
             Monitoria m;
             
             int num = new MonitoriaDAO().verificaConflitoMonitor(monitorias.get(i), monitor);
-            System.out.println(num);
             if(num!=0 &&
-                tela.getBtInscrever().getActionListeners()[0] instanceof AcaoBtSalvar){
+                tela.getBtEsquerda().getActionListeners()[0] instanceof AcaoBtSalvar){
                 m=new MonitoriaDAO().consultarMonitoria(num);
                 tela.getTabela().getModel().setValueAt(false, i, 5);
                 JOptionPane.showMessageDialog(null, "Você não pode reservar este horário."+
@@ -99,85 +97,91 @@ public class MonitorReservarHorarioControle {
                                                      "-"+m.getDia().getNome()+
                                                      "-"+m.getHora().getHoraInicio());
             }
+            else{
+                if(monitorias.get(i).getVagas()<12){
+                    tela.getTabela().getModel().setValueAt(false, i, 5);
+                    JOptionPane.showMessageDialog(null, "Você não pode cancelar a reserva"+
+                                                        "\ndeste horário pois há alunos"+
+                                                        "\ninscritos nela. Por favor,"+
+                                                        "converse com o Coordenador");
+                }
+            }
         }
     }
     
-    class AcaoBtVerInscricoes implements ActionListener{
+    class AcaoBtVerReservas implements ActionListener{
 
         @Override
         public void actionPerformed(ActionEvent ae) {
             System.out.println("VER");
-            tela.getCpSala().setVisible(false);
-            tela.getCbSala().setVisible(false);
-            tela.getBtVerInscricoes().setText("Voltar");
-            tela.getBtVerInscricoes().removeActionListener(averins);
-            tela.getBtVerInscricoes().addActionListener(avolver);
-            tela.getBtInscrever().setText("Alterar");
-            tela.getBtInscrever().removeActionListener(ains);
-            tela.getBtInscrever().addActionListener(aalt);
+            tela.getBtDireita().setText("Voltar");
+            tela.getBtDireita().removeActionListener(averins);
+            tela.getBtDireita().addActionListener(avolver);
+            tela.getBtEsquerda().setText("Alterar");
+            tela.getBtEsquerda().removeActionListener(ains);
+            tela.getBtEsquerda().addActionListener(aalt);
             String str = tela.getCbSala().getSelectedItem().toString();
             MonitoriaDAO dao = new MonitoriaDAO();
             monitorias = dao.consultarMonitoriasMonitor(str, monitor);
-            tela.getTabela().setModel(new MonitoriaTableModel(monitorias));
+            tela.getTabela().setModel(new MonitoriasLivresTableModel(monitorias));
         }
         
     }
     
-    class AcaoBtVoltarVerInscricoes implements ActionListener{
+    class AcaoBtVoltarVerReservas implements ActionListener{
 
         @Override
         public void actionPerformed(ActionEvent ae) {
             System.out.println("VOLTAR DO VER");
-            tela.getCbSala().setVisible(true);
-            MonitoriaDAO dao = new MonitoriaDAO();
-            String str = tela.getCbSala().getSelectedItem().toString();
-            monitorias=dao.consultarMonitoriasLivre(str);
-            tela.getTabela().setModel(new ReservarHorarioTableModel(monitorias));
-            tela.getBtInscrever().setText("Inscrever-se");
-            tela.getBtInscrever().removeActionListener(aalt);
-            tela.getBtInscrever().addActionListener(ains);
-            tela.getBtVerInscricoes().setText("Ver Inscrições");
-            tela.getBtVerInscricoes().removeActionListener(avolver);
-            tela.getBtVerInscricoes().addActionListener(averins);
-        }
-        
-    }
-    
-    class AcaoBtVoltarInscrever implements ActionListener{
-
-        @Override
-        public void actionPerformed(ActionEvent ae) {
-            System.out.println("VOLTAR DO INSCREVER");
             tela.getCpSala().setVisible(true);
             tela.getCbSala().setVisible(true);
             MonitoriaDAO dao = new MonitoriaDAO();
             String str = tela.getCbSala().getSelectedItem().toString();
             monitorias=dao.consultarMonitoriasLivre(str);
-            tela.getTabela().setModel(new ReservarHorarioTableModel(monitorias));            
-            tela.getBtInscrever().setText("Inscrever-se");
-            tela.getBtInscrever().removeActionListener(asal);
-            tela.getBtInscrever().addActionListener(ains);
-            tela.getBtVerInscricoes().setText("Ver Inscrições");
-            tela.getBtVerInscricoes().removeActionListener(avolins);
-            tela.getBtVerInscricoes().addActionListener(averins);
+            tela.getTabela().setModel(new MonitoriasLivresTableModel(monitorias));
+            tela.getBtEsquerda().setText("Reservar horário");
+            tela.getBtEsquerda().removeActionListener(aalt);
+            tela.getBtEsquerda().addActionListener(ains);
+            tela.getBtDireita().setText("Meus horários");
+            tela.getBtDireita().removeActionListener(avolver);
+            tela.getBtDireita().addActionListener(averins);
         }
         
     }
     
-    class AcaoBtInscricao implements ActionListener{
+    class AcaoBtVoltarReservar implements ActionListener{
+
+        @Override
+        public void actionPerformed(ActionEvent ae) {
+            System.out.println("VOLTAR DO INSCREVER");
+            tela.getCbSala().setEnabled(true);
+            MonitoriaDAO dao = new MonitoriaDAO();
+            String str = tela.getCbSala().getSelectedItem().toString();
+            monitorias=dao.consultarMonitoriasLivre(str);
+            tela.getTabela().setModel(new MonitoriasLivresTableModel(monitorias));            
+            tela.getBtEsquerda().setText("Reservar horário");
+            tela.getBtEsquerda().removeActionListener(asal);
+            tela.getBtEsquerda().addActionListener(ains);
+            tela.getBtDireita().setText("Meus horários");
+            tela.getBtDireita().removeActionListener(avolins);
+            tela.getBtDireita().addActionListener(averins);
+        }
+        
+    }
+    
+    class AcaoBtReservar implements ActionListener{
 
         @Override
         public void actionPerformed(ActionEvent ae) {
             System.out.println("INSCREVER");
-            tela.getCpSala().setVisible(false);
-            tela.getCbSala().setVisible(false);
-            tela.getBtInscrever().setText("Salvar");
-            tela.getTabela().setModel(new InscricaoTableModel(monitorias));            
-            tela.getBtVerInscricoes().removeActionListener(averins);
-            tela.getBtVerInscricoes().setText("Voltar");
-            tela.getBtVerInscricoes().addActionListener(avolins);
-            tela.getBtInscrever().removeActionListener(ains);
-            tela.getBtInscrever().addActionListener(asal);
+            tela.getCbSala().setEnabled(false);
+            tela.getBtEsquerda().setText("Salvar");
+            tela.getTabela().setModel(new AgendamentoTableModel(monitorias));            
+            tela.getBtDireita().removeActionListener(averins);
+            tela.getBtDireita().setText("Voltar");
+            tela.getBtDireita().addActionListener(avolins);
+            tela.getBtEsquerda().removeActionListener(ains);
+            tela.getBtEsquerda().addActionListener(asal);
         }
     }
     
@@ -186,18 +190,18 @@ public class MonitorReservarHorarioControle {
         @Override
         public void actionPerformed(ActionEvent ae) {
             System.out.println("SALVAR");
-            tela.getCbSala().setVisible(true);
+            tela.getCbSala().setEnabled(true);
             MonitoriaDAO dao = new MonitoriaDAO();
             dao.AcaoSalvarDoMonitor(monitorias, monitor);
             String str = tela.getCbSala().getSelectedItem().toString();
             monitorias=dao.consultarMonitoriasLivre(str);
-            tela.getTabela().setModel(new ReservarHorarioTableModel(monitorias));
-            tela.getBtVerInscricoes().setText("Ver Inscrições");
-            tela.getBtVerInscricoes().removeActionListener(avolins);
-            tela.getBtVerInscricoes().addActionListener(averins);
-            tela.getBtInscrever().setText("Inscrever-se");
-            tela.getBtInscrever().removeActionListener(asal);
-            tela.getBtInscrever().addActionListener(ains);           
+            tela.getTabela().setModel(new MonitoriasLivresTableModel(monitorias));
+            tela.getBtDireita().setText("Meus horários");
+            tela.getBtDireita().removeActionListener(avolins);
+            tela.getBtDireita().addActionListener(averins);
+            tela.getBtEsquerda().setText("Reservar horário");
+            tela.getBtEsquerda().removeActionListener(asal);
+            tela.getBtEsquerda().addActionListener(ains);           
             JOptionPane.showMessageDialog(null,"Salvo com sucesso");
         }
         
@@ -208,18 +212,18 @@ public class MonitorReservarHorarioControle {
         @Override
         public void actionPerformed(ActionEvent ae) {
             System.out.println("SALVAR DO ALTERAR");
-            tela.getCbSala().setVisible(true);
+            tela.getCbSala().setEnabled(true);
             MonitoriaDAO dao = new MonitoriaDAO();
             dao.AcaoSalvarDoMonitor(monitorias, monitor);
             String str = tela.getCbSala().getSelectedItem().toString();
-            monitorias=dao.consultarMonitoriasLivre(str);
-            tela.getTabela().setModel(new ReservarHorarioTableModel(monitorias));
-            tela.getBtVerInscricoes().setText("Ver Inscrições");
-            tela.getBtVerInscricoes().removeActionListener(avolalt);
-            tela.getBtVerInscricoes().addActionListener(averins);
-            tela.getBtInscrever().setText("Inscrever-se");
-            tela.getBtInscrever().removeActionListener(asalalt);
-            tela.getBtInscrever().addActionListener(ains);
+            monitorias=dao.consultarMonitoriasMonitor(str, monitor);
+            tela.getTabela().setModel(new MonitoriasLivresTableModel(monitorias));
+            tela.getBtDireita().setText("Voltar");
+            tela.getBtDireita().removeActionListener(avolalt);
+            tela.getBtDireita().addActionListener(avolver);
+            tela.getBtEsquerda().setText("Alterar");
+            tela.getBtEsquerda().removeActionListener(asalalt);
+            tela.getBtEsquerda().addActionListener(aalt);
         }
         
     }
@@ -229,14 +233,14 @@ public class MonitorReservarHorarioControle {
         @Override
         public void actionPerformed(ActionEvent ae) {
             System.out.println("ALTERAR");
-            tela.getCbSala().setVisible(false);
-            tela.getBtInscrever().setText("Salvar");
-            tela.getBtInscrever().removeActionListener(aalt);
-            tela.getBtInscrever().addActionListener(asalalt);
-            tela.getTabela().setModel(new InscricaoTableModel(monitorias));
-            tela.getBtVerInscricoes().removeActionListener(avolver);
-            tela.getBtVerInscricoes().setText("Voltar");
-            tela.getBtVerInscricoes().addActionListener(avolalt);
+            tela.getCbSala().setEnabled(false);
+            tela.getBtEsquerda().setText("Salvar");
+            tela.getBtEsquerda().removeActionListener(aalt);
+            tela.getBtEsquerda().addActionListener(asalalt);
+            tela.getTabela().setModel(new AgendamentoTableModel(monitorias));
+            tela.getBtDireita().removeActionListener(avolver);
+            tela.getBtDireita().setText("Voltar");
+            tela.getBtDireita().addActionListener(avolalt);
         }
     }
     
@@ -245,12 +249,13 @@ public class MonitorReservarHorarioControle {
         @Override
         public void actionPerformed(ActionEvent ae) {
             System.out.println("VOLTAR DO ALTERAR");
-            tela.getBtInscrever().setText("Alterar");
-            tela.getBtInscrever().removeActionListener(asalalt);
-            tela.getBtInscrever().addActionListener(aalt);
-            tela.getTabela().setModel(new MonitoriaTableModel(monitorias));
-            tela.getBtVerInscricoes().removeActionListener(avolalt);
-            tela.getBtVerInscricoes().addActionListener(avolver);
+            tela.getCbSala().setEnabled(true);
+            tela.getBtEsquerda().setText("Alterar");
+            tela.getBtEsquerda().removeActionListener(asalalt);
+            tela.getBtEsquerda().addActionListener(aalt);
+            tela.getTabela().setModel(new MonitoriasLivresTableModel(monitorias));
+            tela.getBtDireita().removeActionListener(avolalt);
+            tela.getBtDireita().addActionListener(avolver);
         }
     }
 }

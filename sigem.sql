@@ -73,19 +73,21 @@ miasalid int not null,
 miausucpf varchar(15) not null default '', 
 miadiaid int not null,
 miahorhora varchar(15) not null,
+miadatainicio date not null,
+miadatafim date,
 miaativa boolean default true,
 foreign key (miasalid) references sala(salid),
 foreign key (miausucpf) references usuario(usucpf),
 foreign key (miadiaid) references diadasemana(diaid),
 foreign key (miahorhora) references horario(horhora)
 );
-insert into monitoria(miasalid,miadiaid,miausucpf,miahorhora) values
-(1, 1, '', '11:00-12:00'),
-(1, 1, '', '12:00-13:00'),
-(1, 2, '', '11:00-12:00'),
-(2, 2, '555.555.555-55', '11:00-12:00'),
-(2, 2, '555.555.555-55', '12:00-13:00'),
-(1, 2, '444.444.444-44', '12:00-13:00');
+insert into monitoria(miasalid,miadiaid,miausucpf,miahorhora, miadatainicio) values
+(1, 1, '', '11:00-12:00', curdate()),
+(1, 1, '', '12:00-13:00', curdate()),
+(1, 2, '', '11:00-12:00', curdate()),
+(2, 2, '555.555.555-55', '11:00-12:00', curdate()),
+(2, 2, '555.555.555-55', '12:00-13:00', curdate()),
+(1, 2, '444.444.444-44', '12:00-13:00', curdate());
 
 
 create table inscricao(
@@ -97,8 +99,6 @@ foreign key (insmiaid) references monitoria(miaid)
 );
 insert into inscricao values
 ('111.111.111-11', 5);
-
-select * from inscricao;
 
 
 -- Procedure que retorna o ID da aula da monitoria que está gerando conflito de horário durante a inscrição
@@ -121,6 +121,9 @@ end#
 delimiter ;
 select f_verificaconflito(2, '11:00-12:00', '111.111.111-11');
 
+-- Procedure que retorna o ID da aula da monitoria que está gerando conflito de horário durante a reserva
+-- de horário do monitor
+-- MonitoriaDAO >>>> verificaConflitoMonitor()
 delimiter #
 create function f_verificaconflitomonitor(p_miadiaid int, p_miahorhora varchar(15), p_moncpf varchar(15))returns int
 begin
@@ -138,6 +141,16 @@ end#
 delimiter ;
 select f_verificaconflitomonitor(2, '11:00-12:00', '555.555.555-55');
 
+delimiter #
+create procedure sp_inserirmonitoria(p_miasalid int, p_miadiaid int, p_miahorhora varchar(20))
+begin
+	INSERT INTO monitoria(miasalid, miadiaid, miausucpf, miahorhora, miadatainicio) values
+    (p_miasalid, p_miadiaid, '', p_miahorhora, curdate());
+end#
+delimiter ;
+
+
+-- função que retorna quantas monitorias um determinado monitor tem
 delimiter #
 create function f_contmonitorias(moncpf varchar(15)) returns int
 begin
@@ -163,6 +176,7 @@ begin
 	order by diaid asc, matnome asc, horhora asc;
 end#
 delimiter ;
+call sp_consultamonitoria(5);
 
 
 -- Procedure para consultar por sala quais aulas de monitorias existem
@@ -209,7 +223,8 @@ begin
 	LEFT OUTER JOIN
     (SELECT * FROM inscricao WHERE insusucpf LIKE p_alucpf) as inscricao
     on miaid = insmiaid
-	WHERE matnome LIKE p_matnome AND matid != 1 AND miavagas > 0
+	WHERE matnome LIKE p_matnome AND miausucpf != ''
+    AND miavagas > 0 AND miadatafim IS NULL
 	order by diaid asc, matnome asc, horhora asc;
 end#
 delimiter ;
@@ -262,6 +277,7 @@ begin
     LEFT OUTER JOIN inscricao ON miaid = insmiaid
 	WHERE salnome LIKE p_salnome
     AND monitor.usucpf = ''
+    AND miadatafim IS NULL
 	order by diaid asc, matnome asc, horhora asc;
 end#
 delimiter ;
@@ -283,7 +299,7 @@ begin
     INNER JOIN materia ON matid = tusmatid
 	WHERE salnome LIKE p_salnome
     AND monitor.usucpf = p_moncpf    
-	order by diaid asc, matnome asc, horhora asc;
+	ORDER BY diaid ASC, matnome ASC, horhora ASC;
 end#
 delimiter ;
 CALL  sp_consultamonitoriasmonitor('LAB VII', '555.555.555-55');
@@ -401,24 +417,50 @@ delimiter #
 create procedure sp_registrarmonitor(p_moncpf varchar(15), p_matid int)
 begin
 	declare v_dia date;
+    declare v_boo boolean;
     
-    set v_dia = curdate();
-    INSERT INTO tipousuario(tususucpf, tusfcoid, tusdatainicio, tusmatid) 
-    values(p_moncpf, 3, v_dia, p_matid);
+    set v_dia = (select tusdatafim from tipousuario
+				inner join funcao ON fcoid = tusfcoid
+				where tususucpf = p_moncpf
+                AND fconome = 'Monitor'
+                ORDER BY tusdatafim desc
+                limit 1);
+	if(extract(year from v_dia) = extract(year from curdate()))then
+		set @num = extract(month from v_dia);
+        select @num;
+        if(@num<=6)then
+			if(extract(month from curdate())>=7)then
+				set v_boo = true;
+			else
+				set v_boo = false;
+			end if;
+		else
+			set v_boo = false;
+		end if;
+	else
+		set v_boo = true;
+	end if;
+    
+    if(v_boo)then
+		INSERT INTO tipousuario(tususucpf, tusfcoid, tusdatainicio, tusmatid) 
+		values(p_moncpf, 3, curdate(), p_matid);
+	end if;
 end #
 delimiter;
 
+
 delimiter #
 create procedure sp_inativarmonitor(p_moncpf varchar(15), p_matid int)
-begin
-	declare v_dia date;
-    
-    set v_dia = curdate();
+begin   
     UPDATE tipousuario 
-    SET tusdatafim = v_dia
+    SET tusdatafim = curdate()
     WHERE tususucpf = p_moncpf 
     AND tusdatafim is null
     AND tusmatid is not null;
+    
+    UPDATE monitoria SET miausucpf = ''
+    WHERE miadatafim IS NULL
+    AND miausucpf = p_moncpf;
 end #
 delimiter;
 
@@ -432,7 +474,21 @@ begin
 	WHERE horhora NOT IN (SELECT miahorhora FROM monitoria
 							INNER JOIN sala ON salid = miasalid
 							INNER JOIN diadasemana ON diaid = miadiaid
-							WHERE salnome = p_salnome AND dianome = p_dianome);
+							WHERE salnome = p_salnome AND dianome = p_dianome
+                            AND miadatafim IS NULL);
 end#
 delimiter ;
 call sp_consultarhorasdisponiveis('LAB V', 'Segunda');
+
+
+delimiter #
+create procedure sp_relatoriodemonitorias()
+begin
+SELECT matnome, count(*) FROM materia
+INNER JOIN tipousuario ON tusmatid = matid
+INNER JOIN monitoria ON miausucpf = tususucpf
+INNER JOIN inscricao ON insmiaid = miaid
+GROUP BY matnome
+ORDER BY count(*) desc;
+end#
+delimiter ;
