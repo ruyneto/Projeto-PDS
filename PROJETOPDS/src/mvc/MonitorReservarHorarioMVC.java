@@ -19,7 +19,7 @@ public class MonitorReservarHorarioMVC {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        Monitor monitor = new Monitor("111.111.111-11", "Sandro", null);
+        Monitor monitor = new Monitor("555.555.555-55", "Sandro", null);
         MonitorReservarHorarioTela tela = new MonitorReservarHorarioTela();
         MonitorReservarHorarioControle controle = new MonitorReservarHorarioControle(monitor, tela);
         tela.setVisible(true);

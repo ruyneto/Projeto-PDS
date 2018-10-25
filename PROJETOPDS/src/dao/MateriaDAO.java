@@ -26,7 +26,7 @@ public class MateriaDAO {
     
     public Vector<Materia> consultarMaterias(String str){
         try{
-            String sql = "sp_consultamaterias()";
+            String sql = "call sp_consultamaterias()";
             PreparedStatement instrucao = connection.prepareStatement(sql);
             ResultSet resultado = instrucao.executeQuery();
             Vector<Materia> materias = new Vector<>();
@@ -55,6 +55,71 @@ public class MateriaDAO {
         }catch(SQLException ex){
             System.out.println(ex);
             return null;
+        }
+    }
+    
+    public Vector<Materia> pesquisarMateria(String texto){
+    String sql = "SELECT * FROM materia WHERE matnome LIKE ?";        
+        try {
+            PreparedStatement ps = connection.prepareStatement(sql);
+            ps.setString(1,"%"+texto+"%");
+           ResultSet resultado = ps.executeQuery();
+            Vector<Materia> materias = new Vector<>();
+            while(resultado.next()){
+                Materia materia = new Materia(resultado.getInt("matid"), resultado.getString("matnome"));
+                materias.add(materia);
+            }
+            return materias; 
+           
+        } catch (SQLException e) {
+            System.out.println(e);
+            return null;
+        }
+    }
+    
+    public boolean inserirMateria(Materia materia){
+        String sql = "INSERT INTO materia (matnome) VALUES (?)";        
+        try {
+            PreparedStatement ps = connection.prepareStatement(sql);
+            ps.setString(1, materia.getNome());
+            ps.execute();
+            
+            connection.close();
+            return true;
+        } catch (SQLException e) {
+            System.out.println(e);
+            return false;
+        }
+    } 
+    
+    public boolean alterarMateria(Materia materia){
+         String sql = "UPDATE materia SET matnome = ? WHERE matid = ?";        
+        try {
+            PreparedStatement ps = connection.prepareStatement(sql);
+            ps.setString(1, materia.getNome());
+            ps.setInt(2, materia.getId());
+            ps.execute();
+            
+            connection.close();
+            return true;
+        } catch (SQLException e) {
+            System.out.println(e);
+            return false;
+        }
+    }
+    
+    public boolean deletarMateria(Materia materia){
+         String sql = "DELETE FROM materia WHERE matid = ?";        
+        try {
+            PreparedStatement ps = connection.prepareStatement(sql);
+            ps.setInt(1, materia.getId());
+            ps.execute();
+            
+            connection.close();
+            return true;
+        } catch (SQLException e) {
+            System.out.println(e);
+            return false;
         }
     }
 }

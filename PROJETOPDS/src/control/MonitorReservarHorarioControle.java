@@ -107,8 +107,8 @@ public class MonitorReservarHorarioControle {
         @Override
         public void actionPerformed(ActionEvent ae) {
             System.out.println("VER");
-            tela.getCpSala().setVisible(false);
-            tela.getCbSala().setVisible(false);
+            tela.getCpSala().setVisible(true);
+            tela.getCbSala().setVisible(true);
             tela.getBtVerInscricoes().setText("Voltar");
             tela.getBtVerInscricoes().removeActionListener(averins);
             tela.getBtVerInscricoes().addActionListener(avolver);
