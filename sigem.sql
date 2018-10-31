@@ -490,5 +490,105 @@ INNER JOIN monitoria ON miausucpf = tususucpf
 INNER JOIN inscricao ON insmiaid = miaid
 GROUP BY matnome
 ORDER BY count(*) desc;
-end#
+end$
 delimiter ;
+
+-- Procedures para gerar relatórios de monitores mais requisitados, dia da semana, horario e matéria mais requisitados
+-- E monitores com mais e menos horarios oferecidos
+delimiter $
+create procedure sp_monitoresmaisrequisitados()
+begin
+
+	SELECT  usucpf, usunome, matnome,matid, count(*)'numero de inscricoes' 
+			FROM usuario
+			INNER JOIN tipousuario ON tususucpf = usucpf
+			INNER JOIN funcao ON fcoid = tusfcoid
+			INNER JOIN materia ON tusmatid = matid
+			INNER JOIN monitoria ON usucpf = miausucpf
+			INNER JOIN inscricao ON miaid = insmiaid
+			WHERE tusdatafim is null
+			group by usucpf
+			order by count(*) desc 
+			;
+end$
+delimiter ;
+call sp_monitoresmaisrequisitados();
+delimiter $
+create procedure sp_disciplinasmaisrequisitadas()
+begin
+SELECT  matid, matnome, count(*)'numero de inscricoes' FROM usuario
+					INNER JOIN tipousuario ON tususucpf = usucpf
+                    INNER JOIN funcao ON fcoid = tusfcoid
+					INNER JOIN materia ON tusmatid = matid
+                    INNER JOIN monitoria ON usucpf = miausucpf
+                    INNER JOIN inscricao ON miaid = insmiaid
+                    WHERE tusdatafim is null
+                    group by matid
+                    order by count(*) desc 
+                    ;
+end$
+delimiter ;
+call sp_disciplinasmaisrequisitadas();
+
+delimiter $
+create procedure sp_horariosmaisrequisitados()
+begin
+	SELECT  horhora, count(*)'numero de inscricoes' 
+				FROM horario
+				INNER JOIN monitoria ON horhora = miahorhora
+                INNER JOIN inscricao ON miaid = insmiaid
+                group by horhora
+                order by count(*) desc 
+                ;
+end$
+delimiter ;
+
+call sp_horariosmaisrequisitados();
+
+delimiter $
+create procedure sp_diadasemanamaisrequisitados()
+begin
+SELECT  diaid, dianome, count(*)'numero de inscricoes' 
+					FROM diadasemana
+					INNER JOIN monitoria ON diaid = miadiaid
+                    INNER JOIN inscricao ON miaid = insmiaid
+                    group by diaid
+                    order by count(*) desc 
+                    ;
+end$
+delimiter ;
+
+call sp_diadasemanamaisrequisitados();
+
+delimiter $
+create procedure sp_monitoresqueoferecemmaishorarios()
+begin
+SELECT  usucpf,usunome,matid,matnome, count(*)'horarios oferecidos' FROM usuario
+					INNER JOIN tipousuario ON tususucpf = usucpf
+                    INNER JOIN funcao ON fcoid = tusfcoid
+					INNER JOIN materia ON tusmatid = matid
+                    INNER JOIN monitoria ON usucpf = miausucpf
+					WHERE tusdatafim is null
+                    group by usucpf
+                    order by count(*) desc 
+                    ;
+end$
+delimiter ;
+call sp_monitoresqueoferecemmaishorarios();
+
+
+delimiter $
+create procedure sp_monitoresqueoferecemmenoshorarios()
+begin
+SELECT  usucpf,usunome,matid,matnome, count(*)'horarios oferecidos' FROM usuario
+					INNER JOIN tipousuario ON tususucpf = usucpf
+                    INNER JOIN funcao ON fcoid = tusfcoid
+					INNER JOIN materia ON tusmatid = matid
+                    INNER JOIN monitoria ON usucpf = miausucpf
+					WHERE tusdatafim is null
+                    group by usucpf
+                    order by count(*) asc
+                    ;
+end$
+delimiter ;
+call sp_monitoresqueoferecemmenoshorarios();

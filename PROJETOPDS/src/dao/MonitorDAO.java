@@ -75,4 +75,91 @@ public class MonitorDAO {
             throw new RuntimeException(ex);
         }
     }
+
+    public Vector<Vector> monitoresMaisRequisitados(){
+     try{
+            String sql = "CALL sp_monitoresmaisrequisitados()";
+            PreparedStatement instrucao = connection.prepareStatement(sql);
+            ResultSet resultado = instrucao.executeQuery();
+
+            Vector<Vector> monitores = new Vector<>();
+            while(resultado.next()){
+                Vector linha= new Vector();
+                Materia materia = new Materia();
+                materia.setId(resultado.getInt("matid"));
+                materia.setNome(resultado.getString("matnome"));
+                Monitor monitor = new Monitor();
+                monitor.setCpf(resultado.getString("usucpf"));
+                monitor.setNome(resultado.getString("usunome"));
+                monitor.setMateria(materia);
+                
+                linha.add(monitor);
+                
+                linha.add(resultado.getInt("numero de inscricoes"));
+                
+                monitores.add(linha);
+            }
+            return monitores;
+        }catch(SQLException ex){
+            throw new RuntimeException(ex);
+        }
+    } 
+
+    public Vector<Vector> monitoresQueOferecemMaisHorarios(){
+    try{
+            String sql = "CALL sp_monitoresqueoferecemmaishorarios()";
+            PreparedStatement instrucao = connection.prepareStatement(sql);
+            ResultSet resultado = instrucao.executeQuery();
+
+            Vector<Vector> monitores = new Vector<>();
+            while(resultado.next()){
+                Vector linha= new Vector();
+                Materia materia = new Materia();
+                materia.setId(resultado.getInt("matid"));
+                materia.setNome(resultado.getString("matnome"));
+                Monitor monitor = new Monitor();
+                monitor.setCpf(resultado.getString("usucpf"));
+                monitor.setNome(resultado.getString("usunome"));
+                monitor.setMateria(materia);
+                
+                linha.add(monitor);
+                
+                linha.add(resultado.getInt("horarios oferecidos"));
+                
+                monitores.add(linha);
+            }
+            return monitores;
+        }catch(SQLException ex){
+            throw new RuntimeException(ex);
+        }
+    }
+    
+    public Vector<Vector> monitoresQueOferecemMenosHorarios(){
+    try{
+            String sql = "CALL sp_monitoresqueoferecemmenoshorarios()";
+            PreparedStatement instrucao = connection.prepareStatement(sql);
+            ResultSet resultado = instrucao.executeQuery();
+
+            Vector<Vector> monitores = new Vector<>();
+            while(resultado.next()){
+                Vector linha= new Vector();
+                Materia materia = new Materia();
+                materia.setId(resultado.getInt("matid"));
+                materia.setNome(resultado.getString("matnome"));
+                Monitor monitor = new Monitor();
+                monitor.setCpf(resultado.getString("usucpf"));
+                monitor.setNome(resultado.getString("usunome"));
+                monitor.setMateria(materia);
+                
+                linha.add(monitor);
+                
+                linha.add(resultado.getInt("horarios oferecidos"));
+                
+                monitores.add(linha);
+            }
+            return monitores;
+        }catch(SQLException ex){
+            throw new RuntimeException(ex);
+        } 
+    }
 }

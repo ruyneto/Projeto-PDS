@@ -45,4 +45,24 @@ public class HorarioDAO {
             return null;
         }
     }
+
+    public Vector<Vector> horariosmaisrequisitados(){
+    try{
+            String sql = "CALL sp_horariosmaisrequisitados()";
+            PreparedStatement instrucao = connection.prepareStatement(sql);
+            ResultSet resultado = instrucao.executeQuery();
+            Vector<Vector> horarios = new Vector<>();
+            while(resultado.next()){
+                Vector linha = new Vector();
+                Horario hora = new Horario(resultado.getString("horhora"));
+                linha.add(hora);                
+                linha.add(resultado.getInt("numero de inscricoes"));                
+                horarios.add(linha);
+            }
+            return horarios;
+        }catch(SQLException ex){
+            System.out.println(ex);
+            return null;
+        }
+    }
 }

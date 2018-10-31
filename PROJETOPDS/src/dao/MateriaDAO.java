@@ -124,4 +124,26 @@ public class MateriaDAO {
             return false;
         }
     }
+
+    public Vector<Vector> materiasmaisrequisitadas(){
+        try{
+            String sql = "call sp_disciplinasmaisrequisitadas()";
+            PreparedStatement instrucao = connection.prepareStatement(sql);
+            ResultSet resultado = instrucao.executeQuery();
+            Vector<Vector> materias = new Vector<>();
+            while(resultado.next()){
+                Vector linha = new Vector();
+                Materia materia = new Materia();
+                materia.setId(resultado.getInt("matid"));
+                materia.setNome(resultado.getString("matnome"));
+                linha.add(materia);
+                linha.add(resultado.getInt("numero de inscricoes"));
+                materias.add(linha);
+            }
+            return materias;
+        }catch(SQLException ex){
+            System.out.println(ex);
+            return null;
+        }
+    }
 }
