@@ -125,7 +125,7 @@ public class MateriaDAO {
         }
     }
 
-    public Vector<Vector> materiasmaisrequisitadas(){
+    public Vector<Vector> materiasMaisRequisitadas(){
         try{
             String sql = "call sp_disciplinasmaisrequisitadas()";
             PreparedStatement instrucao = connection.prepareStatement(sql);

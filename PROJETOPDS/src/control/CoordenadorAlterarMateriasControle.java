@@ -11,7 +11,6 @@ import java.awt.event.ActionListener;
 import model.Materia;
 import util.Alert;
 import view.CoordenadorAlterarMateriasTela;
-import view.CoordenadorCadastrarMateriasTela;
 
 /**
  *

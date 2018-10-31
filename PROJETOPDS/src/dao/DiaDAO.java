@@ -42,7 +42,7 @@ public class DiaDAO {
         }
     }
 
-    public Vector<Vector> diadasemanamaisrequisitados(){
+    public Vector<Vector> diaDaSemanaMaisRequisitados(){
      try{
             String sql = "CALL sp_diadasemanamaisrequisitados()";
             PreparedStatement instrucao = connection.prepareStatement(sql);

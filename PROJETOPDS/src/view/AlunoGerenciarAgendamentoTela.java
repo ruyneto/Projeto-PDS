@@ -8,7 +8,7 @@ package view;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JTable;
-import javax.swing.JTextField;
+import javax.swing.ImageIcon;
 
 /**
  *
@@ -62,6 +62,8 @@ public class AlunoGerenciarAgendamentoTela extends javax.swing.JFrame {
         btFinalizar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setIconImage(new ImageIcon(getClass().getResource("/img/sigem.png")).
+            getImage());
 
         tabela.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
