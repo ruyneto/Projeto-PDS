@@ -76,7 +76,7 @@ public class MonitorDAO {
         }
     }
 
-    public Vector<Vector> monitoresMaisRequisitados(){
+    public  Vector<Vector> monitoresMaisRequisitados(){
      try{
             String sql = "CALL sp_monitoresmaisrequisitados()";
             PreparedStatement instrucao = connection.prepareStatement(sql);
