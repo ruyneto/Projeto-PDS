@@ -3,12 +3,8 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/mega/Documents/NetBeansProjects/Projeto-PDS/PROJETOPDS/src/model/Materia.java</file>
-            <file>file:/C:/Users/mega/Documents/NetBeansProjects/Projeto-PDS/PROJETOPDS/src/dao/MateriaDAO.java</file>
-            <file>file:/C:/Users/mega/Documents/NetBeansProjects/Projeto-PDS/PROJETOPDS/src/control/CoordenadorVisualizarMateriasControle.java</file>
-            <file>file:/C:/Users/mega/Documents/NetBeansProjects/Projeto-PDS/PROJETOPDS/src/util/Alert.java</file>
-            <file>file:/C:/Users/mega/Documents/NetBeansProjects/Projeto-PDS/PROJETOPDS/src/dao/MonitorDAO.java</file>
-            <file>file:/C:/Users/sandr/Documents/NetBeansProjects/Projeto-PDS/PROJETOPDS/src/mvc/CoordenadorCadastrarMonitoriaMVC.java</file>
+            <file>file:/C:/Users/sandr/Documents/NetBeansProjects/Projeto-PDS/PROJETOPDS/src/control/AlunoGerenciarAgendamentoControle.java</file>
+            <file>file:/C:/Users/sandr/Documents/NetBeansProjects/Projeto-PDS/PROJETOPDS/src/view/LoginTela.java</file>
         </group>
     </open-files>
 </project-private>

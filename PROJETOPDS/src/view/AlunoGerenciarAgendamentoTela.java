@@ -32,18 +32,13 @@ public class AlunoGerenciarAgendamentoTela extends javax.swing.JFrame {
         return tabela;
     }
 
-    public JButton getBtInscrever() {
-        return btInscrever;
+    public JButton getBtDireita() {
+        return btEsquerda;
     }
 
-    public JButton getBtFinalizar() {
-        return btFinalizar;
-    }
-
-    public void setBtFinalizar(JButton btFinalizar) {
-        this.btFinalizar = btFinalizar;
-    }
-    
+    public JButton getBtEsquerda() {
+        return btDireita;
+    }    
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -57,9 +52,9 @@ public class AlunoGerenciarAgendamentoTela extends javax.swing.JFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         tabela = new javax.swing.JTable();
         jLabel1 = new javax.swing.JLabel();
-        btInscrever = new javax.swing.JButton();
+        btEsquerda = new javax.swing.JButton();
         cbMateria = new javax.swing.JComboBox<>();
-        btFinalizar = new javax.swing.JButton();
+        btDireita = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setIconImage(new ImageIcon(getClass().getResource("/img/sigem.png")).
@@ -80,11 +75,11 @@ public class AlunoGerenciarAgendamentoTela extends javax.swing.JFrame {
 
         jLabel1.setText("Matéria");
 
-        btInscrever.setText("Inscrever-se");
+        btEsquerda.setText("Inscrever-se");
 
         cbMateria.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
-        btFinalizar.setText("Ver meus horários");
+        btDireita.setText("Ver meus horários");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -97,9 +92,9 @@ public class AlunoGerenciarAgendamentoTela extends javax.swing.JFrame {
                     .addComponent(cbMateria, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                         .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                            .addComponent(btInscrever)
+                            .addComponent(btEsquerda)
                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(btFinalizar))
+                            .addComponent(btDireita))
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 375, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(15, Short.MAX_VALUE))
         );
@@ -114,8 +109,8 @@ public class AlunoGerenciarAgendamentoTela extends javax.swing.JFrame {
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 142, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 49, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btInscrever)
-                    .addComponent(btFinalizar))
+                    .addComponent(btEsquerda)
+                    .addComponent(btDireita))
                 .addContainerGap())
         );
 
@@ -189,8 +184,8 @@ public class AlunoGerenciarAgendamentoTela extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btFinalizar;
-    private javax.swing.JButton btInscrever;
+    private javax.swing.JButton btDireita;
+    private javax.swing.JButton btEsquerda;
     private javax.swing.JComboBox<Object> cbMateria;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane1;

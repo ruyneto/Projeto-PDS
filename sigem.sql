@@ -36,11 +36,16 @@ insert into diadasemana(dianome) values ('Segunda'), ('Terça'), ('Quarta'), ('Q
 
 create table usuario(
 usucpf varchar(15) primary key,
-usunome varchar(50) not null
+usunome varchar(50) not null,
+usulogin varchar(20) not null,
+ususenha varchar(50) not null
 );
-insert into usuario values('','Indefinido'),('111.111.111-11', 'Sandro'),
-('222.222.222-22', 'Izaltino'), ('333.333.333-33', 'Ruy'),
-('444.444.444-44', 'Estaife'), ('555.555.555-55', 'Gustavo');
+insert into usuario values('','Indefinido', '', ''),
+						('111.111.111-11', 'Sandro Haiden Teixeira', 'sandro.teixeira', 'ifam123'),
+						('222.222.222-22', 'Izaltino Viana Neto', 'izaltino.neto', 'ifam123'),
+						('333.333.333-33', 'Ruy de Ascenção Neto', 'ruy.neto', 'ifam123'),
+						('444.444.444-44', 'Estaife Lima', 'estaife.lima', 'ifam123'), 
+						('555.555.555-55', 'Gustavo Rocha', 'gustavo.rocha', 'ifam123');
 
 create table funcao(
 fcoid int primary key auto_increment,
@@ -63,6 +68,8 @@ insert into tipousuario (tususucpf, tusfcoid, tusdatainicio, tusmatid)
 values ('111.111.111-11', 1, '2018-10-17', null),
 ('222.222.222-22', 1, '2018-10-17', null),
 ('333.333.333-33', 1, '2018-10-17', null),
+('444.444.444-44', 1, '2018-10-17', null),
+('555.555.555-55', 1, '2018-10-17', null),
 ('444.444.444-44', 3, '2018-10-17', 3),
 ('555.555.555-55', 3, '2018-10-17', 2);
 
@@ -212,7 +219,7 @@ create procedure sp_consultamonitoriasdisponiveis(p_matnome varchar(50), p_alucp
 begin
     SELECT salid, salnome, horhora, diaid, dianome,
     monitor.usucpf 'moncpf', monitor.usunome 'monnome',
-    matid, matnome, miaid, miavagas, insusucpf 'insalucpf'
+    matid, matnome, miaid, miavagas
     FROM monitoria
 	INNER JOIN sala ON salid = miasalid
 	INNER JOIN horario ON horhora = miahorhora
@@ -220,11 +227,9 @@ begin
 	INNER JOIN usuario monitor ON monitor.usucpf = miausucpf
     INNER JOIN tipousuario ON tususucpf = monitor.usucpf
     INNER JOIN materia ON matid = tusmatid
-	LEFT OUTER JOIN
-    (SELECT * FROM inscricao WHERE insusucpf LIKE p_alucpf) as inscricao
-    on miaid = insmiaid
 	WHERE matnome LIKE p_matnome AND miausucpf != ''
     AND miavagas > 0 AND miadatafim IS NULL
+    AND monitor.usucpf != p_alucpf
 	order by diaid asc, matnome asc, horhora asc;
 end#
 delimiter ;
@@ -481,7 +486,7 @@ delimiter ;
 call sp_consultarhorasdisponiveis('LAB V', 'Segunda');
 
 
-delimiter #
+delimiter $
 create procedure sp_relatoriodemonitorias()
 begin
 SELECT matnome, count(*) FROM materia
@@ -492,6 +497,7 @@ GROUP BY matnome
 ORDER BY count(*) desc;
 end$
 delimiter ;
+call sp_relatoriodemonitorias();
 
 -- Procedures para gerar relatórios de monitores mais requisitados, dia da semana, horario e matéria mais requisitados
 -- E monitores com mais e menos horarios oferecidos

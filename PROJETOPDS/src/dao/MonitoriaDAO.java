@@ -175,7 +175,7 @@ public class MonitoriaDAO {
                 DiaDaSemana dia = new DiaDaSemana(resultado.getInt("diaid"), resultado.getString("dianome"));
                 Monitor monitor = new Monitor(resultado.getString("moncpf"), resultado.getString("monnome"), materia);
                 Monitoria monitoria = new Monitoria(resultado.getInt("miaid"), resultado.getInt("miavagas"),
-                                                    resultado.getString("insalucpf")!=null, materia, monitor, dia, hora, sala);
+                                                    false, materia, monitor, dia, hora, sala);
                 
                 monitorias.add(monitoria);
             }
