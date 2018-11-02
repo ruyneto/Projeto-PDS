@@ -10,6 +10,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.List;
+import java.util.Vector;
 import model.Aluno;
 import model.Monitoria;
 
@@ -24,14 +26,41 @@ public class InscricaoDAO {
         connection = FabricaConexao.getConnection();
     }
     
+    public void AcaoSalvarDoAluno(List<Monitoria> mia, Aluno a){
+        try{
+            PreparedStatement instrucao;
+            for(Monitoria monitoria: mia ){
+                if(monitoria.isInscrito()){
+                    System.out.println("Marcado");
+                    String sql = "CALL sp_alunocheckboxmarcado(?,?)";
+                    instrucao=connection.prepareStatement(sql);
+                    instrucao.setInt(1, monitoria.getId());
+                    instrucao.setString(2, a.getCpf());
+                    instrucao.execute();
+                }
+                else{
+                    System.out.println("Desmarcado");
+                    String sql = "CALL sp_alunocheckboxdesmarcado(?,?)";
+                    instrucao=connection.prepareStatement(sql);
+                    instrucao.setInt(1, monitoria.getId());
+                    instrucao.setString(2, a.getCpf());
+                    instrucao.execute();
+                }
+                    
+            }
+        }catch(SQLException ex){
+            throw new RuntimeException(ex);
+        }
+    }
+    
     public String inserirInscricao(Aluno a, Monitoria m){
         try{
-            String sql = "SELECT f_inscreveraluno(?,?) AS resp";
+            String sql = "CALL sp_alunocheckboxmarcado(?,?) AS resp";
             PreparedStatement instrucao = connection.prepareStatement(sql);
             instrucao.setString(1, a.getCpf());
             instrucao.setInt(2, m.getId());
             ResultSet resultado = instrucao.executeQuery();
-            return "";//resultado.getString("resp");
+            return resultado.getString("resp");
         }catch(SQLException ex){
             System.out.println(ex);
             return "Problema ao inscrever aluno";

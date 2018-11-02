@@ -230,6 +230,9 @@ begin
 	WHERE matnome LIKE p_matnome AND miausucpf != ''
     AND miavagas > 0 AND miadatafim IS NULL
     AND monitor.usucpf != p_alucpf
+    AND miaid NOT IN (SELECT miaid FROM monitoria
+						INNER JOIN inscricao ON insmiaid = miaid
+                        WHERE insusucpf = p_alucpf)
 	order by diaid asc, matnome asc, horhora asc;
 end#
 delimiter ;
@@ -308,6 +311,35 @@ begin
 end#
 delimiter ;
 CALL  sp_consultamonitoriasmonitor('LAB VII', '555.555.555-55');
+
+delimiter #
+create procedure sp_alunocheckboxmarcado(p_miaid int, p_alucpf varchar(15))
+begin
+	declare v_alucpf varchar(15);
+    
+    set v_alucpf = (select insusucpf from inscricao where insmiaid = p_miaid and insusucpf = p_alucpf);
+    
+    if v_alucpf is null then
+		INSERT INTO inscricao VALUES(p_alucpf, p_miaid);
+        UPDATE monitoria SET miavagas = miavagas -1 WHERE miaid = p_miaid;
+	end if;
+end #
+delimiter ;
+
+
+delimiter #
+create procedure sp_alunocheckboxdesmarcado(p_miaid int, p_alucpf varchar(15))
+begin
+	declare v_alucpf varchar(15);
+    
+    set v_alucpf = (select insusucpf from inscricao where insmiaid = p_miaid and insusucpf = p_alucpf);
+    
+    if v_alucpf = p_alucpf then
+		DELETE FROM inscricao WHERE p_miaid = insmiaid AND insusucpf = p_alucpf;
+        UPDATE monitoria SET miavagas = miavagas + 1 WHERE miaid = p_miaid;
+	end if;
+end #
+delimiter ;
 
 delimiter #
 create procedure sp_monitorcheckboxmarcado(p_miaid int, p_moncpf varchar(15))
