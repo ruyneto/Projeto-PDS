@@ -9,7 +9,7 @@ package model;
  *
  * @author ruyneto
  */
-public class Monitoria {
+public class Monitoria implements Comparable<Monitoria>{
     private int id;
     private int vagas;
     private Materia materia;
@@ -114,5 +114,21 @@ public class Monitoria {
 
     public void setInscrito(boolean inscrito) {
         this.inscrito = inscrito;
+    }
+
+    @Override
+    public int compareTo(Monitoria t) {
+        if(this.dia.getId()<t.getId()){
+            if(this.getHora().getHoraInicio().compareTo(t.getHora().getHoraInicio())==-1){
+                return -1;
+            }
+            else{
+                return 1;
+            }
+        }
+        if(this.dia.getId()>t.getId()){
+            return 1;
+        }
+        return 0;
     }
 }

@@ -73,6 +73,10 @@ values ('111.111.111-11', 1, '2018-10-17', null),
 ('444.444.444-44', 3, '2018-10-17', 3),
 ('555.555.555-55', 3, '2018-10-17', 2);
 
+insert into usuario(usucpf, usunome, usulogin, ususenha) select mpibd_2018.cliente.clicodigo, mpibd_2018.cliente.clinome, '', '' from mpibd_2018.cliente;
+insert into tipousuario(tususucpf, tusfcoid, tusdatainicio, tusmatid) select usucpf, 1, curdate(), null from usuario;
+
+
 create table monitoria(
 miaid int primary key auto_increment,
 miavagas tinyint default 12,
@@ -378,7 +382,8 @@ begin
                         INNER JOIN funcao ON fcoid = tusfcoid
 						WHERE fconome = 'Monitor'AND tusdatafim IS NULL
                         )
-	AND fconome = 'Aluno';
+	AND fconome = 'Aluno'
+    ORDER BY usunome;
 end#
 delimiter ;
 

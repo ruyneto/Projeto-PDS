@@ -10,6 +10,8 @@ import dao.SalaDAO;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Vector;
 import javax.swing.JOptionPane;
 import model.Monitor;
@@ -26,6 +28,7 @@ public class MonitorReservarHorarioControle {
     private final Monitor monitor;
     private final MonitorReservarHorarioTela tela;
     private Vector<Monitoria> monitorias;
+    private List<Monitoria> monitoriasSelecionadas = new ArrayList<>();
     private final AcaoBtAlterar aalt = new AcaoBtAlterar();
     private final AcaoBtVoltarAlterar avolalt = new AcaoBtVoltarAlterar();
     private final AcaoBtVoltarVerReservas avolver = new AcaoBtVoltarVerReservas();
@@ -44,6 +47,9 @@ public class MonitorReservarHorarioControle {
         tela.getCbSala().addActionListener(new ComboMateria());
         tela.getTabela().addMouseListener(new Acao());
         tela.getBtDireita().addActionListener(averins);
+        tela.getTabela1().setVisible(false);
+        tela.getjScrollPane2().setVisible(false);
+        this.tela.pack();
     }
     
     public void preencherComboSala(){
@@ -154,6 +160,8 @@ public class MonitorReservarHorarioControle {
         @Override
         public void actionPerformed(ActionEvent ae) {
             System.out.println("VOLTAR DO INSCREVER");
+            tela.getTabela1().setVisible(false);
+            tela.getjScrollPane2().setVisible(false);
             tela.getCbSala().setEnabled(true);
             MonitoriaDAO dao = new MonitoriaDAO();
             String str = tela.getCbSala().getSelectedItem().toString();
@@ -165,6 +173,7 @@ public class MonitorReservarHorarioControle {
             tela.getBtDireita().setText("Meus horários");
             tela.getBtDireita().removeActionListener(avolins);
             tela.getBtDireita().addActionListener(averins);
+            tela.pack();
         }
         
     }
@@ -174,6 +183,8 @@ public class MonitorReservarHorarioControle {
         @Override
         public void actionPerformed(ActionEvent ae) {
             System.out.println("INSCREVER");
+            tela.getTabela1().setVisible(true);
+            tela.getjScrollPane2().setVisible(true);
             tela.getCbSala().setEnabled(false);
             tela.getBtEsquerda().setText("Salvar");
             tela.getTabela().setModel(new AgendamentoTableModel(monitorias));            
@@ -182,6 +193,7 @@ public class MonitorReservarHorarioControle {
             tela.getBtDireita().addActionListener(avolins);
             tela.getBtEsquerda().removeActionListener(ains);
             tela.getBtEsquerda().addActionListener(asal);
+            tela.pack();
         }
     }
     
