@@ -16,7 +16,7 @@ import java.util.Vector;
 import model.Monitoria;
 import view.CoordenadorCadastrarMonitoriaTela;
 import view.CoordenadorPesquisarMonitoriaTela;
-import view.MonitoriaTableModel;
+import view.tableModels.MonitoriaTableModel;
 
 /**
  *

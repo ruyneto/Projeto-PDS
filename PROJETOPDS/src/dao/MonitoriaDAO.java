@@ -10,6 +10,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.List;
 import java.util.Vector;
 import model.Aluno;
 import model.DiaDaSemana;
@@ -234,28 +235,50 @@ public class MonitoriaDAO {
         }
     }
     
-    public void AcaoSalvarDoMonitor(Vector<Monitoria> mia, Monitor mon){
+    public void acaoSalvarDoMonitor(List<Monitoria> mia, Monitor mon){
         try{
             PreparedStatement instrucao;
             for(Monitoria monitoria: mia ){
-                if(monitoria.isInscrito()){
-                    String sql = "CALL sp_monitorcheckboxmarcado(?,?)";
-                    instrucao=connection.prepareStatement(sql);
-                    instrucao.setInt(1, monitoria.getId());
-                    instrucao.setString(2, mon.getCpf());
-                    instrucao.execute();
-                }
-                else{
-                    String sql = "CALL sp_monitorcheckboxdesmarcado(?,?)";
-                    instrucao=connection.prepareStatement(sql);
-                    instrucao.setInt(1, monitoria.getId());
-                    instrucao.setString(2, mon.getCpf());
-                    instrucao.execute();
-                }
-                    
+                String sql = "CALL sp_monitorcheckboxmarcado(?,?)";
+                instrucao=connection.prepareStatement(sql);
+                instrucao.setInt(1, monitoria.getId());
+                instrucao.setString(2, mon.getCpf());
+                instrucao.execute();
             }
         }catch(SQLException ex){
             throw new RuntimeException(ex);
         }
+    }
+    
+    public void acaoAlterarDoMonitor(List<Monitoria> mia, Monitor mon){
+        try{
+            PreparedStatement instrucao;
+            for(Monitoria monitoria: mia ){
+                String sql = "CALL sp_monitorcheckboxdesmarcado(?,?)";
+                instrucao=connection.prepareStatement(sql);
+                instrucao.setInt(1, monitoria.getId());
+                instrucao.setString(2, mon.getCpf());
+                instrucao.execute();
+            }
+        }catch(SQLException ex){
+            throw new RuntimeException(ex);
+        }
+    }
+    
+    public int numeroDeMonitorias(Monitor m){
+        int cont = 0;
+        try{
+            String sql = "SELECT f_numerodemonitorias(?) AS resp";
+            PreparedStatement instrucao = connection.prepareStatement(sql);
+            instrucao.setString(1, m.getCpf());
+            ResultSet resultado = instrucao.executeQuery();
+            while(resultado.next()){
+               cont = resultado.getInt("resp");
+            }
+            return cont;
+        }catch(SQLException ex){
+            System.out.println(ex);
+        }
+        return cont;
     }
 }

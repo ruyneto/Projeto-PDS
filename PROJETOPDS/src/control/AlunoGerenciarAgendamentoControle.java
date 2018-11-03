@@ -18,9 +18,9 @@ import javax.swing.JOptionPane;
 import model.Aluno;
 import model.Materia;
 import model.Monitoria;
-import view.InscricaoTableModel;
+import view.tableModels.InscricaoTableModel;
 import view.AlunoGerenciarAgendamentoTela;
-import view.MonitoriaDisponivelTableModel;
+import view.tableModels.MonitoriaDisponivelTableModel;
 
 /**
  *

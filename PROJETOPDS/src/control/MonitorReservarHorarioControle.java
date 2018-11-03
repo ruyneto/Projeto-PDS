@@ -11,14 +11,16 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Vector;
 import javax.swing.JOptionPane;
 import model.Monitor;
 import model.Monitoria;
-import view.AgendamentoTableModel;
+import view.tableModels.AgendamentoTableModel;
 import view.MonitorReservarHorarioTela;
-import view.MonitoriasLivresTableModel;
+import view.tableModels.HorariosSelecionadosTableModel;
+import view.tableModels.MonitoriasLivresTableModel;
 
 /**
  *
@@ -37,6 +39,7 @@ public class MonitorReservarHorarioControle {
     private final AcaoBtReservar ains = new AcaoBtReservar();
     private final AcaoBtSalvar asal = new AcaoBtSalvar();
     private final AcaoBtSalvarAlterar asalalt = new AcaoBtSalvarAlterar();
+    private int qtdMonitoriasOfertadas;
 
     public MonitorReservarHorarioControle (Monitor monitor, MonitorReservarHorarioTela tela) {
         this.tela = tela;
@@ -49,6 +52,7 @@ public class MonitorReservarHorarioControle {
         tela.getBtDireita().addActionListener(averins);
         tela.getTabela1().setVisible(false);
         tela.getjScrollPane2().setVisible(false);
+        qtdMonitoriasOfertadas = new MonitoriaDAO().numeroDeMonitorias(monitor);
         this.tela.pack();
     }
     
@@ -65,15 +69,29 @@ public class MonitorReservarHorarioControle {
         if(tela.getTabela().getModel() instanceof MonitoriasLivresTableModel
                 && tela.getBtEsquerda().getText().equals("Alterar")){
             monitorias = dao.consultarMonitoriasMonitor(str, monitor);
+            seletor();
             tela.getTabela().setModel(new MonitoriasLivresTableModel(monitorias));
         }
         else{
             monitorias = dao.consultarMonitoriasLivre(str);
+            seletor();
             tela.getTabela().setModel(new MonitoriasLivresTableModel(monitorias));
         }
         if(monitorias.isEmpty())
             JOptionPane.showMessageDialog(null, "Não há nenhuma monitoria" +
                                                 "\nlivre para essa sala");
+    }
+    
+    public void seletor(){
+        for(int i=0; i<monitorias.size(); i++){
+            for(int i2=0; i2<monitoriasSelecionadas.size(); i2++){
+                Monitoria m = monitorias.get(i);
+                Monitoria m2 = monitoriasSelecionadas.get(i2);
+                if(m.getId() == m2.getId()){
+                    monitorias.remove(m);
+                }
+            }
+        }
     }
      
     
@@ -89,6 +107,60 @@ public class MonitorReservarHorarioControle {
         @Override
         public void mouseClicked(java.awt.event.MouseEvent evt) {
             int i = tela.getTabela().getSelectedRow();
+            Monitoria m = monitorias.get(i);
+            
+            int num = new MonitoriaDAO().verificaConflitoMonitor(monitorias.get(i), monitor);
+            if(tela.getBtEsquerda().getActionListeners()[0] instanceof AcaoBtSalvar){
+                if(num==0){
+                    if(verConfli(m)==null){
+                        monitorias.remove(m);
+                        monitoriasSelecionadas.add(m);
+                        Collections.sort(monitoriasSelecionadas);
+                        tela.getTabela1().setModel(new HorariosSelecionadosTableModel(monitoriasSelecionadas));
+                        tela.getTabela().setModel(new MonitoriasLivresTableModel(monitorias));
+                    }
+                    else{
+                        m=verConfli(m);
+                        JOptionPane.showMessageDialog(null, "Você não pode efetuar esta reserva"+
+                                                         "\nde horário. Há um conflito de horário"+
+                                                         "\ncom o local selecionado:"+
+                                                         m.getSala().getNome()+
+                                                         "-"+m.getDia().getNome()+
+                                                         "-"+m.getHora().getHoraInicio());
+                    }
+                }
+                else{
+                    m=new MonitoriaDAO().consultarMonitoria(num);
+                    JOptionPane.showMessageDialog(null, "Você não pode efetuar esta reserva de horário "+
+                                                         "\nHá um conflito de horário com o"+
+                                                         "\n local já reservado"+
+                                                         m.getSala().getNome()+
+                                                         "-"+m.getDia().getNome()+
+                                                         "-"+m.getHora().getHoraInicio());
+                }
+            }
+            
+            if(qtdMonitoriasOfertadas!=0 && !monitoriasSelecionadas.isEmpty()){
+                tela.getBtEsquerda().setEnabled(true);
+            }
+            else{
+                if(monitoriasSelecionadas.size()>=6){
+                    tela.getBtEsquerda().setEnabled(true);
+                }
+                else{
+                    tela.getBtEsquerda().setEnabled(false);
+                }
+            }
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            /*int i = tela.getTabela().getSelectedRow();
             Monitoria m;
             
             int num = new MonitoriaDAO().verificaConflitoMonitor(monitorias.get(i), monitor);
@@ -111,7 +183,18 @@ public class MonitorReservarHorarioControle {
                                                         "\ninscritos nela. Por favor,"+
                                                         "converse com o Coordenador");
                 }
+            }*/
+        }
+        public Monitoria verConfli(Monitoria m){
+            for(Monitoria ms: monitoriasSelecionadas){
+                String dia = ms.getDia().getNome();
+                String hora = ms.getHora().getHoraInicio();
+                if(m.getDia().getNome().equals(dia) &&
+                        m.getHora().getHoraInicio().equals(hora)){
+                    return ms;                    
+                }
             }
+            return null;
         }
     }
     
@@ -140,7 +223,6 @@ public class MonitorReservarHorarioControle {
         public void actionPerformed(ActionEvent ae) {
             System.out.println("VOLTAR DO VER");
             tela.getCpSala().setVisible(true);
-            tela.getCbSala().setVisible(true);
             MonitoriaDAO dao = new MonitoriaDAO();
             String str = tela.getCbSala().getSelectedItem().toString();
             monitorias=dao.consultarMonitoriasLivre(str);
@@ -160,7 +242,7 @@ public class MonitorReservarHorarioControle {
         @Override
         public void actionPerformed(ActionEvent ae) {
             System.out.println("VOLTAR DO INSCREVER");
-            tela.getTabela1().setVisible(false);
+            monitoriasSelecionadas = new ArrayList<>();
             tela.getjScrollPane2().setVisible(false);
             tela.getCbSala().setEnabled(true);
             MonitoriaDAO dao = new MonitoriaDAO();
@@ -170,6 +252,7 @@ public class MonitorReservarHorarioControle {
             tela.getBtEsquerda().setText("Reservar horário");
             tela.getBtEsquerda().removeActionListener(asal);
             tela.getBtEsquerda().addActionListener(ains);
+            tela.getBtEsquerda().setEnabled(true);
             tela.getBtDireita().setText("Meus horários");
             tela.getBtDireita().removeActionListener(avolins);
             tela.getBtDireita().addActionListener(averins);
@@ -185,9 +268,10 @@ public class MonitorReservarHorarioControle {
             System.out.println("INSCREVER");
             tela.getTabela1().setVisible(true);
             tela.getjScrollPane2().setVisible(true);
-            tela.getCbSala().setEnabled(false);
             tela.getBtEsquerda().setText("Salvar");
-            tela.getTabela().setModel(new AgendamentoTableModel(monitorias));            
+            tela.getBtEsquerda().setEnabled(false);
+            tela.getTabela().setModel(new MonitoriasLivresTableModel(monitorias));
+            tela.getTabela1().setModel(new HorariosSelecionadosTableModel(monitoriasSelecionadas));
             tela.getBtDireita().removeActionListener(averins);
             tela.getBtDireita().setText("Voltar");
             tela.getBtDireita().addActionListener(avolins);
@@ -204,13 +288,15 @@ public class MonitorReservarHorarioControle {
             System.out.println("SALVAR");
             tela.getCbSala().setEnabled(true);
             MonitoriaDAO dao = new MonitoriaDAO();
-            dao.AcaoSalvarDoMonitor(monitorias, monitor);
+            dao.acaoSalvarDoMonitor(monitoriasSelecionadas, monitor);
+            monitoriasSelecionadas = new ArrayList<>();
             String str = tela.getCbSala().getSelectedItem().toString();
             monitorias=dao.consultarMonitoriasLivre(str);
             tela.getTabela().setModel(new MonitoriasLivresTableModel(monitorias));
             tela.getBtDireita().setText("Meus horários");
             tela.getBtDireita().removeActionListener(avolins);
             tela.getBtDireita().addActionListener(averins);
+            tela.getBtEsquerda().setEnabled(true);
             tela.getBtEsquerda().setText("Reservar horário");
             tela.getBtEsquerda().removeActionListener(asal);
             tela.getBtEsquerda().addActionListener(ains);           
@@ -226,7 +312,7 @@ public class MonitorReservarHorarioControle {
             System.out.println("SALVAR DO ALTERAR");
             tela.getCbSala().setEnabled(true);
             MonitoriaDAO dao = new MonitoriaDAO();
-            dao.AcaoSalvarDoMonitor(monitorias, monitor);
+            dao.acaoAlterarDoMonitor(monitorias, monitor);
             String str = tela.getCbSala().getSelectedItem().toString();
             monitorias=dao.consultarMonitoriasMonitor(str, monitor);
             tela.getTabela().setModel(new MonitoriasLivresTableModel(monitorias));

@@ -635,3 +635,16 @@ SELECT  usucpf,usunome,matid,matnome, count(*)'horarios oferecidos' FROM usuario
 end$
 delimiter ;
 call sp_monitoresqueoferecemmenoshorarios();
+
+delimiter #
+create function f_numerodemonitorias(p_moncpf varchar(15))returns int
+begin
+	declare v_num int;
+    
+    set v_num = (select count(*) from monitoria
+				where miausucpf = p_moncpf AND
+                miadatafim is null);
+	return v_num;
+end#
+delimiter ;
+

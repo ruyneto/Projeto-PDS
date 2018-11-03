@@ -17,7 +17,7 @@ import model.Aluno;
 import model.Materia;
 import model.Monitor;
 import view.CoordenadorGerenciarMonitoresTela;
-import view.MonitorTableModel;
+import view.tableModels.MonitorTableModel;
 
 /**
  *
