@@ -48,9 +48,9 @@ public class MonitorReservarHorarioControle {
         listar(tela.getCbSala().getSelectedItem().toString());
         tela.getBtEsquerda().addActionListener(ains);
         tela.getCbSala().addActionListener(new ComboMateria());
-        tela.getTabela().addMouseListener(new Acao());
+        tela.getTabela().addMouseListener(new AcaoMouseTabela());
+        tela.getTabela1().addMouseListener(new AcaoMouseTabela1());
         tela.getBtDireita().addActionListener(averins);
-        tela.getTabela1().setVisible(false);
         tela.getjScrollPane2().setVisible(false);
         qtdMonitoriasOfertadas = new MonitoriaDAO().numeroDeMonitorias(monitor);
         this.tela.pack();
@@ -83,13 +83,19 @@ public class MonitorReservarHorarioControle {
     }
     
     public void seletor(){
-        for(int i=0; i<monitorias.size(); i++){
-            for(int i2=0; i2<monitoriasSelecionadas.size(); i2++){
-                Monitoria m = monitorias.get(i);
-                Monitoria m2 = monitoriasSelecionadas.get(i2);
-                if(m.getId() == m2.getId()){
-                    monitorias.remove(m);
+        List<Monitoria> tempList = new ArrayList<>();
+        if(!monitorias.isEmpty()){
+            for(int i=0; i<monitorias.size(); i++){
+                for(int i2=0; i2<monitoriasSelecionadas.size(); i2++){
+                    Monitoria m = monitorias.get(i);
+                    Monitoria m2 = monitoriasSelecionadas.get(i2);
+                    if(m.getId() == m2.getId()){
+                        tempList.add(m);
+                    }
                 }
+            }
+            for(Monitoria d: tempList){
+                monitorias.remove(d);
             }
         }
     }
@@ -103,7 +109,7 @@ public class MonitorReservarHorarioControle {
         }   
     }
     
-    class Acao extends MouseAdapter{
+    class AcaoMouseTabela extends MouseAdapter{
         @Override
         public void mouseClicked(java.awt.event.MouseEvent evt) {
             int i = tela.getTabela().getSelectedRow();
@@ -138,53 +144,20 @@ public class MonitorReservarHorarioControle {
                                                          "-"+m.getDia().getNome()+
                                                          "-"+m.getHora().getHoraInicio());
                 }
-            }
-            
-            if(qtdMonitoriasOfertadas!=0 && !monitoriasSelecionadas.isEmpty()){
-                tela.getBtEsquerda().setEnabled(true);
-            }
-            else{
-                if(monitoriasSelecionadas.size()>=6){
+                if(qtdMonitoriasOfertadas!=0 && !monitoriasSelecionadas.isEmpty()){
                     tela.getBtEsquerda().setEnabled(true);
                 }
                 else{
-                    tela.getBtEsquerda().setEnabled(false);
+                    if(monitoriasSelecionadas.size()>=6){
+                        tela.getBtEsquerda().setEnabled(true);
+                    }
+                    else{
+                        tela.getBtEsquerda().setEnabled(false);
+                    }
                 }
             }
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            /*int i = tela.getTabela().getSelectedRow();
-            Monitoria m;
-            
-            int num = new MonitoriaDAO().verificaConflitoMonitor(monitorias.get(i), monitor);
-            if(num!=0 &&
-                tela.getBtEsquerda().getActionListeners()[0] instanceof AcaoBtSalvar){
-                m=new MonitoriaDAO().consultarMonitoria(num);
-                tela.getTabela().getModel().setValueAt(false, i, 5);
-                JOptionPane.showMessageDialog(null, "Você não pode reservar este horário."+
-                                                     "\nHá um conflito de horário com a "+
-                                                     "\nmonitoria"+
-                                                     "\n" + m.getMateria().getNome()+
-                                                     "-"+m.getDia().getNome()+
-                                                     "-"+m.getHora().getHoraInicio());
-            }
-            else{
-                if(monitorias.get(i).getVagas()<12){
-                    tela.getTabela().getModel().setValueAt(false, i, 5);
-                    JOptionPane.showMessageDialog(null, "Você não pode cancelar a reserva"+
-                                                        "\ndeste horário pois há alunos"+
-                                                        "\ninscritos nela. Por favor,"+
-                                                        "converse com o Coordenador");
-                }
-            }*/
         }
+        
         public Monitoria verConfli(Monitoria m){
             for(Monitoria ms: monitoriasSelecionadas){
                 String dia = ms.getDia().getNome();
@@ -195,6 +168,27 @@ public class MonitorReservarHorarioControle {
                 }
             }
             return null;
+        }
+    }
+    
+    class AcaoMouseTabela1 extends MouseAdapter{
+        @Override
+        public void mouseClicked(java.awt.event.MouseEvent evt) {
+            int i = tela.getTabela1().getSelectedRow();
+            Monitoria m = monitoriasSelecionadas.get(i);
+            monitoriasSelecionadas.remove(m);
+            monitorias.add(m);
+            tela.getTabela().setModel(new MonitoriasLivresTableModel(monitorias));
+            tela.getTabela1().setModel(new HorariosSelecionadosTableModel(monitoriasSelecionadas));
+            if(monitoriasSelecionadas.isEmpty()){
+                tela.getBtEsquerda().setEnabled(false);
+            }
+            else{
+                if(qtdMonitoriasOfertadas==0 &&
+                        monitoriasSelecionadas.size()<6){
+                    tela.getBtEsquerda().setEnabled(false);
+                }
+            }
         }
     }
     
@@ -287,6 +281,7 @@ public class MonitorReservarHorarioControle {
         public void actionPerformed(ActionEvent ae) {
             System.out.println("SALVAR");
             tela.getCbSala().setEnabled(true);
+            tela.getjScrollPane2().setEnabled(false);
             MonitoriaDAO dao = new MonitoriaDAO();
             dao.acaoSalvarDoMonitor(monitoriasSelecionadas, monitor);
             monitoriasSelecionadas = new ArrayList<>();

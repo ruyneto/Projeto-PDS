@@ -96,8 +96,8 @@ insert into monitoria(miasalid,miadiaid,miausucpf,miahorhora, miadatainicio) val
 (1, 1, '', '11:00-12:00', curdate()),
 (1, 1, '', '12:00-13:00', curdate()),
 (1, 2, '', '11:00-12:00', curdate()),
-(2, 2, '555.555.555-55', '11:00-12:00', curdate()),
-(2, 2, '555.555.555-55', '12:00-13:00', curdate()),
+-- (2, 2, '555.555.555-55', '11:00-12:00', curdate()),
+-- (2, 2, '555.555.555-55', '12:00-13:00', curdate()),
 (1, 2, '444.444.444-44', '12:00-13:00', curdate());
 
 
@@ -108,8 +108,8 @@ primary key (insusucpf, insmiaid),
 foreign key (insusucpf) references usuario(usucpf),
 foreign key (insmiaid) references monitoria(miaid)
 );
-insert into inscricao values
-('111.111.111-11', 5);
+/*insert into inscricao values
+('111.111.111-11', 5);*/
 
 
 -- Procedure que retorna o ID da aula da monitoria que está gerando conflito de horário durante a inscrição
@@ -647,4 +647,3 @@ begin
 	return v_num;
 end#
 delimiter ;
-
