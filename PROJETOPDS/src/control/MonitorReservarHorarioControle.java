@@ -53,6 +53,7 @@ public class MonitorReservarHorarioControle {
         tela.getBtDireita().addActionListener(averins);
         tela.getjScrollPane2().setVisible(false);
         qtdMonitoriasOfertadas = new MonitoriaDAO().numeroDeMonitorias(monitor);
+        tela.setTitle("Horários Livres");
         this.tela.pack();
     }
     
@@ -156,6 +157,24 @@ public class MonitorReservarHorarioControle {
                     }
                 }
             }
+            
+            if(tela.getBtEsquerda().getActionListeners()[0] instanceof AcaoBtSalvarAlterar){
+                if(tela.getTabela().getSelectedColumn()==4){
+                    if(monitoriasSelecionadas.contains(m))
+                        monitoriasSelecionadas.remove(m);
+                    else
+                        monitoriasSelecionadas.add(m);
+                }
+                if(qtdMonitoriasOfertadas-monitoriasSelecionadas.size()<6){
+                    JOptionPane.showMessageDialog(null,"Você precisa de no mínimo"+
+                                                        "\n6 horários reservados!");
+                    tela.getBtEsquerda().setEnabled(false);
+                }
+                else{
+                    if(!monitoriasSelecionadas.isEmpty())
+                        tela.getBtEsquerda().setEnabled(true);
+                }
+            }
         }
         
         public Monitoria verConfli(Monitoria m){
@@ -207,6 +226,7 @@ public class MonitorReservarHorarioControle {
             MonitoriaDAO dao = new MonitoriaDAO();
             monitorias = dao.consultarMonitoriasMonitor(str, monitor);
             tela.getTabela().setModel(new MonitoriasLivresTableModel(monitorias));
+            tela.setTitle("Meus Horários");
         }
         
     }
@@ -227,6 +247,7 @@ public class MonitorReservarHorarioControle {
             tela.getBtDireita().setText("Meus horários");
             tela.getBtDireita().removeActionListener(avolver);
             tela.getBtDireita().addActionListener(averins);
+            tela.setTitle("Horários Livres");
         }
         
     }
@@ -236,7 +257,7 @@ public class MonitorReservarHorarioControle {
         @Override
         public void actionPerformed(ActionEvent ae) {
             System.out.println("VOLTAR DO INSCREVER");
-            monitoriasSelecionadas = new ArrayList<>();
+            monitoriasSelecionadas.clear();
             tela.getjScrollPane2().setVisible(false);
             tela.getCbSala().setEnabled(true);
             MonitoriaDAO dao = new MonitoriaDAO();
@@ -250,6 +271,7 @@ public class MonitorReservarHorarioControle {
             tela.getBtDireita().setText("Meus horários");
             tela.getBtDireita().removeActionListener(avolins);
             tela.getBtDireita().addActionListener(averins);
+            tela.setTitle("Horários Livres");
             tela.pack();
         }
         
@@ -260,7 +282,6 @@ public class MonitorReservarHorarioControle {
         @Override
         public void actionPerformed(ActionEvent ae) {
             System.out.println("INSCREVER");
-            tela.getTabela1().setVisible(true);
             tela.getjScrollPane2().setVisible(true);
             tela.getBtEsquerda().setText("Salvar");
             tela.getBtEsquerda().setEnabled(false);
@@ -271,6 +292,7 @@ public class MonitorReservarHorarioControle {
             tela.getBtDireita().addActionListener(avolins);
             tela.getBtEsquerda().removeActionListener(ains);
             tela.getBtEsquerda().addActionListener(asal);
+            tela.setTitle("Reservar Horários");
             tela.pack();
         }
     }
@@ -281,10 +303,10 @@ public class MonitorReservarHorarioControle {
         public void actionPerformed(ActionEvent ae) {
             System.out.println("SALVAR");
             tela.getCbSala().setEnabled(true);
-            tela.getjScrollPane2().setEnabled(false);
+            tela.getjScrollPane2().setVisible(false);
             MonitoriaDAO dao = new MonitoriaDAO();
             dao.acaoSalvarDoMonitor(monitoriasSelecionadas, monitor);
-            monitoriasSelecionadas = new ArrayList<>();
+            monitoriasSelecionadas.clear();
             String str = tela.getCbSala().getSelectedItem().toString();
             monitorias=dao.consultarMonitoriasLivre(str);
             tela.getTabela().setModel(new MonitoriasLivresTableModel(monitorias));
@@ -296,6 +318,8 @@ public class MonitorReservarHorarioControle {
             tela.getBtEsquerda().removeActionListener(asal);
             tela.getBtEsquerda().addActionListener(ains);           
             JOptionPane.showMessageDialog(null,"Salvo com sucesso");
+            tela.setTitle("Horários Livres");
+            tela.pack();
         }
         
     }
@@ -307,7 +331,8 @@ public class MonitorReservarHorarioControle {
             System.out.println("SALVAR DO ALTERAR");
             tela.getCbSala().setEnabled(true);
             MonitoriaDAO dao = new MonitoriaDAO();
-            dao.acaoAlterarDoMonitor(monitorias, monitor);
+            dao.acaoAlterarDoMonitor(monitoriasSelecionadas, monitor);
+            monitoriasSelecionadas.clear();
             String str = tela.getCbSala().getSelectedItem().toString();
             monitorias=dao.consultarMonitoriasMonitor(str, monitor);
             tela.getTabela().setModel(new MonitoriasLivresTableModel(monitorias));
@@ -317,6 +342,7 @@ public class MonitorReservarHorarioControle {
             tela.getBtEsquerda().setText("Alterar");
             tela.getBtEsquerda().removeActionListener(asalalt);
             tela.getBtEsquerda().addActionListener(aalt);
+            tela.setTitle("Meus Horários");
         }
         
     }
@@ -327,6 +353,7 @@ public class MonitorReservarHorarioControle {
         public void actionPerformed(ActionEvent ae) {
             System.out.println("ALTERAR");
             tela.getCbSala().setEnabled(false);
+            tela.getBtEsquerda().setEnabled(false);
             tela.getBtEsquerda().setText("Salvar");
             tela.getBtEsquerda().removeActionListener(aalt);
             tela.getBtEsquerda().addActionListener(asalalt);
@@ -334,6 +361,7 @@ public class MonitorReservarHorarioControle {
             tela.getBtDireita().removeActionListener(avolver);
             tela.getBtDireita().setText("Voltar");
             tela.getBtDireita().addActionListener(avolalt);
+            tela.setTitle("Cancelar Reserva de Horários");
         }
     }
     
@@ -342,6 +370,7 @@ public class MonitorReservarHorarioControle {
         @Override
         public void actionPerformed(ActionEvent ae) {
             System.out.println("VOLTAR DO ALTERAR");
+            monitoriasSelecionadas.clear();
             tela.getCbSala().setEnabled(true);
             tela.getBtEsquerda().setText("Alterar");
             tela.getBtEsquerda().removeActionListener(asalalt);
@@ -349,6 +378,7 @@ public class MonitorReservarHorarioControle {
             tela.getTabela().setModel(new MonitoriasLivresTableModel(monitorias));
             tela.getBtDireita().removeActionListener(avolalt);
             tela.getBtDireita().addActionListener(avolver);
+            tela.setTitle("Meus Horários");
         }
     }
 }

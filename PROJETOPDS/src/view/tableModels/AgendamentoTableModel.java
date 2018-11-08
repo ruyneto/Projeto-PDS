@@ -46,7 +46,7 @@ public class AgendamentoTableModel extends AbstractTableModel{
             case 1: return "Sala";
             case 2: return "Horário";
             case 3: return "Vagas";
-            case 4: return "Reservar?";
+            case 4: return "Cancelar";
         }
         return null;
     }

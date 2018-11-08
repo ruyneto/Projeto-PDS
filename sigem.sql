@@ -541,7 +541,6 @@ call sp_relatoriodemonitorias();
 delimiter $
 create procedure sp_monitoresmaisrequisitados()
 begin
-
 	SELECT  usucpf, usunome, matnome,matid, count(*)'numero de inscricoes' 
 			FROM usuario
 			INNER JOIN tipousuario ON tususucpf = usucpf
@@ -550,13 +549,14 @@ begin
 			INNER JOIN monitoria ON usucpf = miausucpf
 			INNER JOIN inscricao ON miaid = insmiaid
 			WHERE tusdatafim is null
-			group by usucpf
-			order by count(*) desc 
+			GROUP BY usucpf
+			ORDER BY count(*) DESC 
 			;
 end$
 delimiter ;
 call sp_monitoresmaisrequisitados();
 delimiter $
+
 create procedure sp_disciplinasmaisrequisitadas()
 begin
 SELECT  matid, matnome, count(*)'numero de inscricoes' FROM usuario
@@ -565,9 +565,9 @@ SELECT  matid, matnome, count(*)'numero de inscricoes' FROM usuario
 					INNER JOIN materia ON tusmatid = matid
                     INNER JOIN monitoria ON usucpf = miausucpf
                     INNER JOIN inscricao ON miaid = insmiaid
-                    WHERE tusdatafim is null
-                    group by matid
-                    order by count(*) desc 
+                    WHERE tusdatafim IS NULL
+                    GROUP BY matid
+                    ORDER BY count(*) DESC 
                     ;
 end$
 delimiter ;
@@ -580,8 +580,8 @@ begin
 				FROM horario
 				INNER JOIN monitoria ON horhora = miahorhora
                 INNER JOIN inscricao ON miaid = insmiaid
-                group by horhora
-                order by count(*) desc 
+                GROUP BY horhora
+                ORDER BY count(*) DESC 
                 ;
 end$
 delimiter ;
@@ -595,8 +595,8 @@ SELECT  diaid, dianome, count(*)'numero de inscricoes'
 					FROM diadasemana
 					INNER JOIN monitoria ON diaid = miadiaid
                     INNER JOIN inscricao ON miaid = insmiaid
-                    group by diaid
-                    order by count(*) desc 
+                    GROUP BY diaid
+                    ORDER BY count(*) DESC
                     ;
 end$
 delimiter ;
@@ -611,9 +611,9 @@ SELECT  usucpf,usunome,matid,matnome, count(*)'horarios oferecidos' FROM usuario
                     INNER JOIN funcao ON fcoid = tusfcoid
 					INNER JOIN materia ON tusmatid = matid
                     INNER JOIN monitoria ON usucpf = miausucpf
-					WHERE tusdatafim is null
-                    group by usucpf
-                    order by count(*) desc 
+					WHERE tusdatafim IS NULL
+                    GROUP BY usucpf
+                    ORDER BY count(*) DESC
                     ;
 end$
 delimiter ;
@@ -628,9 +628,9 @@ SELECT  usucpf,usunome,matid,matnome, count(*)'horarios oferecidos' FROM usuario
                     INNER JOIN funcao ON fcoid = tusfcoid
 					INNER JOIN materia ON tusmatid = matid
                     INNER JOIN monitoria ON usucpf = miausucpf
-					WHERE tusdatafim is null
-                    group by usucpf
-                    order by count(*) asc
+					WHERE tusdatafim IS NULL
+                    GROUP BY usucpf
+                    ORDER BY count(*) DESC
                     ;
 end$
 delimiter ;
@@ -641,9 +641,23 @@ create function f_numerodemonitorias(p_moncpf varchar(15))returns int
 begin
 	declare v_num int;
     
-    set v_num = (select count(*) from monitoria
-				where miausucpf = p_moncpf AND
-                miadatafim is null);
+    set v_num = (SELECT count(*) FROM monitoria
+				WHERE miausucpf = p_moncpf AND
+                miadatafim IS NULL);
 	return v_num;
+end#
+delimiter ;
+
+
+delimiter #
+create procedure sp_validacao(p_usulogin varchar(50), p_ususenha varchar(50), p_funcao varchar(20))
+begin
+	SELECT * FROM usuario
+    INNER JOIN tipousuario ON usucpf = tususucpf
+    INNER JOIN funcao ON fcoid = tusfcoid
+    WHERE usulogin = p_usulogin AND
+    ususenha = p_ususenha AND
+    fconome = p_funcao AND
+    tusdatafim IS NULL;
 end#
 delimiter ;

@@ -10,6 +10,8 @@ import dao.MateriaDAO;
 import dao.MonitorDAO;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JOptionPane;
@@ -34,6 +36,7 @@ public class CoordenadorGerenciarMonitoresControle {
         listar("_");
         tela.getBtCadastrar().addActionListener(new BtCadastrar());
         tela.getBtInativar().addActionListener(new BtInativar());
+        tela.getCpMonitor().addKeyListener(new Pesquisa());
     }
     
     public void preencherComboAluno(){
@@ -103,5 +106,12 @@ public class CoordenadorGerenciarMonitoresControle {
             }
         }
         
+    }
+    
+    class Pesquisa extends KeyAdapter{
+        @Override
+        public void keyReleased(KeyEvent evt){
+            listar(tela.getCpMonitor().getText());
+        }
     }
 }

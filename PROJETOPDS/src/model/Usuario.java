@@ -9,26 +9,33 @@ package model;
  *
  * @author sandr
  */
-public class Monitor extends Usuario{
-    private String cpf, nome;
-    private Materia materia;
+public class Usuario {
+    private String cpf;
+    private String nome;
 
-    public Monitor(String cpf, String nome, Materia materia) {
+    public Usuario(String cpf, String nome) {
         this.cpf = cpf;
         this.nome = nome;
-        this.materia = materia;
     }
     
-    public Monitor(){
+    public Usuario(){
         
     }
 
-    public Materia getMateria() {
-        return materia;
+    public String getCpf() {
+        return cpf;
     }
 
-    public void setMateria(Materia materia) {
-        this.materia = materia;
+    public void setCpf(String cpf) {
+        this.cpf = cpf;
+    }
+
+    public String getNome() {
+        return nome;
+    }
+
+    public void setNome(String nome) {
+        this.nome = nome;
     }
     
     @Override
