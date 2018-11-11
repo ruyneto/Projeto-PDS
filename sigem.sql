@@ -109,6 +109,7 @@ insert into monitoria(miasalid,miadiaid,miausucpf,miahorhora, miadatainicio) val
 create table inscricao(
 insusucpf varchar(15) not null,
 insmiaid int not null,
+insdata date,
 primary key (insusucpf, insmiaid),
 foreign key (insusucpf) references usuario(usucpf),
 foreign key (insmiaid) references monitoria(miaid)
@@ -328,6 +329,15 @@ delimiter ;
 CALL  sp_consultamonitoriasmonitor('LAB VII', '555.555.555-55');
 
 delimiter #
+create procedure sp_consultaalunosmonitoria(p_miaid int)
+begin
+	SELECT usunome, insdata FROM inscricao
+    INNER JOIN usuario ON usucpf = insusucpf
+    WHERE insmiaid = p_miaid;
+end#
+delimiter ;
+
+delimiter #
 create procedure sp_alunocheckboxmarcado(p_miaid int, p_alucpf varchar(15))
 begin
 	declare v_alucpf varchar(15);
@@ -335,7 +345,7 @@ begin
     set v_alucpf = (select insusucpf from inscricao where insmiaid = p_miaid and insusucpf = p_alucpf);
     
     if v_alucpf is null then
-		INSERT INTO inscricao VALUES(p_alucpf, p_miaid);
+		INSERT INTO inscricao VALUES(p_alucpf, p_miaid, curdate());
         UPDATE monitoria SET miavagas = miavagas -1 WHERE miaid = p_miaid;
 	end if;
 end #
@@ -408,6 +418,18 @@ begin
     WHERE tusdatafim is null
     AND usunome LIKE p_monnome
     ORDER BY usunome;
+end#
+delimiter ;
+
+delimiter #
+create procedure sp_consultamonitor(p_moncpf varchar(15))
+begin
+	SELECT usucpf, usunome, matid, matnome FROM usuario
+    INNER JOIN tipousuario ON tususucpf = usucpf
+    INNER JOIN funcao ON fcoid = tusfcoid
+    INNER JOIN materia ON tusmatid = matid
+    WHERE tusdatafim is null
+    AND usucpf = p_moncpf;
 end#
 delimiter ;
 

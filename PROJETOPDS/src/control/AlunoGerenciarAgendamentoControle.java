@@ -183,7 +183,7 @@ public class AlunoGerenciarAgendamentoControle {
             tela.setTitle("Monitorias Disponíveis");
             System.out.println("VOLTAR DO INSCREVER");
             tela.getTabela().setModel(new MonitoriaDisponivelTableModel(monitorias));            
-            tela.getBtEsquerda().setText("Inscrever");
+            tela.getBtEsquerda().setText("Inscrever-se");
             tela.getBtEsquerda().removeActionListener(asal);
             tela.getBtEsquerda().addActionListener(ains);
             tela.getBtDireita().setText("Ver meus horários");

@@ -5,6 +5,8 @@
  */
 package model;
 
+import java.util.Calendar;
+
 /**
  *
  * @author sandr
@@ -12,10 +14,15 @@ package model;
 public class Inscricao {
     private Monitoria monitoria;
     private Aluno aluno;
+    private Calendar data;
 
     public Inscricao(Monitoria monitoria, Aluno aluno) {
         this.monitoria = monitoria;
         this.aluno = aluno;
+    }
+    
+    public Inscricao(){
+        
     }
 
     public Monitoria getMonitoria() {
@@ -32,6 +39,14 @@ public class Inscricao {
 
     public void setAluno(Aluno aluno) {
         this.aluno = aluno;
+    }
+
+    public Calendar getData() {
+        return data;
+    }
+
+    public void setData(Calendar data) {
+        this.data = data;
     }
        
 }

@@ -5,6 +5,7 @@
  */
 package control;
 
+import dao.InscricaoDAO;
 import dao.MonitoriaDAO;
 import dao.SalaDAO;
 import java.awt.event.ActionEvent;
@@ -15,8 +16,10 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Vector;
 import javax.swing.JOptionPane;
+import model.Inscricao;
 import model.Monitor;
 import model.Monitoria;
+import view.AlunosInscritosTela;
 import view.tableModels.AgendamentoTableModel;
 import view.MonitorReservarHorarioTela;
 import view.tableModels.HorariosSelecionadosTableModel;
@@ -156,6 +159,13 @@ public class MonitorReservarHorarioControle {
                         tela.getBtEsquerda().setEnabled(false);
                     }
                 }
+            }
+            
+            if(tela.getBtEsquerda().getActionListeners()[0] instanceof AcaoBtAlterar){
+                List<Inscricao> inscritos = new InscricaoDAO().consultaAlunosMonitoria(m);
+                AlunosInscritosTela tela = new AlunosInscritosTela();
+                new AlunosInscritosControle(tela, inscritos);
+                tela.setVisible(true);
             }
             
             if(tela.getBtEsquerda().getActionListeners()[0] instanceof AcaoBtSalvarAlterar){

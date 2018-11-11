@@ -51,6 +51,28 @@ public class MonitorDAO {
         }
     }
     
+    public Monitor consultaMonitor(String str){
+        try{
+            String sql = "CALL sp_consultamonitor(?)";
+            PreparedStatement instrucao = connection.prepareStatement(sql);
+            instrucao.setString(1, "%"+str+"%");
+            ResultSet resultado = instrucao.executeQuery();
+
+            Monitor monitor = new Monitor();
+            while(resultado.next()){
+                Materia materia = new Materia();
+                materia.setId(resultado.getInt("matid"));
+                materia.setNome(resultado.getString("matnome"));
+                monitor.setCpf(resultado.getString("usucpf"));
+                monitor.setNome(resultado.getString("usunome"));
+                monitor.setMateria(materia);
+            }
+            return monitor;
+        }catch(SQLException ex){
+            throw new RuntimeException(ex);
+        }
+    }
+    
     public void registrarMonitor(Aluno a, Materia m){
         try{
             String sql = "CALL sp_registrarmonitor(?,?)";

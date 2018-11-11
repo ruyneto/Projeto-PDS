@@ -10,10 +10,14 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Vector;
 import model.Aluno;
+import model.Inscricao;
 import model.Monitoria;
+import model.Usuario;
+import util.DataUtil;
 
 /**
  *
@@ -53,17 +57,25 @@ public class InscricaoDAO {
         }
     }
     
-    public String inserirInscricao(Aluno a, Monitoria m){
+    public List<Inscricao> consultaAlunosMonitoria(Monitoria m){
         try{
-            String sql = "CALL sp_alunocheckboxmarcado(?,?) AS resp";
+            String sql = "CALL sp_consultaalunosmonitoria(?)";
             PreparedStatement instrucao = connection.prepareStatement(sql);
-            instrucao.setString(1, a.getCpf());
-            instrucao.setInt(2, m.getId());
+            instrucao.setInt(1, m.getId());
             ResultSet resultado = instrucao.executeQuery();
-            return resultado.getString("resp");
+            List<Inscricao> inscricoes = new ArrayList<Inscricao>();
+            while(resultado.next()){
+                Aluno alu = new Aluno();
+                alu.setNome(resultado.getString("usunome"));
+                Inscricao ins = new Inscricao();
+                ins.setAluno(alu);
+                ins.setData(DataUtil.dateToCalendar(resultado.getDate("insdata")));
+                inscricoes.add(ins);                
+            }
+            return inscricoes;
         }catch(SQLException ex){
             System.out.println(ex);
-            return "Problema ao inscrever aluno";
+            return null;
         }
     }
     

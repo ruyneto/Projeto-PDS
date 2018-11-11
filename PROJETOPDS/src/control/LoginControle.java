@@ -6,6 +6,7 @@
 package control;
 
 import dao.LoginDAO;
+import dao.MonitorDAO;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -28,11 +29,7 @@ public class LoginControle {
     public LoginControle(LoginTela tela) {
         this.tela = tela;
         preencherCbFuncao();
-        tela.getBtEntrar().addActionListener(new AcaoBtEntra());
-        /*ImageIcon img = new ImageIcon("../img/sigem.png");
-        img.setImage(img.getImage().getScaledInstance(100, 100, 100));
-        tela.getLogo() = new JLabel(new ImageIcon("../img/sigem.png"));*/
-        
+        tela.getBtEntrar().addActionListener(new AcaoBtEntra());       
         tela.setTitle("Login");
     }
     
@@ -63,9 +60,7 @@ public class LoginControle {
                 if(tela.getCbFuncao().getSelectedItem().equals("Monitor")){
                    tela.dispose();
                    MonitorReservarHorarioTela view = new MonitorReservarHorarioTela();
-                   Monitor mon = new Monitor();
-                   mon.setNome(usu.getNome());
-                   mon.setCpf(usu.getCpf());
+                   Monitor mon = new MonitorDAO().consultaMonitor(usu.getCpf());
                    new MonitorReservarHorarioControle(mon, view);
                    view.setVisible(true);
                 }
