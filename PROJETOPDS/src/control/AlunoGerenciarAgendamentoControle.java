@@ -13,7 +13,6 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Vector;
 import javax.swing.JOptionPane;
 import model.Aluno;
 import model.Materia;
@@ -29,7 +28,7 @@ import view.tableModels.MonitoriaDisponivelTableModel;
 public class AlunoGerenciarAgendamentoControle {
     private Aluno aluno;
     private final AlunoGerenciarAgendamentoTela tela;
-    private Vector<Monitoria> monitorias;
+    private List<Monitoria> monitorias;
     private final AcaoBtVerIncricoes averins = new AcaoBtVerIncricoes();
     private final AcaoBtInscrever ains = new AcaoBtInscrever();
     private final AcaoBtVoltarInscrever avolins = new AcaoBtVoltarInscrever();
@@ -49,6 +48,7 @@ public class AlunoGerenciarAgendamentoControle {
         tela.getCbMateria().addActionListener(new ComboMateria());
         tela.getTabela().addMouseListener(new Acao());
         tela.getBtDireita().addActionListener(averins);
+        tela.setTitle("Monitorias Disponíveis");
     }
     
     public void preencherComboMateria(){
@@ -63,7 +63,7 @@ public class AlunoGerenciarAgendamentoControle {
         MonitoriaDAO dao = new MonitoriaDAO();
         if(tela.getTabela().getModel() instanceof InscricaoTableModel){
             monitorias = dao.consultarMonitoriasDisponiveis(str, aluno);
-            tela.getTabela().setModel(new MonitoriaDisponivelTableModel(monitorias));
+            tela.getTabela().setModel(new InscricaoTableModel(monitorias));
         }
         else{
             if(tela.getBtEsquerda().getText().equals("Inscrever-se")){
@@ -72,7 +72,7 @@ public class AlunoGerenciarAgendamentoControle {
             }
             else{
                 monitorias = dao.consultarMonitoriasInscrito(str, aluno);
-                tela.getTabela().setModel(new InscricaoTableModel(monitorias));
+                tela.getTabela().setModel(new MonitoriaDisponivelTableModel(monitorias));
             }
         }
         if(monitorias.isEmpty())
@@ -164,7 +164,7 @@ public class AlunoGerenciarAgendamentoControle {
         @Override
         public void actionPerformed(ActionEvent ae) {
             System.out.println("INSCREVER");
-            MonitoriaDAO dao = new MonitoriaDAO();
+            tela.setTitle("Inscrição");
             tela.getBtEsquerda().setText("Salvar");
             tela.getBtEsquerda().removeActionListener(ains);
             tela.getBtEsquerda().addActionListener(asal);
@@ -180,6 +180,7 @@ public class AlunoGerenciarAgendamentoControle {
 
         @Override
         public void actionPerformed(ActionEvent ae) {
+            tela.setTitle("Monitorias Disponíveis");
             System.out.println("VOLTAR DO INSCREVER");
             tela.getTabela().setModel(new MonitoriaDisponivelTableModel(monitorias));            
             tela.getBtEsquerda().setText("Inscrever");
@@ -198,6 +199,7 @@ public class AlunoGerenciarAgendamentoControle {
         @Override
         public void actionPerformed(ActionEvent ae) {
             System.out.println("VER");
+            tela.setTitle("Minhas Inscrições");
             MonitoriaDAO dao = new MonitoriaDAO();
             Materia m = (Materia)tela.getCbMateria().getSelectedItem();
             tela.getBtDireita().setText("Voltar");
@@ -216,7 +218,8 @@ public class AlunoGerenciarAgendamentoControle {
 
         @Override
         public void actionPerformed(ActionEvent ae) {
-            System.out.println("VOLTAR DO VER");;
+            System.out.println("VOLTAR DO VER");
+            tela.setTitle("Monitorias Disponíveis");
             MonitoriaDAO dao = new MonitoriaDAO();
             String str = tela.getCbMateria().getSelectedItem().toString();
             monitorias=dao.consultarMonitoriasDisponiveis(str, aluno);
@@ -237,6 +240,7 @@ public class AlunoGerenciarAgendamentoControle {
         @Override
         public void actionPerformed(ActionEvent ae) {
             System.out.println("SALVAR");
+            tela.setTitle("Monitorias Disponíveis");
             tela.getCbMateria().setEnabled(true);
             InscricaoDAO daoins = new InscricaoDAO();
             daoins.AcaoSalvarDoAluno(monitoriasSelecionadas, aluno);
@@ -260,6 +264,7 @@ public class AlunoGerenciarAgendamentoControle {
         @Override
         public void actionPerformed(ActionEvent ae) {
             System.out.println("SALVAR DO ALTERAR");
+            tela.setTitle("Minhas Inscrições");
             tela.getCbMateria().setEnabled(true);
             InscricaoDAO insdao = new InscricaoDAO();
             insdao.AcaoSalvarDoAluno(monitoriasSelecionadas, aluno);
@@ -283,6 +288,7 @@ public class AlunoGerenciarAgendamentoControle {
         @Override
         public void actionPerformed(ActionEvent ae) {
             System.out.println("ALTERAR");
+            tela.setTitle("Cancelar Inscrições");
             tela.getCbMateria().setEnabled(false);
             tela.getBtEsquerda().setText("Salvar");
             tela.getBtEsquerda().removeActionListener(aalt);
@@ -299,6 +305,7 @@ public class AlunoGerenciarAgendamentoControle {
         @Override
         public void actionPerformed(ActionEvent ae) {
             System.out.println("VOLTAR DO ALTERAR");
+            tela.setTitle("");
             tela.getCbMateria().setEnabled(true);
             tela.getBtEsquerda().setText("Alterar");
             tela.getBtEsquerda().removeActionListener(asalalt);

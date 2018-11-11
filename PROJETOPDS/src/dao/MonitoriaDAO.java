@@ -10,6 +10,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Vector;
 import model.Aluno;
@@ -112,6 +113,21 @@ public class MonitoriaDAO {
         }
     }
     
+    public boolean excluirMonitoria(int miaid){
+        String sql = "CALL sp_excluirmonitoria(?)";        
+        try {
+            PreparedStatement ps = connection.prepareStatement(sql);
+            ps.setInt(1, miaid);
+            ps.execute();
+            
+            connection.close();
+            return true;
+        } catch (SQLException e) {
+            System.out.println(e);
+            return false;
+        }
+    }
+    
     public Vector<Monitoria> consultarMonitoriaCoord(String str){
         try{
             String sql = "CALL sp_consultamonitoriascoord(?)";
@@ -136,14 +152,14 @@ public class MonitoriaDAO {
         }
     }
     
-    public Vector<Monitoria> consultarMonitoriasDisponiveis(String str, Aluno a){
+    public List<Monitoria> consultarMonitoriasDisponiveis(String str, Aluno a){
         try{
             String sql = "CALL sp_consultamonitoriasdisponiveis(?, ?)";
             PreparedStatement instrucao = connection.prepareStatement(sql);
             instrucao.setString(1, str);
             instrucao.setString(2, a.getCpf());
             ResultSet resultado = instrucao.executeQuery();
-            Vector<Monitoria> monitorias = new Vector<>();
+            List<Monitoria> monitorias = new ArrayList<>();
             while(resultado.next()){
                 Sala sala = new Sala(resultado.getInt("salid"), resultado.getString("salnome"));
                 Horario hora = new Horario(resultado.getString("horhora"));

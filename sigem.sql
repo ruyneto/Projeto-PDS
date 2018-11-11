@@ -46,6 +46,8 @@ insert into usuario values('','Indefinido', '', ''),
 						('333.333.333-33', 'Ruy de Ascenção Neto', 'ruy.neto', 'ifam123'),
 						('444.444.444-44', 'Estaife Lima', 'estaife.lima', 'ifam123'), 
 						('555.555.555-55', 'Gustavo Rocha', 'gustavo.rocha', 'ifam123');
+                        
+update usuario set ususenha = 'tads' where usucpf='111.111.111-11';
 
 create table funcao(
 fcoid int primary key auto_increment,
@@ -72,6 +74,9 @@ values ('111.111.111-11', 1, '2018-10-17', null),
 ('555.555.555-55', 1, '2018-10-17', null),
 ('444.444.444-44', 3, '2018-10-17', 3),
 ('555.555.555-55', 3, '2018-10-17', 2);
+
+use sigem;
+insert into tipousuario (tususucpf, tusfcoid, tusdatainicio, tusmatid) values('111.111.111-11', 3, '2018-10-17', 2);
 
 insert into usuario(usucpf, usunome, usulogin, ususenha) select mpibd_2018.cliente.clicodigo, mpibd_2018.cliente.clinome, '', '' from mpibd_2018.cliente;
 insert into tipousuario(tususucpf, tusfcoid, tusdatainicio, tusmatid) select usucpf, 1, curdate(), null from usuario;
@@ -108,8 +113,6 @@ primary key (insusucpf, insmiaid),
 foreign key (insusucpf) references usuario(usucpf),
 foreign key (insmiaid) references monitoria(miaid)
 );
-/*insert into inscricao values
-('111.111.111-11', 5);*/
 
 
 -- Procedure que retorna o ID da aula da monitoria que está gerando conflito de horário durante a inscrição
@@ -160,6 +163,13 @@ begin
 end#
 delimiter ;
 
+delimiter #
+create procedure sp_excluirmonitoria(p_miaid int)
+begin
+	UPDATE monitoria SET miadatafim = curdate() WHERE miaid = p_miaid;
+end#
+delimiter ;
+
 
 -- função que retorna quantas monitorias um determinado monitor tem
 delimiter #
@@ -197,8 +207,7 @@ create procedure sp_consultamonitoriascoord(p_salnome varchar(20))
 begin
 	SELECT salid, salnome, horhora, diaid, dianome,
     monitor.usucpf 'moncpf', monitor.usunome 'monnome',
-    matid, matnome, insusucpf 'insalucpf',
-    miaid, miavagas
+    matid, matnome, miaid, miavagas
     FROM monitoria
 	INNER JOIN sala ON salid = miasalid
 	INNER JOIN horario ON horhora = miahorhora
@@ -207,13 +216,15 @@ begin
     LEFT OUTER JOIN tipousuario ON tususucpf = monitor.usucpf
     LEFT OUTER JOIN funcao ON fcoid = tusfcoid
     LEFT OUTER JOIN materia on matid = tusmatid
-    LEFT OUTER JOIN inscricao ON miaid = insmiaid
-	WHERE salnome LIKE p_salnome
+	WHERE salnome LIKE p_salnome AND
+    (fconome = 'Monitor' OR miausucpf = '') AND
+    miadatafim IS NULL
     
 	order by diaid asc, matnome asc, horhora asc;
 end#
 delimiter ;
-call sp_consultamonitoriascoord('LAB V');
+call sp_consultamonitoriascoord('%_%');
+select * from monitoria;
 
 
 -- Procedure para consultar por matéria quais aulas de monitorias estão disponíveis para inscrição
@@ -497,14 +508,14 @@ begin
     UPDATE tipousuario 
     SET tusdatafim = curdate()
     WHERE tususucpf = p_moncpf 
-    AND tusdatafim is null
-    AND tusmatid is not null;
+    AND tusdatafim is null;
     
     UPDATE monitoria SET miausucpf = ''
     WHERE miadatafim IS NULL
     AND miausucpf = p_moncpf;
 end #
 delimiter;
+drop procedure sp_inativarmonitor;
 
 
 -- Procedure para consultar as horas disponíveis para uma sala em um determinado dia
@@ -661,3 +672,5 @@ begin
     tusdatafim IS NULL;
 end#
 delimiter ;
+
+CALL sp_validacao('sandro.teixeira', 'tads', 'Aluno');

@@ -8,6 +8,7 @@ package control;
 import dao.MateriaDAO;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import javax.swing.JOptionPane;
 import model.Materia;
 import util.Alert;
 import view.CoordenadorCadastrarMateriasTela;
@@ -33,15 +34,20 @@ public class CoordenadorCadastrarMateriasControle {
         @Override
         public void actionPerformed(ActionEvent e) {
           
-          materia.setNome(tela.getCpNome());
-          MateriaDAO dao = new MateriaDAO();
-            try {
-                dao.inserirMateria(materia);
-                Alert.materiaInserirSucesso(materia);
-                tela.dispose();
-            } catch (Exception ex) {
-                System.out.println("Erro ao inserir!!");
+            materia.setNome(tela.getCpNome());
+            if(!materia.getNome().equals("")){
+                MateriaDAO dao = new MateriaDAO();
+                try {
+                    dao.inserirMateria(materia);
+                    Alert.materiaInserirSucesso(materia);
+                    tela.dispose();
+                } catch (Exception ex) {
+                    System.out.println("Erro ao inserir!!");
+                }
             }
-          }
+            else{
+                JOptionPane.showMessageDialog(tela, "O campo matéria não pode ser vazio!");
+            }
+        }
     }
 }

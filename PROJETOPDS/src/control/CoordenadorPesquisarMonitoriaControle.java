@@ -8,11 +8,12 @@ package control;
 import dao.MonitoriaDAO;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.KeyAdapter;
-import java.awt.event.KeyEvent;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowFocusListener;
 import java.util.Vector;
+import javax.swing.JOptionPane;
 import model.Monitoria;
 import view.CoordenadorCadastrarMonitoriaTela;
 import view.CoordenadorPesquisarMonitoriaTela;
@@ -32,8 +33,11 @@ public class CoordenadorPesquisarMonitoriaControle {
         this.modelo = modelo;
         listar("_");
         tela.addWindowFocusListener(new GanedFocus());
+        tela.getTabela().addMouseListener(new MouseListenerTabela());
         tela.getBtPesquisar().addActionListener(new BtPesquisar());
         tela.getBtCadastar().addActionListener(new BtCadastrar());
+        tela.getBtExcluir().addActionListener(new BtExcluir());
+        tela.getBtExcluir().setEnabled(false);
     }
     
     public void listar(String str){
@@ -55,6 +59,27 @@ public class CoordenadorPesquisarMonitoriaControle {
         
     }
     
+    class BtExcluir implements ActionListener{
+
+        @Override
+        public void actionPerformed(ActionEvent ae) {
+            int num = tela.getTabela().getSelectedRow();
+            Monitoria m = monitorias.get(num);
+            if(m.getMonitor().getNome().equals("Indefinido")){
+                new MonitoriaDAO().excluirMonitoria(m.getId());
+                listar("_");
+                tela.getTabela().clearSelection();
+                tela.getBtExcluir().setEnabled(false);
+            }
+            else{
+                JOptionPane.showMessageDialog(tela, "Você não pode excluir esse horário."
+                                                    + "\nUm monitor já o reservou!!");
+                tela.getBtExcluir().setEnabled(false);
+            }
+        }
+        
+    }
+    
     class BtPesquisar implements ActionListener{
 
         @Override
@@ -63,6 +88,33 @@ public class CoordenadorPesquisarMonitoriaControle {
         }
         
     }
+    
+    class MouseListenerTabela implements MouseListener{
+
+        @Override
+        public void mouseClicked(MouseEvent me) {
+        }
+
+        @Override
+        public void mousePressed(MouseEvent me) {
+        }
+
+        @Override
+        public void mouseReleased(MouseEvent me) {
+            if(tela.getTabela().getSelectedRow()>=0){
+                tela.getBtExcluir().setEnabled(true);
+            }
+        }
+
+        @Override
+        public void mouseEntered(MouseEvent me) {
+        }
+
+        @Override
+        public void mouseExited(MouseEvent me) {
+        }
+    
+}
     
     class GanedFocus implements WindowFocusListener{
 

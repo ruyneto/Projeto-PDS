@@ -10,12 +10,11 @@ package model;
  * @author sandr
  */
 public class Monitor extends Usuario{
-    private String cpf, nome;
     private Materia materia;
 
     public Monitor(String cpf, String nome, Materia materia) {
-        this.cpf = cpf;
-        this.nome = nome;
+        super.setCpf(cpf);
+        super.setNome(nome);
         this.materia = materia;
     }
     
@@ -33,7 +32,7 @@ public class Monitor extends Usuario{
     
     @Override
     public String toString(){
-        return nome;
+        return getNome();
     }
     
 }

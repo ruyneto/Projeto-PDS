@@ -31,7 +31,7 @@ public class InscricaoTableModel extends AbstractTableModel{
         Monitoria m = monitorias.get(i);
         
         switch(i1){
-            case 0: return (m.getMonitor().getCpf().equals(""))? null: m.getMonitor().toString();
+            case 0: return m.getMonitor().getNome();//(m.getMonitor().getCpf().equals(""))? null: m.getMonitor().toString();
             case 1: return m.getDia().toString();
             case 2: return m.getSala().toString();
             case 3: return m.getHora().toString();

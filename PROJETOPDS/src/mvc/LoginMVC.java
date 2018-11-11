@@ -5,10 +5,7 @@
  */
 package mvc;
 
-import control.AlunoGerenciarAgendamentoControle;
 import control.LoginControle;
-import model.Aluno;
-import view.AlunoGerenciarAgendamentoTela;
 import view.LoginTela;
 
 /**
@@ -22,7 +19,7 @@ public class LoginMVC {
      */
     public static void main(String[] args) {
         LoginTela tela = new LoginTela();
-        LoginControle controle = new LoginControle(tela);
+        new LoginControle(tela);
         tela.setVisible(true);
     }
 }

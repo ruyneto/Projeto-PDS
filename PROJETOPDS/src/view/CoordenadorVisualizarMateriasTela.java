@@ -76,10 +76,10 @@ public class CoordenadorVisualizarMateriasTela extends javax.swing.JFrame {
         jLabel1.setText("Nome");
 
         cpMateria.addInputMethodListener(new java.awt.event.InputMethodListener() {
-            public void caretPositionChanged(java.awt.event.InputMethodEvent evt) {
-            }
             public void inputMethodTextChanged(java.awt.event.InputMethodEvent evt) {
                 cpMateriaInputMethodTextChanged(evt);
+            }
+            public void caretPositionChanged(java.awt.event.InputMethodEvent evt) {
             }
         });
         cpMateria.addPropertyChangeListener(new java.beans.PropertyChangeListener() {

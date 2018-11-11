@@ -10,19 +10,14 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
-import java.awt.event.InputMethodEvent;
-import java.awt.event.InputMethodListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowFocusListener;
-import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
 import java.util.Vector;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
 import model.Materia;
@@ -205,14 +200,15 @@ public class CoordenadorVisualizarMateriasControle {
 
         @Override
         public void actionPerformed(ActionEvent e) {
-             if(Alert.materiaAlertaExclusao(materias.get(linhaSelecionada))==0){
-                 MateriaDAO dao = new MateriaDAO();
-                 dao.deletarMateria(materias.get(linhaSelecionada));
-                 linhaSelecionada = -1;
-                 tela.getbtAlterar().setEnabled(false);
-                 tela.getbtExcluir().setEnabled(false);
-                 }
-            
+            if(Alert.materiaAlertaExclusao(materias.get(linhaSelecionada))==0){
+                MateriaDAO dao = new MateriaDAO();
+                if(!dao.deletarMateria(materias.get(linhaSelecionada))){
+                    JOptionPane.showMessageDialog(tela, "Erro ao deletar. Contate o Administrador");
+                }
+                linhaSelecionada = -1;
+                tela.getbtAlterar().setEnabled(false);
+                tela.getbtExcluir().setEnabled(false);
+            }
         }
     }
 }
