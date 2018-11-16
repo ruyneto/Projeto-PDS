@@ -5,16 +5,21 @@
  */
 package control;
 
+import dao.InscricaoDAO;
 import dao.MonitoriaDAO;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowFocusListener;
+import java.util.List;
 import java.util.Vector;
 import javax.swing.JOptionPane;
+import model.Inscricao;
 import model.Monitoria;
+import view.AlunosInscritosTela;
 import view.CoordenadorCadastrarMonitoriaTela;
 import view.CoordenadorPesquisarMonitoriaTela;
 import view.tableModels.MonitoriaTableModel;
@@ -38,6 +43,8 @@ public class CoordenadorPesquisarMonitoriaControle {
         tela.getBtCadastar().addActionListener(new BtCadastrar());
         tela.getBtExcluir().addActionListener(new BtExcluir());
         tela.getBtExcluir().setEnabled(false);
+        tela.getBtDetalhar().addActionListener(new BtDetalhar());
+        tela.getBtDetalhar().setEnabled(false);
     }
     
     public void listar(String str){
@@ -46,6 +53,21 @@ public class CoordenadorPesquisarMonitoriaControle {
         System.out.println(monitorias.size());
         
         tela.getTabela().setModel(new MonitoriaTableModel(monitorias));
+    }
+    
+    class BtDetalhar implements ActionListener{
+
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            int i = tela.getTabela().getSelectedRow();
+            Monitoria m = monitorias.get(i);
+            List<Inscricao> inscritos = new InscricaoDAO().consultaAlunosMonitoria(m);
+            AlunosInscritosTela tela2 = new AlunosInscritosTela();
+            new AlunosInscritosControle(tela2, inscritos, m);
+            tela2.setLocationRelativeTo(tela);
+            tela2.setVisible(true);
+        }
+        
     }
     
     class BtCadastrar implements ActionListener{
@@ -103,6 +125,7 @@ public class CoordenadorPesquisarMonitoriaControle {
         public void mouseReleased(MouseEvent me) {
             if(tela.getTabela().getSelectedRow()>=0){
                 tela.getBtExcluir().setEnabled(true);
+                tela.getBtDetalhar().setEnabled(true);
             }
         }
 

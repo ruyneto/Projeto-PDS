@@ -14,20 +14,20 @@ import model.Aluno;
 import model.Monitor;
 import model.Usuario;
 import view.AlunoGerenciarAgendamentoTela;
-import view.LoginTela;
+import view.LoginTela2;
 import view.MonitorReservarHorarioTela;
 
 /**
  *
  * @author sandr
  */
-public class LoginControle {
-    private LoginTela tela;
+public class LoginControle2 {
+    private LoginTela2 tela;
 
-    public LoginControle(LoginTela tela) {
+    public LoginControle2(LoginTela2 tela) {
         this.tela = tela;
-        preencherCbFuncao();
-        tela.getBtEntrar().addActionListener(new AcaoBtEntra());       
+        tela.getBtEntrar().addActionListener(new AcaoBtEntra());
+        tela.getBtSair().addActionListener(new AcaoBtSair());
         tela.setTitle("Login");
     }
     
@@ -35,11 +35,17 @@ public class LoginControle {
         LoginDAO dao = new LoginDAO();
         String login = tela.getCpUsuario().getText();
         String senha = tela.getCpSenha().getText();
-        String funcao = (String)tela.getCbFuncao().getSelectedItem();
+        String funcao="";
+        if(tela.getRdAluno().isSelected())
+            funcao = "Aluno";
+        if(tela.getRdCoordenador().isSelected())
+            funcao = "Coordenador";
+        if(tela.getRdMonitor().isSelected())
+            funcao = "Monitor";
         Usuario usu =  dao.validacao(login, senha, funcao);
         if(!senha.equals("") || !login.equals("")){
             if(usu.getCpf()!=null){
-                if(tela.getCbFuncao().getSelectedItem().equals("Aluno")){
+                if(funcao.equals("Aluno")){
                    tela.dispose();
                    AlunoGerenciarAgendamentoTela view = new AlunoGerenciarAgendamentoTela();
                    Aluno alu = new Aluno(usu.getCpf(), usu.getNome());
@@ -47,7 +53,7 @@ public class LoginControle {
                    view.setVisible(true);
                 }
 
-                if(tela.getCbFuncao().getSelectedItem().equals("Coordenador")){
+                if(funcao.equals("Coordenador")){
                    tela.dispose();
                    /*AlunoGerenciarAgendamentoTela view = new AlunoGerenciarAgendamentoTela();
                    Aluno alu = new Aluno(usu.getCpf(), usu.getNome());
@@ -55,7 +61,7 @@ public class LoginControle {
                    view.setVisible(true);*/
                 }
 
-                if(tela.getCbFuncao().getSelectedItem().equals("Monitor")){
+                if(funcao.equals("Monitor")){
                    tela.dispose();
                    MonitorReservarHorarioTela view = new MonitorReservarHorarioTela();
                     System.out.println(usu.getCpf());
@@ -79,18 +85,19 @@ public class LoginControle {
         
     }
     
-    public void preencherCbFuncao(){
-        tela.getCbFuncao().removeAllItems();
-        tela.getCbFuncao().addItem("Aluno");
-        tela.getCbFuncao().addItem("Coordenador");
-        tela.getCbFuncao().addItem("Monitor");
-    }
-    
     class AcaoBtEntra implements ActionListener{
 
         @Override
         public void actionPerformed(ActionEvent ae) {
             validacao();
+        }
+    }
+    
+    class AcaoBtSair implements ActionListener{
+
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            System.exit(0);
         }
         
     }

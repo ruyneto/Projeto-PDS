@@ -16,7 +16,7 @@ import java.sql.SQLException;
 public class FabricaConexao {
     public static Connection getConnection(){
         try{
-            return DriverManager.getConnection("jdbc:mysql://localhost:3306/sigem",
+            return DriverManager.getConnection("jdbc:mysql://localhost:3306/sigem?autoReconnect=true&useSSL=false",
                 "root", "root");
         }
         catch(SQLException exc){

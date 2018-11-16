@@ -55,7 +55,7 @@ public class MonitorDAO {
         try{
             String sql = "CALL sp_consultamonitor(?)";
             PreparedStatement instrucao = connection.prepareStatement(sql);
-            instrucao.setString(1, "%"+str+"%");
+            instrucao.setString(1, str);
             ResultSet resultado = instrucao.executeQuery();
 
             Monitor monitor = new Monitor();

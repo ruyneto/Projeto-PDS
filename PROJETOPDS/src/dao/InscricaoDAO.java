@@ -12,11 +12,9 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Vector;
 import model.Aluno;
 import model.Inscricao;
 import model.Monitoria;
-import model.Usuario;
 import util.DataUtil;
 
 /**

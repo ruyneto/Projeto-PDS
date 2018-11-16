@@ -38,6 +38,7 @@ public class CoordenadorPesquisarMonitoriaTela extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         btPesquisar = new javax.swing.JButton();
         btExcluir = new javax.swing.JButton();
+        btDetalhar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setResizable(false);
@@ -62,13 +63,15 @@ public class CoordenadorPesquisarMonitoriaTela extends javax.swing.JFrame {
         ));
         jScrollPane1.setViewportView(tabela);
 
-        btCadastar.setText("Cadastar");
+        btCadastar.setText("Cadastrar");
 
         jLabel1.setText("Sala:");
 
         btPesquisar.setText("Pesquisar");
 
         btExcluir.setText("Excluir");
+
+        btDetalhar.setText("Detalhar");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -86,6 +89,8 @@ public class CoordenadorPesquisarMonitoriaTela extends javax.swing.JFrame {
                         .addGroup(layout.createSequentialGroup()
                             .addComponent(btCadastar)
                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(btDetalhar)
+                            .addGap(76, 76, 76)
                             .addComponent(btExcluir))
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 375, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(15, Short.MAX_VALUE))
@@ -104,7 +109,8 @@ public class CoordenadorPesquisarMonitoriaTela extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 42, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btCadastar)
-                    .addComponent(btExcluir))
+                    .addComponent(btExcluir)
+                    .addComponent(btDetalhar))
                 .addContainerGap())
         );
 
@@ -133,6 +139,10 @@ public class CoordenadorPesquisarMonitoriaTela extends javax.swing.JFrame {
 
     public JButton getBtExcluir() {
         return btExcluir;
+    }
+
+    public JButton getBtDetalhar() {
+        return btDetalhar;
     }
 
 
@@ -176,6 +186,7 @@ public class CoordenadorPesquisarMonitoriaTela extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btCadastar;
+    private javax.swing.JButton btDetalhar;
     private javax.swing.JButton btExcluir;
     private javax.swing.JButton btPesquisar;
     private javax.swing.JTextField cpPesquisa;

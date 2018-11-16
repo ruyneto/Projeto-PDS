@@ -5,6 +5,13 @@
  */
 package view;
 
+import java.awt.Image;
+import java.awt.Toolkit;
+import java.io.IOException;
+import java.net.URL;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.imageio.ImageIO;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JTable;
@@ -21,6 +28,7 @@ public class AlunoGerenciarAgendamentoTela extends javax.swing.JFrame {
      */
     public AlunoGerenciarAgendamentoTela() {
         initComponents();
+        
         this.setLocationRelativeTo(null);
     }
 
@@ -57,7 +65,7 @@ public class AlunoGerenciarAgendamentoTela extends javax.swing.JFrame {
         btDireita = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setIconImage(new ImageIcon(getClass().getResource("../img/sigem.png")).getImage());
+        setIconImage(new ImageIcon(getClass().getResource("/img/sigem.png")).getImage());
 
         tabela.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {

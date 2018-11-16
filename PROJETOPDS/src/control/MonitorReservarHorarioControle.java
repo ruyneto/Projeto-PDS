@@ -19,6 +19,7 @@ import javax.swing.JOptionPane;
 import model.Inscricao;
 import model.Monitor;
 import model.Monitoria;
+import util.BtLogoff;
 import view.AlunosInscritosTela;
 import view.tableModels.AgendamentoTableModel;
 import view.MonitorReservarHorarioTela;
@@ -55,6 +56,7 @@ public class MonitorReservarHorarioControle {
         tela.getTabela1().addMouseListener(new AcaoMouseTabela1());
         tela.getBtDireita().addActionListener(averins);
         tela.getjScrollPane2().setVisible(false);
+        tela.getBtSair().addActionListener(new BtLogoff(tela.getBtSair(), tela));
         qtdMonitoriasOfertadas = new MonitoriaDAO().numeroDeMonitorias(monitor);
         tela.setTitle("Horários Livres");
         this.tela.pack();
@@ -164,7 +166,7 @@ public class MonitorReservarHorarioControle {
             if(tela.getBtEsquerda().getActionListeners()[0] instanceof AcaoBtAlterar){
                 List<Inscricao> inscritos = new InscricaoDAO().consultaAlunosMonitoria(m);
                 AlunosInscritosTela tela = new AlunosInscritosTela();
-                new AlunosInscritosControle(tela, inscritos);
+                new AlunosInscritosControle(tela, inscritos, m);
                 tela.setVisible(true);
             }
             
@@ -385,6 +387,7 @@ public class MonitorReservarHorarioControle {
             tela.getBtEsquerda().setText("Alterar");
             tela.getBtEsquerda().removeActionListener(asalalt);
             tela.getBtEsquerda().addActionListener(aalt);
+            tela.getBtEsquerda().setEnabled(true);
             tela.getTabela().setModel(new MonitoriasLivresTableModel(monitorias));
             tela.getBtDireita().removeActionListener(avolalt);
             tela.getBtDireita().addActionListener(avolver);
