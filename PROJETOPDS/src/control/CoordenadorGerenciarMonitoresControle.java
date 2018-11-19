@@ -71,10 +71,16 @@ public class CoordenadorGerenciarMonitoresControle {
         public void actionPerformed(ActionEvent ae) {
             MonitorDAO dao = new MonitorDAO();
             Aluno a = (Aluno)tela.getCbAlunos().getSelectedItem();
-            Materia m = (Materia)tela.getCbMateria().getSelectedItem();
-            dao.registrarMonitor(a, m);
-            preencherComboAluno();
-            listar("_");
+            if (dao.validaAluno(a)){
+                Materia m = (Materia)tela.getCbMateria().getSelectedItem();
+                dao.registrarMonitor(a, m);
+                preencherComboAluno();
+                listar("_");
+            }
+            else{
+                JOptionPane.showMessageDialog(tela, "Este aluno só poderá ser monitor"
+                                                + "\nno próximo semestre");
+            }
         }
         
     }

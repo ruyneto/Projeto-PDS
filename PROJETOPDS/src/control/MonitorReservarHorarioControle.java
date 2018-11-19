@@ -79,7 +79,7 @@ public class MonitorReservarHorarioControle {
             tela.getTabela().setModel(new MonitoriasLivresTableModel(monitorias));
         }
         else{
-            monitorias = dao.consultarMonitoriasLivre(str);
+            monitorias = dao.consultarMonitoriasLivres(str);
             seletor();
             tela.getTabela().setModel(new MonitoriasLivresTableModel(monitorias));
         }
@@ -271,7 +271,7 @@ public class MonitorReservarHorarioControle {
             tela.getCpSala().setVisible(true);
             MonitoriaDAO dao = new MonitoriaDAO();
             String str = tela.getCbSala().getSelectedItem().toString();
-            monitorias=dao.consultarMonitoriasLivre(str);
+            monitorias=dao.consultarMonitoriasLivres(str);
             tela.getTabela().setModel(new MonitoriasLivresTableModel(monitorias));
             tela.getBtEsquerda().setText("Reservar horário");
             tela.getBtEsquerda().removeActionListener(aalt);
@@ -294,7 +294,7 @@ public class MonitorReservarHorarioControle {
             tela.getCbSala().setEnabled(true);
             MonitoriaDAO dao = new MonitoriaDAO();
             String str = tela.getCbSala().getSelectedItem().toString();
-            monitorias=dao.consultarMonitoriasLivre(str);
+            monitorias=dao.consultarMonitoriasLivres(str);
             tela.getTabela().setModel(new MonitoriasLivresTableModel(monitorias));            
             tela.getBtEsquerda().setText("Reservar horário");
             tela.getBtEsquerda().removeActionListener(asal);
@@ -340,7 +340,7 @@ public class MonitorReservarHorarioControle {
             dao.acaoSalvarDoMonitor(monitoriasSelecionadas, monitor);
             monitoriasSelecionadas.clear();
             String str = tela.getCbSala().getSelectedItem().toString();
-            monitorias=dao.consultarMonitoriasLivre(str);
+            monitorias=dao.consultarMonitoriasLivres(str);
             tela.getTabela().setModel(new MonitoriasLivresTableModel(monitorias));
             tela.getBtDireita().setText("Meus horários");
             tela.getBtDireita().removeActionListener(avolins);

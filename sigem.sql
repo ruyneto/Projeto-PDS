@@ -529,7 +529,8 @@ create procedure sp_inativarmonitor(p_moncpf varchar(15), p_matid int)
 begin   
     UPDATE tipousuario 
     SET tusdatafim = curdate()
-    WHERE tususucpf = p_moncpf 
+    WHERE tususucpf = p_moncpf
+    AND tusfcoid = 3
     AND tusdatafim is null;
     
     UPDATE monitoria SET miausucpf = ''
@@ -557,22 +558,23 @@ call sp_consultarhorasdisponiveis('LAB V', 'Segunda');
 
 
 delimiter $
-create procedure sp_relatoriodemonitorias()
+create procedure sp_relatoriodemonitorias(p_periodo varchar(7))
 begin
 SELECT matnome, count(*) FROM materia
 INNER JOIN tipousuario ON tusmatid = matid
 INNER JOIN monitoria ON miausucpf = tususucpf
 INNER JOIN inscricao ON insmiaid = miaid
+WHERE concat(extract(year from miadatainicio), '/', convert(extract(month from miadatainicio) div 7 + 1, decimal(2,0))) = p_periodo
 GROUP BY matnome
 ORDER BY count(*) desc;
 end$
 delimiter ;
-call sp_relatoriodemonitorias();
+call sp_relatoriodemonitorias('2018/1');
 
 -- Procedures para gerar relatórios de monitores mais requisitados, dia da semana, horario e matéria mais requisitados
 -- E monitores com mais e menos horarios oferecidos
 delimiter $
-create procedure sp_monitoresmaisrequisitados()
+create procedure sp_monitoresmaisrequisitados(p_periodo varchar(7))
 begin
 	SELECT  usucpf, usunome, matnome,matid, count(*)'numero de inscricoes' 
 			FROM usuario
@@ -582,15 +584,16 @@ begin
 			INNER JOIN monitoria ON usucpf = miausucpf
 			INNER JOIN inscricao ON miaid = insmiaid
 			WHERE tusdatafim is null
+            AND concat(extract(year from miadatainicio), '/', convert(extract(month from miadatainicio) div 7 + 1, decimal(2,0))) = p_periodo
 			GROUP BY usucpf
 			ORDER BY count(*) DESC 
 			;
 end$
 delimiter ;
-call sp_monitoresmaisrequisitados();
+call sp_monitoresmaisrequisitados('2018/1');
 delimiter $
 
-create procedure sp_disciplinasmaisrequisitadas()
+create procedure sp_disciplinasmaisrequisitadas(p_periodo varchar(7))
 begin
 SELECT  matid, matnome, count(*)'numero de inscricoes' FROM usuario
 					INNER JOIN tipousuario ON tususucpf = usucpf
@@ -599,45 +602,48 @@ SELECT  matid, matnome, count(*)'numero de inscricoes' FROM usuario
                     INNER JOIN monitoria ON usucpf = miausucpf
                     INNER JOIN inscricao ON miaid = insmiaid
                     WHERE tusdatafim IS NULL
+                    AND concat(extract(year from miadatainicio), '/', convert(extract(month from miadatainicio) div 7 + 1, decimal(2,0))) = p_periodo
                     GROUP BY matid
                     ORDER BY count(*) DESC 
                     ;
 end$
 delimiter ;
-call sp_disciplinasmaisrequisitadas();
+call sp_disciplinasmaisrequisitadas('2018/1');
 
 delimiter $
-create procedure sp_horariosmaisrequisitados()
+create procedure sp_horariosmaisrequisitados(p_periodo varchar(7))
 begin
 	SELECT  horhora, count(*)'numero de inscricoes' 
 				FROM horario
 				INNER JOIN monitoria ON horhora = miahorhora
                 INNER JOIN inscricao ON miaid = insmiaid
+                WHERE concat(extract(year from miadatainicio), '/', convert(extract(month from miadatainicio) div 7 + 1, decimal(2,0))) = p_periodo
                 GROUP BY horhora
                 ORDER BY count(*) DESC 
                 ;
 end$
 delimiter ;
 
-call sp_horariosmaisrequisitados();
+call sp_horariosmaisrequisitados('2018/1');
 
 delimiter $
-create procedure sp_diadasemanamaisrequisitados()
+create procedure sp_diadasemanamaisrequisitados(p_periodo varchar(7))
 begin
 SELECT  diaid, dianome, count(*)'numero de inscricoes' 
 					FROM diadasemana
 					INNER JOIN monitoria ON diaid = miadiaid
                     INNER JOIN inscricao ON miaid = insmiaid
+                    WHERE concat(extract(year from miadatainicio), '/', convert(extract(month from miadatainicio) div 7 + 1, decimal(2,0))) = p_periodo
                     GROUP BY diaid
                     ORDER BY count(*) DESC
                     ;
 end$
 delimiter ;
 
-call sp_diadasemanamaisrequisitados();
+call sp_diadasemanamaisrequisitados('2018/1');
 
 delimiter $
-create procedure sp_monitoresqueoferecemmaishorarios()
+create procedure sp_monitoresqueoferecemmaishorarios(p_periodo varchar(7))
 begin
 SELECT  usucpf,usunome,matid,matnome, count(*)'horarios oferecidos' FROM usuario
 					INNER JOIN tipousuario ON tususucpf = usucpf
@@ -645,16 +651,17 @@ SELECT  usucpf,usunome,matid,matnome, count(*)'horarios oferecidos' FROM usuario
 					INNER JOIN materia ON tusmatid = matid
                     INNER JOIN monitoria ON usucpf = miausucpf
 					WHERE tusdatafim IS NULL
+                    AND concat(extract(year from miadatainicio), '/', convert(extract(month from miadatainicio) div 7 + 1, decimal(2,0))) = p_periodo
                     GROUP BY usucpf
                     ORDER BY count(*) DESC
                     ;
 end$
 delimiter ;
-call sp_monitoresqueoferecemmaishorarios();
+call sp_monitoresqueoferecemmaishorarios('2018/1');
 
 
 delimiter $
-create procedure sp_monitoresqueoferecemmenoshorarios()
+create procedure sp_monitoresqueoferecemmenoshorarios(p_periodo varchar(7))
 begin
 SELECT  usucpf,usunome,matid,matnome, count(*)'horarios oferecidos' FROM usuario
 					INNER JOIN tipousuario ON tususucpf = usucpf
@@ -662,12 +669,13 @@ SELECT  usucpf,usunome,matid,matnome, count(*)'horarios oferecidos' FROM usuario
 					INNER JOIN materia ON tusmatid = matid
                     INNER JOIN monitoria ON usucpf = miausucpf
 					WHERE tusdatafim IS NULL
+                    AND concat(extract(year from miadatainicio), '/', convert(extract(month from miadatainicio) div 7 + 1, decimal(2,0))) = p_periodo
                     GROUP BY usucpf
                     ORDER BY count(*) DESC
                     ;
 end$
 delimiter ;
-call sp_monitoresqueoferecemmenoshorarios();
+call sp_monitoresqueoferecemmenoshorarios('2018/1');
 
 delimiter #
 create function f_numerodemonitorias(p_moncpf varchar(15))returns int
@@ -696,3 +704,49 @@ end#
 delimiter ;
 
 CALL sp_validacao('sandro.teixeira', 'tads', 'Aluno');
+
+delimiter #
+create function f_validaaluno(p_alupf varchar(15)) returns boolean
+begin
+	declare v_dataregistrada date;
+    declare v_registroexiste boolean default null;
+    declare v_dtregistrada varchar(7);
+    declare v_dtatual varchar(7);
+    
+    set v_registroexiste = (select count(*) from tipousuario
+							where tususucpf = p_alupf
+                            and tusfcoid = 3);
+                            
+	if v_registroexiste = 1 then
+		set v_dtatual = concat(extract(month from curdate()), '/', extract(year from curdate()));
+        set v_dtregistrada = concat(extract(month from v_dataregistrada),'/',  extract(year from v_dataregistrada));
+		set v_dataregistrada = (select max(tusdatainicio) from tipousuario
+								where tususucpf = p_alupf
+								and tusfcoid = 3);
+		if extract(month from v_dataregistrada) >= 7 then
+			if v_dtatual >= concat('1/', extract(year from v_dtregistrada)+1) then
+				return 1;
+			else
+				return 0;
+            end if;
+		else
+			if v_dtatual >= concat('7/', extract(year from v_dtregistrada)) then
+				return 1;
+			else
+				return 0;
+            end if;
+        end if;
+	else
+		return 1;
+    end if;
+end #
+delimiter ;
+
+delimiter #
+create procedure sp_periodo()
+begin
+	select distinct concat(extract(year from miadatainicio), '/', convert(extract(month from miadatainicio) div 7 + 1, decimal(2,0))) 'periodo'
+    from monitoria
+    order by periodo desc;
+end#
+delimiter ;

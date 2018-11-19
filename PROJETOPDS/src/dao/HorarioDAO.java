@@ -46,10 +46,11 @@ public class HorarioDAO {
         }
     }
 
-    public Vector<Vector> horariosMaisRequisitados(){
+    public Vector<Vector> horariosMaisRequisitados(String str){
     try{
             String sql = "CALL sp_horariosmaisrequisitados()";
             PreparedStatement instrucao = connection.prepareStatement(sql);
+            instrucao.setString(1, str);
             ResultSet resultado = instrucao.executeQuery();
             Vector<Vector> horarios = new Vector<>();
             while(resultado.next()){

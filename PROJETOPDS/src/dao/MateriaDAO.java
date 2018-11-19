@@ -125,10 +125,11 @@ public class MateriaDAO {
         }
     }
 
-    public Vector<Vector> materiasMaisRequisitadas(){
+    public Vector<Vector> materiasMaisRequisitadas(String str){
         try{
             String sql = "call sp_disciplinasmaisrequisitadas()";
             PreparedStatement instrucao = connection.prepareStatement(sql);
+            instrucao.setString(1, str);
             ResultSet resultado = instrucao.executeQuery();
             Vector<Vector> materias = new Vector<>();
             while(resultado.next()){
