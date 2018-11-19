@@ -7,8 +7,11 @@ package control;
 
 import dao.LoginDAO;
 import dao.MonitorDAO;
+import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import model.Aluno;
 import model.Monitor;
@@ -71,11 +74,28 @@ public class LoginControle2 {
                 }
             }
             else{
-                JOptionPane.showMessageDialog(null, "Não foi possível efetuar o login."
+                Point p = tela.getLocation();
+                new Thread(){
+                    @Override
+                    public void run() {
+                        for(int i=0; i<3; i++){
+                            try {
+                                tela.setLocation(p.x + 10, p.y);
+                                sleep(10);
+                                tela.setLocation(p.x - 10, p.y);
+                                tela.setLocation(p);
+                            } catch (InterruptedException ex) {
+                                Logger.getLogger(LoginControle2.class.getName()).log(Level.SEVERE, null, ex);
+                            }
+                        }
+                    }
+                    
+                }.start();
+                /*JOptionPane.showMessageDialog(null, "Não foi possível efetuar o login."
                                                     + "\nVerifique suas credenciais"
                                                     + "\ne o tipo de usuário");
                 tela.getCpUsuario().setText("");
-                tela.getCpSenha().setText("");
+                tela.getCpSenha().setText("");*/
             }
         }
         else{

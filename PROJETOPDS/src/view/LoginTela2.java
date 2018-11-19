@@ -6,18 +6,18 @@
 package view;
 
 import java.awt.Color;
+import java.awt.Point;
 import javax.swing.JButton;
 import javax.swing.JPasswordField;
 import javax.swing.JRadioButton;
 import javax.swing.JTextField;
-import javax.swing.SwingConstants;
-import javax.swing.plaf.basic.BasicComboBoxRenderer;
 
 /**
  *
  * @author sandr
  */
 public class LoginTela2 extends javax.swing.JFrame {
+    Point point = new Point();
 
     /**
      * Creates new form LoginTela2
@@ -83,6 +83,16 @@ public class LoginTela2 extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setUndecorated(true);
+        addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
+            public void mouseDragged(java.awt.event.MouseEvent evt) {
+                formMouseDragged(evt);
+            }
+        });
+        addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                formMouseClicked(evt);
+            }
+        });
 
         jPanel1.setBackground(new java.awt.Color(51, 102, 255));
 
@@ -90,7 +100,7 @@ public class LoginTela2 extends javax.swing.JFrame {
         jLabel1.setFont(new java.awt.Font("Segoe UI Light", 0, 24)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(255, 255, 255));
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel1.setText("Login de Acesso");
+        jLabel1.setText("SIGEM");
         jLabel1.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
@@ -221,6 +231,16 @@ public class LoginTela2 extends javax.swing.JFrame {
         btSair.setForeground(new Color(235, 235, 235));
         btSair.setBackground(new Color(217, 81, 51));
     }//GEN-LAST:event_btSairMouseExited
+
+    private void formMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_formMouseClicked
+        point.x = evt.getX();
+        point.y = evt.getY();
+    }//GEN-LAST:event_formMouseClicked
+
+    private void formMouseDragged(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_formMouseDragged
+        Point p = this.getLocation();
+        this.setLocation(p.x + evt.getX() - point.x, p.y + evt.getY() - point.y);
+    }//GEN-LAST:event_formMouseDragged
 
     /**
      * @param args the command line arguments
