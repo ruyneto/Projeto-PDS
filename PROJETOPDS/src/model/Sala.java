@@ -12,7 +12,20 @@ package model;
 public class Sala {
     private int id;
     private String nome;
+    private int ativa;
 
+    public int getAtiva() {
+        return ativa;
+    }
+
+    public void setAtiva(int ativa) {
+        this.ativa = ativa;
+    }
+
+    public Sala() {
+    }
+    
+    
     public Sala(int id, String nome) {
         this.id = id;
         this.nome = nome;

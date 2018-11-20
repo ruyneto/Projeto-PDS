@@ -49,10 +49,10 @@ public class LoginControle {
 
                 if(tela.getCbFuncao().getSelectedItem().equals("Coordenador")){
                    tela.dispose();
-                   /*AlunoGerenciarAgendamentoTela view = new AlunoGerenciarAgendamentoTela();
+                   AlunoGerenciarAgendamentoTela view = new AlunoGerenciarAgendamentoTela();
                    Aluno alu = new Aluno(usu.getCpf(), usu.getNome());
                    new AlunoGerenciarAgendamentoControle(alu, view);
-                   view.setVisible(true);*/
+                   view.setVisible(true);
                 }
 
                 if(tela.getCbFuncao().getSelectedItem().equals("Monitor")){

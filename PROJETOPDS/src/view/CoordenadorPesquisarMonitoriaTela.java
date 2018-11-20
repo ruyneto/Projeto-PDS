@@ -39,6 +39,7 @@ public class CoordenadorPesquisarMonitoriaTela extends javax.swing.JFrame {
         btPesquisar = new javax.swing.JButton();
         btExcluir = new javax.swing.JButton();
         btDetalhar = new javax.swing.JButton();
+        jButton1 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setResizable(false);
@@ -73,6 +74,13 @@ public class CoordenadorPesquisarMonitoriaTela extends javax.swing.JFrame {
 
         btDetalhar.setText("Detalhar");
 
+        jButton1.setText("Voltar");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -88,10 +96,12 @@ public class CoordenadorPesquisarMonitoriaTela extends javax.swing.JFrame {
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                         .addGroup(layout.createSequentialGroup()
                             .addComponent(btCadastar)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addGap(52, 52, 52)
                             .addComponent(btDetalhar)
-                            .addGap(76, 76, 76)
-                            .addComponent(btExcluir))
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                            .addComponent(btExcluir)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jButton1))
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 375, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(15, Short.MAX_VALUE))
         );
@@ -110,7 +120,8 @@ public class CoordenadorPesquisarMonitoriaTela extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btCadastar)
                     .addComponent(btExcluir)
-                    .addComponent(btDetalhar))
+                    .addComponent(btDetalhar)
+                    .addComponent(jButton1))
                 .addContainerGap())
         );
 
@@ -120,6 +131,11 @@ public class CoordenadorPesquisarMonitoriaTela extends javax.swing.JFrame {
     private void formWindowGainedFocus(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowGainedFocus
         // TODO add your handling code here:
     }//GEN-LAST:event_formWindowGainedFocus
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        this.dispose();
+        new CoordenadorOpcoes().setVisible(true);
+    }//GEN-LAST:event_jButton1ActionPerformed
 
     public JButton getBtCadastar() {
         return btCadastar;
@@ -190,6 +206,7 @@ public class CoordenadorPesquisarMonitoriaTela extends javax.swing.JFrame {
     private javax.swing.JButton btExcluir;
     private javax.swing.JButton btPesquisar;
     private javax.swing.JTextField cpPesquisa;
+    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable tabela;

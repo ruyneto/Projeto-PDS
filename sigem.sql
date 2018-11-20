@@ -2,6 +2,8 @@ drop database if exists sigem;
 create database sigem;
 use sigem;
 
+SET GLOBAL log_bin_trust_function_creators = 1;
+
 create table sala(
 salid int primary key auto_increment,
 salnome varchar(20) not null,

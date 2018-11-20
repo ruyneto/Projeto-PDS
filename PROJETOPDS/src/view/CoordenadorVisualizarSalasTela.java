@@ -13,20 +13,20 @@ import javax.swing.JTextField;
  *
  * @author Izaltino
  */
-public class CoordenadorVisualizarMateriasTela extends javax.swing.JFrame {
+public class CoordenadorVisualizarSalasTela extends javax.swing.JFrame {
 
     /**
      * Creates new form CoordenadorVisualizarMateriasTelas
      */
-    public CoordenadorVisualizarMateriasTela() {
+    public CoordenadorVisualizarSalasTela() {
         initComponents();
     }
 
-    public JTable getTabelaMaterias(){
-    return tabelaMaterias;
+    public JTable getTabelaSalas(){
+    return tabelaSalas;
     }
-    public JTextField getCpMateria(){
-        return cpMateria;
+    public JTextField getCpSala(){
+        return cpSala;
     }
     
     public JButton getBtCadastrar()
@@ -51,15 +51,16 @@ public class CoordenadorVisualizarMateriasTela extends javax.swing.JFrame {
     private void initComponents() {
 
         jLabel1 = new javax.swing.JLabel();
-        cpMateria = new javax.swing.JTextField();
+        cpSala = new javax.swing.JTextField();
         jScrollPane1 = new javax.swing.JScrollPane();
-        tabelaMaterias = new javax.swing.JTable();
+        tabelaSalas = new javax.swing.JTable();
         btCadastrar = new javax.swing.JButton();
         btVoltar = new javax.swing.JButton();
         btAlterar = new javax.swing.JButton();
         btExcluir = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setTitle("Salas");
         addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusGained(java.awt.event.FocusEvent evt) {
                 formFocusGained(evt);
@@ -75,25 +76,25 @@ public class CoordenadorVisualizarMateriasTela extends javax.swing.JFrame {
 
         jLabel1.setText("Nome");
 
-        cpMateria.addInputMethodListener(new java.awt.event.InputMethodListener() {
-            public void inputMethodTextChanged(java.awt.event.InputMethodEvent evt) {
-                cpMateriaInputMethodTextChanged(evt);
-            }
+        cpSala.addInputMethodListener(new java.awt.event.InputMethodListener() {
             public void caretPositionChanged(java.awt.event.InputMethodEvent evt) {
             }
-        });
-        cpMateria.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
-            public void propertyChange(java.beans.PropertyChangeEvent evt) {
-                cpMateriaPropertyChange(evt);
+            public void inputMethodTextChanged(java.awt.event.InputMethodEvent evt) {
+                cpSalaInputMethodTextChanged(evt);
             }
         });
-        cpMateria.addKeyListener(new java.awt.event.KeyAdapter() {
+        cpSala.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
+            public void propertyChange(java.beans.PropertyChangeEvent evt) {
+                cpSalaPropertyChange(evt);
+            }
+        });
+        cpSala.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
-                cpMateriaKeyPressed(evt);
+                cpSalaKeyPressed(evt);
             }
         });
 
-        tabelaMaterias.setModel(new javax.swing.table.DefaultTableModel(
+        tabelaSalas.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
                 {null, null, null, null},
@@ -104,7 +105,7 @@ public class CoordenadorVisualizarMateriasTela extends javax.swing.JFrame {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
-        jScrollPane1.setViewportView(tabelaMaterias);
+        jScrollPane1.setViewportView(tabelaSalas);
 
         btCadastrar.setText("Cadastrar");
 
@@ -128,7 +129,7 @@ public class CoordenadorVisualizarMateriasTela extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(cpMateria)
+                    .addComponent(cpSala)
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel1)
@@ -151,7 +152,7 @@ public class CoordenadorVisualizarMateriasTela extends javax.swing.JFrame {
                 .addGap(20, 20, 20)
                 .addComponent(jLabel1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(cpMateria, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(cpSala, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 182, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 29, Short.MAX_VALUE)
@@ -171,17 +172,17 @@ public class CoordenadorVisualizarMateriasTela extends javax.swing.JFrame {
             new CoordenadorOpcoes().setVisible(true);
     }//GEN-LAST:event_btVoltarActionPerformed
 
-    private void cpMateriaInputMethodTextChanged(java.awt.event.InputMethodEvent evt) {//GEN-FIRST:event_cpMateriaInputMethodTextChanged
+    private void cpSalaInputMethodTextChanged(java.awt.event.InputMethodEvent evt) {//GEN-FIRST:event_cpSalaInputMethodTextChanged
         // TODO add your handling code here:
-    }//GEN-LAST:event_cpMateriaInputMethodTextChanged
+    }//GEN-LAST:event_cpSalaInputMethodTextChanged
 
-    private void cpMateriaPropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_cpMateriaPropertyChange
+    private void cpSalaPropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_cpSalaPropertyChange
         // TODO add your handling code here:
-    }//GEN-LAST:event_cpMateriaPropertyChange
+    }//GEN-LAST:event_cpSalaPropertyChange
 
-    private void cpMateriaKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_cpMateriaKeyPressed
+    private void cpSalaKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_cpSalaKeyPressed
         // TODO add your handling code here:
-    }//GEN-LAST:event_cpMateriaKeyPressed
+    }//GEN-LAST:event_cpSalaKeyPressed
 
     private void formFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_formFocusGained
         System.out.println("Entrou no focusGained!");
@@ -209,21 +210,23 @@ public class CoordenadorVisualizarMateriasTela extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(CoordenadorVisualizarMateriasTela.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(CoordenadorVisualizarSalasTela.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(CoordenadorVisualizarMateriasTela.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(CoordenadorVisualizarSalasTela.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(CoordenadorVisualizarMateriasTela.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(CoordenadorVisualizarSalasTela.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(CoordenadorVisualizarMateriasTela.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(CoordenadorVisualizarSalasTela.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
+        //</editor-fold>
         //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new CoordenadorVisualizarMateriasTela().setVisible(true);
+                new CoordenadorVisualizarSalasTela().setVisible(true);
             }
         });
     }
@@ -233,9 +236,9 @@ public class CoordenadorVisualizarMateriasTela extends javax.swing.JFrame {
     private javax.swing.JButton btCadastrar;
     private javax.swing.JButton btExcluir;
     private javax.swing.JButton btVoltar;
-    private javax.swing.JTextField cpMateria;
+    private javax.swing.JTextField cpSala;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable tabelaMaterias;
+    private javax.swing.JTable tabelaSalas;
     // End of variables declaration//GEN-END:variables
 }

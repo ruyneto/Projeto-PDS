@@ -2,6 +2,7 @@ package util;
 
 import javax.swing.JOptionPane;
 import model.Materia;
+import model.Sala;
 
 
 public class Alert {
@@ -21,6 +22,20 @@ public class Alert {
                 "A matéria "+c.getNome()+ " foi inserida com sucesso.");
     }
     
+    public static int salaAlertaExclusao(Sala c) {
+        return JOptionPane.showConfirmDialog(null, "Você quer realmente excluir a Sala " + c.getNome()+ "?",
+                "EXCLUIR", JOptionPane.YES_NO_OPTION);
+    }
+
+    public static void salaAlterarSucesso(Sala c) {
+        JOptionPane.showMessageDialog(null,
+                "A Sala "+c.getNome()+ " foi alterada com sucesso.");
+    }
+
+    public static void salaInserirSucesso(Sala c) {
+        JOptionPane.showMessageDialog(null,
+                "A Sala "+c.getNome()+ " foi inserida com sucesso.");
+    }
     
 }
 

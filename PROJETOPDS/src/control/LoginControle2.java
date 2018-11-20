@@ -14,6 +14,7 @@ import model.Aluno;
 import model.Monitor;
 import model.Usuario;
 import view.AlunoGerenciarAgendamentoTela;
+import view.CoordenadorOpcoes;
 import view.LoginTela2;
 import view.MonitorReservarHorarioTela;
 
@@ -55,10 +56,7 @@ public class LoginControle2 {
 
                 if(funcao.equals("Coordenador")){
                    tela.dispose();
-                   /*AlunoGerenciarAgendamentoTela view = new AlunoGerenciarAgendamentoTela();
-                   Aluno alu = new Aluno(usu.getCpf(), usu.getNome());
-                   new AlunoGerenciarAgendamentoControle(alu, view);
-                   view.setVisible(true);*/
+                   new CoordenadorOpcoes().setVisible(true);
                 }
 
                 if(funcao.equals("Monitor")){
