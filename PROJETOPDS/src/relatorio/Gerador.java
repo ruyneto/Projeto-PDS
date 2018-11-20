@@ -39,9 +39,11 @@ import model.Monitor;
  */
 public class Gerador {
     public static String DEST = "Relatorio/relatorio.pdf";
-    public static void main(String args[]){
+    public static String periodo;
+    public static void gerarRelatorio(String str){
         File file = new File(DEST);
         file.getParentFile().mkdirs(); 
+        periodo = str;
         try {
             createPdf(DEST);
         } catch (IOException ex) {
@@ -109,7 +111,7 @@ public class Gerador {
         table.addCell(cell);        
         MonitorDAO lista = new MonitorDAO();
         
-        lista.monitoresMaisRequisitados().forEach((n)->{
+        lista.monitoresMaisRequisitados(periodo).forEach((n)->{
                           PdfPCell celula;
                         celula = new PdfPCell(new Phrase(((Monitor) n.get(0)).getNome()));
                         table.addCell(celula);
@@ -143,7 +145,7 @@ public class Gerador {
         table.addCell(cell);        
         MateriaDAO lista = new MateriaDAO();
         
-               lista.materiasMaisRequisitadas().forEach((n)->{
+               lista.materiasMaisRequisitadas(periodo).forEach((n)->{
                           PdfPCell celula;
                         celula = new PdfPCell(new Phrase(((Materia) n.get(0)).getNome()));
                         table.addCell(celula);
@@ -178,7 +180,7 @@ public class Gerador {
         table.addCell(cell);        
         HorarioDAO lista = new HorarioDAO();
         
-               lista.horariosMaisRequisitados().forEach((n)->{
+               lista.horariosMaisRequisitados(periodo).forEach((n)->{
                           PdfPCell celula;
                         celula = new PdfPCell(new Phrase(((Horario) n.get(0)).getHoraInicio()));
                         table.addCell(celula);
@@ -212,7 +214,7 @@ public class Gerador {
         table.addCell(cell);        
         DiaDAO lista = new DiaDAO();
         
-               lista.diaDaSemanaMaisRequisitados().forEach((n)->{
+               lista.diaDaSemanaMaisRequisitados(periodo).forEach((n)->{
                           PdfPCell celula;
                         celula = new PdfPCell(new Phrase(((DiaDaSemana) n.get(0)).getNome()));
                         table.addCell(celula);
@@ -246,7 +248,7 @@ public class Gerador {
         table.addCell(cell);        
         MonitorDAO lista = new MonitorDAO();
         
-               lista.monitoresQueOferecemMaisHorarios().forEach((n)->{
+               lista.monitoresQueOferecemMaisHorarios(periodo).forEach((n)->{
                           PdfPCell celula;
                         celula = new PdfPCell(new Phrase(((Monitor) n.get(0)).getNome()));
                         table.addCell(celula);

@@ -97,11 +97,27 @@ public class MonitorDAO {
             throw new RuntimeException(ex);
         }
     }
-
-    public  Vector<Vector> monitoresMaisRequisitados(){
-     try{
-            String sql = "CALL sp_monitoresmaisrequisitados()";
+    
+    public boolean validaAluno(Aluno a){
+        try{
+            String sql = "SELECT f_validaaluno(?) AS resp";
             PreparedStatement instrucao = connection.prepareStatement(sql);
+            instrucao.setString(1, a.getCpf());
+            ResultSet resultado = instrucao.executeQuery();
+            while(resultado.next()){
+                return resultado.getBoolean("resp");
+            }
+        }catch(SQLException ex){
+            throw new RuntimeException(ex);
+        }
+        return false;
+    }
+
+    public  Vector<Vector> monitoresMaisRequisitados(String str){
+     try{
+            String sql = "CALL sp_monitoresmaisrequisitados(?)";
+            PreparedStatement instrucao = connection.prepareStatement(sql);
+            instrucao.setString(1, str);
             ResultSet resultado = instrucao.executeQuery();
 
             Vector<Vector> monitores = new Vector<>();
@@ -127,10 +143,11 @@ public class MonitorDAO {
         }
     } 
 
-    public Vector<Vector> monitoresQueOferecemMaisHorarios(){
+    public Vector<Vector> monitoresQueOferecemMaisHorarios(String str){
     try{
-            String sql = "CALL sp_monitoresqueoferecemmaishorarios()";
+            String sql = "CALL sp_monitoresqueoferecemmaishorarios(?)";
             PreparedStatement instrucao = connection.prepareStatement(sql);
+            instrucao.setString(1, str);
             ResultSet resultado = instrucao.executeQuery();
 
             Vector<Vector> monitores = new Vector<>();
@@ -156,10 +173,11 @@ public class MonitorDAO {
         }
     }
     
-    public Vector<Vector> monitoresQueOferecemMenosHorarios(){
+    public Vector<Vector> monitoresQueOferecemMenosHorarios(String str){
     try{
-            String sql = "CALL sp_monitoresqueoferecemmenoshorarios()";
+            String sql = "CALL sp_monitoresqueoferecemmenoshorarios(?)";
             PreparedStatement instrucao = connection.prepareStatement(sql);
+            instrucao.setString(1, str);
             ResultSet resultado = instrucao.executeQuery();
 
             Vector<Vector> monitores = new Vector<>();

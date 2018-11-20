@@ -202,7 +202,7 @@ public class MonitoriaDAO {
         }
     }
     
-    public Vector<Monitoria> consultarMonitoriasLivre(String str){
+    public Vector<Monitoria> consultarMonitoriasLivres(String str){
         try{
             String sql = "CALL sp_consultamonitoriaslivres(?)";
             PreparedStatement instrucao = connection.prepareStatement(sql);
@@ -250,6 +250,22 @@ public class MonitoriaDAO {
             throw new RuntimeException(ex);
         }
     }
+    
+    public List<String> periodo(){
+        try{
+            String sql = "CALL sp_periodo()";
+            PreparedStatement instrucao = connection.prepareStatement(sql);
+            ResultSet resultado = instrucao.executeQuery();
+            List<String> periodos = new ArrayList<>();
+            while(resultado.next()){
+                periodos.add(resultado.getString("periodo"));
+            }
+            return periodos;
+        }catch(SQLException ex){
+            throw new RuntimeException(ex);
+        }
+    }
+
     
     public void acaoSalvarDoMonitor(List<Monitoria> mia, Monitor mon){
         try{

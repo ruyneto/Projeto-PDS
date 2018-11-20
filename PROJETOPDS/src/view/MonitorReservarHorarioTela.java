@@ -119,6 +119,8 @@ public class MonitorReservarHorarioTela extends javax.swing.JFrame {
 
         btSair.setFont(new java.awt.Font("Tahoma", 0, 10)); // NOI18N
         btSair.setText("Logoff");
+        btSair.setBorderPainted(false);
+        btSair.setFocusPainted(false);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);

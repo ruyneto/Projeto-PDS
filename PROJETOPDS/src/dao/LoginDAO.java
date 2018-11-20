@@ -34,6 +34,7 @@ public class LoginDAO {
                 usu.setCpf(resultado.getString("usucpf"));
                 usu.setNome(resultado.getString("usunome"));
             }
+            connection.close();
         }catch(SQLException ex){
             System.out.println(ex);
         }
