@@ -44,6 +44,7 @@ public class Gerador {
         File file = new File(DEST);
         file.getParentFile().mkdirs(); 
         periodo = str;
+        System.out.println(periodo);
         try {
             createPdf(DEST);
         } catch (IOException ex) {
