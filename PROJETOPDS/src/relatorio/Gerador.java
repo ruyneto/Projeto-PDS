@@ -11,8 +11,10 @@ import com.itextpdf.text.Document;
 import com.itextpdf.text.DocumentException;
 import com.itextpdf.text.Font;
 import com.itextpdf.text.FontFactory;
+import com.itextpdf.text.Image;
 import com.itextpdf.text.Paragraph;
 import com.itextpdf.text.Phrase;
+import com.itextpdf.text.pdf.PdfImage;
 import com.itextpdf.text.pdf.PdfPCell;
 import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfWriter;
@@ -40,6 +42,7 @@ import model.Monitor;
 public class Gerador {
     public static String DEST = "Relatorio/relatorio.pdf";
     public static String periodo;
+    public static final String IMG = "src/image/sigem.png";
     public static void gerarRelatorio(String str){
         File file = new File(DEST);
         file.getParentFile().mkdirs(); 
@@ -61,13 +64,19 @@ public class Gerador {
         Document document = new Document();
         PdfWriter.getInstance(document, new FileOutputStream(dest));
         document.open();
+
         Font chapterFont = FontFactory.getFont(FontFactory.HELVETICA, 16, Font.BOLDITALIC);
         Font paragraphFont = FontFactory.getFont(FontFactory.HELVETICA, 12, Font.NORMAL);
         Chunk chunk = new Chunk("SIGEM - Relatório de Monitorias.", chapterFont);
         Chapter chapter = new Chapter(new Paragraph(chunk), 1);
         chapter.setNumberDepth(0);
         chapter.add(new Paragraph("Relatório gerado as "+sdf.format(cal.getTime()), paragraphFont));
-        document.add(chapter);
+        
+        
+        
+        
+        document.add(chapter);        
+        
         document.add(Chunk.NEWLINE);
         document.add(Chunk.NEWLINE);
         document.add(Chunk.NEWLINE);
@@ -91,7 +100,7 @@ public class Gerador {
         document.close();
     }
     public static Paragraph gerarSecaoMonitoresMaisRequisitados(){
-        Chunk titulo = new Chunk("1 - Monitores mais requisitados e quantidades de requisições.",FontFactory.getFont(FontFactory.HELVETICA, 18, Font.NORMAL));
+        Chunk titulo = new Chunk("1 - Monitores mais requisitados e quantidades de requisições.",FontFactory.getFont(FontFactory.HELVETICA, 12, Font.NORMAL));
         Paragraph paragrafo = new Paragraph(titulo);
         paragrafo.add(gerarTabelamonitoresMaisRequisitados());
         return paragrafo;
@@ -125,7 +134,7 @@ public class Gerador {
         return table;    
     }
     public static Paragraph gerarSecaoMateriasMaisRequisitadas(){
-        Chunk titulo = new Chunk("2 - Matérias mais requisitadas e quantidades de requisições.",FontFactory.getFont(FontFactory.HELVETICA, 18, Font.NORMAL));
+        Chunk titulo = new Chunk("2 - Matérias mais requisitadas e quantidades de requisições.",FontFactory.getFont(FontFactory.HELVETICA, 12, Font.NORMAL));
         Paragraph paragrafo = new Paragraph(titulo);
         paragrafo.add(gerarTabelaMateriasMaisRequisitadas());
         return paragrafo;
@@ -160,7 +169,7 @@ public class Gerador {
     }
     
  public static Paragraph gerarSecaoHorariosMaisRequisitados(){
-        Chunk titulo = new Chunk("3 - Horários mais requisitados e quantidades de requisições.",FontFactory.getFont(FontFactory.HELVETICA, 18, Font.NORMAL));
+        Chunk titulo = new Chunk("3 - Horários mais requisitados e quantidades de requisições.",FontFactory.getFont(FontFactory.HELVETICA, 12, Font.NORMAL));
         Paragraph paragrafo = new Paragraph(titulo);
         paragrafo.add(gerarTabelaHorariosMaisRequisitados());
         return paragrafo;
@@ -194,7 +203,7 @@ public class Gerador {
         return table;    
     }    
  public static Paragraph gerarSecaodiadasemanamaisrequisitados(){
-        Chunk titulo = new Chunk("4 - Dias semanais mais requisitados e quantidade.",FontFactory.getFont(FontFactory.HELVETICA, 18, Font.NORMAL));
+        Chunk titulo = new Chunk("4 - Dias semanais mais requisitados e quantidade.",FontFactory.getFont(FontFactory.HELVETICA, 12, Font.NORMAL));
         Paragraph paragrafo = new Paragraph(titulo);
         paragrafo.add(gerarTabeladiadasemanamaisrequisitados());
         return paragrafo;
@@ -228,7 +237,7 @@ public class Gerador {
         return table;    
     }    
  public static Paragraph gerarSecaomonitoresqueoferecemmaishorarios(){
-        Chunk titulo = new Chunk("5 - Monitores e quantidade de horas oferecidas em ordem reversa.",FontFactory.getFont(FontFactory.HELVETICA, 18, Font.NORMAL));
+        Chunk titulo = new Chunk("5 - Monitores e quantidade de horas oferecidas em ordem decrescente.",FontFactory.getFont(FontFactory.HELVETICA, 12, Font.NORMAL));
         Paragraph paragrafo = new Paragraph(titulo);
         paragrafo.add(gerarTabelamonitoresqueoferecemmaishorarios());
         return paragrafo;
