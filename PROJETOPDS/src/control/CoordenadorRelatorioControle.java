@@ -37,7 +37,7 @@ public class CoordenadorRelatorioControle {
 
         @Override
         public void actionPerformed(ActionEvent e) {
-            Gerador.gerarRelatorio(tela.getCbPeriodo().getSelectedItem().toString());
+            Gerador.gerarRelatorio((String)tela.getCbPeriodo().getSelectedItem());
         }
         
     }
