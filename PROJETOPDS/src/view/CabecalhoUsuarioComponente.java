@@ -34,8 +34,8 @@ public class CabecalhoUsuarioComponente extends javax.swing.JPanel {
     public CabecalhoUsuarioComponente() {
         initComponents();
         
-      carregarMenu();
-        
+    
+//        comboTipoUsuario.addItem(TOOL_TIP_TEXT_KEY);
     }
     
     public JLabel getNome(){
@@ -50,31 +50,14 @@ public class CabecalhoUsuarioComponente extends javax.swing.JPanel {
         return botaoOpcoes;
     }
     
-    private void carregarMenu(){
-    //criando item do menu
-    JMenuItem itemAlterarSenha=new JMenuItem("Alterar Senha");
-    JMenuItem itemLogout=new JMenuItem("Logout");
-    //ação do item de menu
-    /*itemAlterarSenha.addActionListener(new ActionListener() {
-        @Override
-        public void actionPerformed(ActionEvent e) {
-           
-                try {
-                 if(Alert.alertaExclusao(controle.getCategoria())==0){
-                    controle.deletar();
-                 }
-                } catch (SQLException ex) {
-                    Logger.getLogger(CategoriaPesquisarTela.class.getName()).log(Level.SEVERE, null, ex);
-                } catch (DAOException ex) {
-                    Logger.getLogger(CategoriaPesquisarTela.class.getName()).log(Level.SEVERE, null, ex);
-                }
-            
-        }
-    });*/
-    //adicionando o item ao menu PopUp
-    testePopup.add(itemAlterarSenha);
-    testePopup.add(itemLogout);
+    public JMenuItem getItemAlterarSenha(){
+        return itemAlterarSenha;
     }
+    public JMenuItem getItemLogout(){
+        return itemLogout;
+    }
+    
+    
 
     private void realizarAcao(MouseEvent evt){
                 if(evt.getButton()==MouseEvent.BUTTON1){
@@ -93,6 +76,8 @@ public class CabecalhoUsuarioComponente extends javax.swing.JPanel {
 
         jComboBox2 = new javax.swing.JComboBox<>();
         testePopup = new javax.swing.JPopupMenu();
+        itemAlterarSenha = new javax.swing.JMenuItem();
+        itemLogout = new javax.swing.JMenuItem();
         nome = new javax.swing.JLabel();
         jSeparator1 = new javax.swing.JSeparator();
         comboTipoUsuario = new javax.swing.JComboBox<>();
@@ -103,12 +88,25 @@ public class CabecalhoUsuarioComponente extends javax.swing.JPanel {
         testePopup.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.LOWERED, null, new java.awt.Color(204, 204, 204), null, null));
         testePopup.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
 
-        nome.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        nome.setText("IzaltinoNeto");
+        itemAlterarSenha.setText("AlterarSenha");
+        testePopup.add(itemAlterarSenha);
+
+        itemLogout.setText("Logout");
+        testePopup.add(itemLogout);
+
+        nome.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
+        nome.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        nome.setText("Testing");
 
         jSeparator1.setOrientation(javax.swing.SwingConstants.VERTICAL);
 
         comboTipoUsuario.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Aluno", "Monitor", "Coordenador" }));
+        comboTipoUsuario.setMinimumSize(new java.awt.Dimension(40, 15));
+        comboTipoUsuario.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                comboTipoUsuarioItemStateChanged(evt);
+            }
+        });
 
         botaoOpcoes.setText("...");
         botaoOpcoes.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -127,26 +125,23 @@ public class CabecalhoUsuarioComponente extends javax.swing.JPanel {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(nome, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(nome, javax.swing.GroupLayout.DEFAULT_SIZE, 127, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 8, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(comboTipoUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, 66, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(comboTipoUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, 62, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(botaoOpcoes, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(botaoOpcoes, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(nome, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(botaoOpcoes, javax.swing.GroupLayout.DEFAULT_SIZE, 32, Short.MAX_VALUE)
-                    .addComponent(comboTipoUsuario)
-                    .addComponent(nome, javax.swing.GroupLayout.DEFAULT_SIZE, 32, Short.MAX_VALUE)
-                    .addComponent(jSeparator1))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                    .addComponent(comboTipoUsuario, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(botaoOpcoes, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jSeparator1, javax.swing.GroupLayout.Alignment.LEADING))
+                .addGap(0, 0, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -158,10 +153,16 @@ public class CabecalhoUsuarioComponente extends javax.swing.JPanel {
         realizarAcao(evt);
     }//GEN-LAST:event_botaoOpcoesMouseClicked
 
+    private void comboTipoUsuarioItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_comboTipoUsuarioItemStateChanged
+        // TODO add your handling code here:
+    }//GEN-LAST:event_comboTipoUsuarioItemStateChanged
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton botaoOpcoes;
     private javax.swing.JComboBox<String> comboTipoUsuario;
+    private javax.swing.JMenuItem itemAlterarSenha;
+    private javax.swing.JMenuItem itemLogout;
     private javax.swing.JComboBox<String> jComboBox2;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JLabel nome;

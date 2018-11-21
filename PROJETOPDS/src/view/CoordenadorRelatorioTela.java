@@ -41,7 +41,7 @@ public class CoordenadorRelatorioTela extends javax.swing.JFrame {
         cbPeriodo = new javax.swing.JComboBox<>();
         btGerar = new javax.swing.JButton();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         cbPeriodo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 

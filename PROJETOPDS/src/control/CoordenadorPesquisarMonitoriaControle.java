@@ -17,11 +17,17 @@ import java.awt.event.WindowFocusListener;
 import java.util.List;
 import java.util.Vector;
 import javax.swing.JOptionPane;
+import model.Coordenador;
 import model.Inscricao;
 import model.Monitoria;
+import mvc.CoordenadorRelatorioMVC;
 import view.AlunosInscritosTela;
 import view.CoordenadorCadastrarMonitoriaTela;
+import view.CoordenadorGerenciarMonitoresTela;
 import view.CoordenadorPesquisarMonitoriaTela;
+import view.CoordenadorRelatorioTela;
+import view.CoordenadorVisualizarMateriasTela;
+import view.CoordenadorVisualizarSalasTela;
 import view.tableModels.MonitoriaTableModel;
 
 /**
@@ -32,10 +38,16 @@ public class CoordenadorPesquisarMonitoriaControle {
     private CoordenadorPesquisarMonitoriaTela tela;
     private Monitoria modelo;
     private Vector<Monitoria> monitorias;
-
-    public CoordenadorPesquisarMonitoriaControle(CoordenadorPesquisarMonitoriaTela tela, Monitoria modelo) {
+    private Coordenador coordenador;
+    
+    
+    
+    public CoordenadorPesquisarMonitoriaControle(CoordenadorPesquisarMonitoriaTela tela, Monitoria modelo, Coordenador coordenador){
         this.tela = tela;
         this.modelo = modelo;
+        this.coordenador = coordenador;
+        new CabecalhoUsuarioControle(coordenador, tela.getUsuarioComponente(), tela);
+        
         listar("_");
         tela.addWindowFocusListener(new GanedFocus());
         tela.getTabela().addMouseListener(new MouseListenerTabela());
@@ -45,8 +57,16 @@ public class CoordenadorPesquisarMonitoriaControle {
         tela.getBtExcluir().setEnabled(false);
         tela.getBtDetalhar().addActionListener(new BtDetalhar());
         tela.getBtDetalhar().setEnabled(false);
+        tela.getBtGerenciarMaterias().addActionListener(new listenerBtGerenciarMaterias());
+        tela.getBtGerenciarMonitor().addActionListener(new listenerBtGerenciarMonitores());
+        tela.getBtGerenciarSalas().addActionListener(new listenerBtGerenciarSalas());
+        tela.getBtRelatórios().addActionListener(new listenerBtRelatorios());
+        
     }
     
+    public CoordenadorPesquisarMonitoriaControle(CoordenadorPesquisarMonitoriaTela tela, Monitoria modelo){
+    this(tela,modelo, null);
+    }
     public void listar(String str){
         MonitoriaDAO dao = new MonitoriaDAO();
         monitorias = dao.consultarMonitoriaCoord(str);
@@ -151,5 +171,49 @@ public class CoordenadorPesquisarMonitoriaControle {
         }
         
     }
+
+    class listenerBtGerenciarMonitores implements ActionListener{
+
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            tela.dispose();
+            CoordenadorGerenciarMonitoresTela tela = new CoordenadorGerenciarMonitoresTela();
+        CoordenadorGerenciarMonitoresControle controle = new CoordenadorGerenciarMonitoresControle(tela,coordenador);
+        tela.setVisible(true);
+        }
     
+    }
+    
+    class listenerBtGerenciarMaterias implements ActionListener{
+
+        @Override
+        public void actionPerformed(ActionEvent e) {
+           tela.dispose();
+            CoordenadorVisualizarMateriasTela tela = new CoordenadorVisualizarMateriasTela();
+       CoordenadorVisualizarMateriasControle controle = new CoordenadorVisualizarMateriasControle(tela, coordenador);
+       tela.setVisible(true);  
+        }
+    
+    }
+    
+    class listenerBtGerenciarSalas implements ActionListener{
+
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            tela.dispose();
+            CoordenadorVisualizarSalasTela tela = new CoordenadorVisualizarSalasTela();
+       CoordenadorVisualizarSalasControle controle = new CoordenadorVisualizarSalasControle(tela, coordenador);
+       tela.setVisible(true);
+        }
+    
+    }
+    class listenerBtRelatorios implements ActionListener{
+
+        @Override
+        public void actionPerformed(ActionEvent e) {
+        
+           CoordenadorRelatorioMVC.main(null);
+        }
+    
+    }
 }

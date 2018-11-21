@@ -15,7 +15,7 @@ import view.CoordenadorVisualizarMateriasTela;
 public class CoordenadorVisualizarMateriaMVC {
     public static void main(String[] args){
        CoordenadorVisualizarMateriasTela tela = new CoordenadorVisualizarMateriasTela();
-       CoordenadorVisualizarMateriasControle controle = new CoordenadorVisualizarMateriasControle(tela);
+       CoordenadorVisualizarMateriasControle controle = new CoordenadorVisualizarMateriasControle(tela, null);
        tela.setVisible(true);
     }   
 }

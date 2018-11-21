@@ -14,10 +14,13 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import model.Aluno;
+import model.Coordenador;
 import model.Monitor;
+import model.Monitoria;
 import model.Usuario;
 import view.AlunoGerenciarAgendamentoTela;
 import view.CoordenadorOpcoes;
+import view.CoordenadorPesquisarMonitoriaTela;
 import view.LoginTela2;
 import view.MonitorReservarHorarioTela;
 
@@ -59,7 +62,11 @@ public class LoginControle2 {
 
                 if(funcao.equals("Coordenador")){
                    tela.dispose();
-                   new CoordenadorOpcoes().setVisible(true);
+                   CoordenadorPesquisarMonitoriaTela view = new CoordenadorPesquisarMonitoriaTela();
+                   Coordenador cor = new Coordenador(usu.getCpf(),usu.getNome());
+                   new CoordenadorPesquisarMonitoriaControle(view, new Monitoria(), cor);
+                   view.setVisible(true);
+                   
                 }
 
                 if(funcao.equals("Monitor")){
@@ -67,6 +74,8 @@ public class LoginControle2 {
                    MonitorReservarHorarioTela view = new MonitorReservarHorarioTela();
                     System.out.println(usu.getCpf());
                    Monitor mon = new MonitorDAO().consultaMonitor(usu.getCpf());
+                   if(mon instanceof Monitor)
+                   System.out.println("É um Monitor");
                    new MonitorReservarHorarioControle(mon, view);
                    view.setVisible(true);
                 }

@@ -16,9 +16,12 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JOptionPane;
 import model.Aluno;
+import model.Coordenador;
 import model.Materia;
 import model.Monitor;
+import model.Monitoria;
 import view.CoordenadorGerenciarMonitoresTela;
+import view.CoordenadorPesquisarMonitoriaTela;
 import view.tableModels.MonitorTableModel;
 
 /**
@@ -28,15 +31,19 @@ import view.tableModels.MonitorTableModel;
 public class CoordenadorGerenciarMonitoresControle {
     private CoordenadorGerenciarMonitoresTela tela;
     private List<Monitor> monitores;
+    private Coordenador coordenador;
     
-    public CoordenadorGerenciarMonitoresControle(CoordenadorGerenciarMonitoresTela tela){
+    public CoordenadorGerenciarMonitoresControle(CoordenadorGerenciarMonitoresTela tela, Coordenador coordenador){
         this.tela = tela;
+        this.coordenador = coordenador;
+        new CabecalhoUsuarioControle(coordenador, tela.getUsuarioComponente(), tela);
         preencherComboAluno();
         preencherComboMateria();
         listar("_");
         tela.getBtCadastrar().addActionListener(new BtCadastrar());
         tela.getBtInativar().addActionListener(new BtInativar());
         tela.getCpMonitor().addKeyListener(new Pesquisa());
+        tela.getBtVoltar().addActionListener(new listenerBtVoltar());
     }
     
     public void preencherComboAluno(){
@@ -119,5 +126,17 @@ public class CoordenadorGerenciarMonitoresControle {
         public void keyReleased(KeyEvent evt){
             listar(tela.getCpMonitor().getText());
         }
+    }
+
+    class listenerBtVoltar implements ActionListener{
+
+        @Override
+        public void actionPerformed(ActionEvent e) {
+          tela.dispose();
+                   CoordenadorPesquisarMonitoriaTela view = new CoordenadorPesquisarMonitoriaTela();
+                   new CoordenadorPesquisarMonitoriaControle(view, new Monitoria(), coordenador);
+                   view.setVisible(true);
+        }
+        
     }
 }

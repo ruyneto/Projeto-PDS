@@ -21,13 +21,16 @@ import java.util.Vector;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
+import model.Coordenador;
 import model.Materia;
+import model.Monitoria;
 import model.Sala;
 import mvc.CoordenadorAlterarMateriasMVC;
 import mvc.CoordenadorAlterarSalasMVC;
 import mvc.CoordenadorCadastrarMateriasMVC;
 import mvc.CoordenadorCadastrarSalasMVC;
 import util.Alert;
+import view.CoordenadorPesquisarMonitoriaTela;
 import view.CoordenadorVisualizarMateriasTela;
 import view.CoordenadorVisualizarSalasTela;
 
@@ -40,11 +43,14 @@ public class CoordenadorVisualizarSalasControle {
     private Vector<Sala> salas;
     private CoordenadorVisualizarSalasTela tela;
     private int linhaSelecionada;
+    private Coordenador coordenador;
     
-    public CoordenadorVisualizarSalasControle(CoordenadorVisualizarSalasTela tela) {
+    public CoordenadorVisualizarSalasControle(CoordenadorVisualizarSalasTela tela, Coordenador coordenador) {
         this.tela = tela;
         TableModel modelo = consultarSalas("");
+        this.coordenador = coordenador;
         
+        new CabecalhoUsuarioControle(coordenador, tela.getcCabecalhoUsuarioComponente(), tela);
         this.tela.getTabelaSalas().setModel(modelo);
         this.tela.getCpSala().addKeyListener(new listenerCpSala());
         this.tela.getBtCadastrar().addActionListener(new listenerBtCadastrar());
@@ -54,6 +60,7 @@ public class CoordenadorVisualizarSalasControle {
                 
         this.tela.getbtAlterar().addActionListener(new listenerBtAlterar());
         this.tela.getbtExcluir().addActionListener(new listenerBtExcluir());
+        tela.getBtVoltar().addActionListener(new listenerBtVoltar());
     }
     
     class WindowFocusListenerTela implements WindowFocusListener{
@@ -216,6 +223,17 @@ public class CoordenadorVisualizarSalasControle {
             }
         
         }
+    }
+    class listenerBtVoltar implements ActionListener{
+
+        @Override
+        public void actionPerformed(ActionEvent e) {
+          tela.dispose();
+                   CoordenadorPesquisarMonitoriaTela view = new CoordenadorPesquisarMonitoriaTela();
+                   new CoordenadorPesquisarMonitoriaControle(view, new Monitoria(), coordenador);
+                   view.setVisible(true);
+        }
+        
     }
 }
 

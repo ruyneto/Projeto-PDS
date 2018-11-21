@@ -1,8 +1,10 @@
+SET GLOBAL log_bin_trust_function_creators = 1;
+
+
 drop database if exists sigem;
 create database sigem;
 use sigem;
 
-SET GLOBAL log_bin_trust_function_creators = 1;
 
 create table sala(
 salid int primary key auto_increment,
@@ -752,3 +754,7 @@ begin
     order by periodo desc;
 end#
 delimiter ;
+
+
+insert usuario values (3,'Administrador','Admin','123');
+insert tipousuario values(3,2,'2018-11-17',null,null);

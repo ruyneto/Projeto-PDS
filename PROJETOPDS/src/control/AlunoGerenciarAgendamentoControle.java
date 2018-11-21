@@ -42,6 +42,10 @@ public class AlunoGerenciarAgendamentoControle {
     public AlunoGerenciarAgendamentoControle (Aluno aluno, AlunoGerenciarAgendamentoTela tela) {
         this.tela = tela;
         this.aluno = aluno;
+        System.out.println("Tela: "+tela);
+        System.out.println("controler: "+this);
+        new CabecalhoUsuarioControle(aluno, tela.getComponenteUsuario(), tela);
+        
         preencherComboMateria();
         listar(tela.getCbMateria().getSelectedItem().toString());
         tela.getBtEsquerda().addActionListener(ains);
@@ -49,6 +53,7 @@ public class AlunoGerenciarAgendamentoControle {
         tela.getTabela().addMouseListener(new Acao());
         tela.getBtDireita().addActionListener(averins);
         tela.setTitle("Monitorias Disponíveis");
+        
     }
     
     public void preencherComboMateria(){

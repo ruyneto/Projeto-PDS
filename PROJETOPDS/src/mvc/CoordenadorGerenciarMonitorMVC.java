@@ -19,7 +19,7 @@ public class CoordenadorGerenciarMonitorMVC {
      */
     public static void main(String[] args) {
         CoordenadorGerenciarMonitoresTela tela = new CoordenadorGerenciarMonitoresTela();
-        CoordenadorGerenciarMonitoresControle controle = new CoordenadorGerenciarMonitoresControle(tela);
+        CoordenadorGerenciarMonitoresControle controle = new CoordenadorGerenciarMonitoresControle(tela, null);
         tela.setVisible(true);
     }
     

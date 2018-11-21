@@ -44,10 +44,11 @@ public class MonitorReservarHorarioControle {
     private final AcaoBtSalvar asal = new AcaoBtSalvar();
     private final AcaoBtSalvarAlterar asalalt = new AcaoBtSalvarAlterar();
     private int qtdMonitoriasOfertadas;
-
+    
     public MonitorReservarHorarioControle (Monitor monitor, MonitorReservarHorarioTela tela) {
         this.tela = tela;
         this.monitor = monitor;
+        new CabecalhoUsuarioControle(monitor, tela.getCabecalhoUsuarioComponente(), tela);
         preencherComboSala();
         listar(tela.getCbSala().getSelectedItem().toString());
         tela.getBtEsquerda().addActionListener(ains);
@@ -56,7 +57,6 @@ public class MonitorReservarHorarioControle {
         tela.getTabela1().addMouseListener(new AcaoMouseTabela1());
         tela.getBtDireita().addActionListener(averins);
         tela.getjScrollPane2().setVisible(false);
-        tela.getBtSair().addActionListener(new AcaoBtLogoff());
         qtdMonitoriasOfertadas = new MonitoriaDAO().numeroDeMonitorias(monitor);
         tela.setTitle("Horários Livres");
         this.tela.pack();
@@ -115,19 +115,7 @@ public class MonitorReservarHorarioControle {
         }   
     }
     
-    class AcaoBtLogoff implements ActionListener{
-
-        @Override
-        public void actionPerformed(ActionEvent e) {
-            tela.dispose();
-            tela=null;
-            LoginTela frame = new LoginTela();
-            new LoginControle(frame);
-            frame.setLocationRelativeTo(null);
-            frame.setVisible(true);
-        }
-        
-    }
+   
     
     class AcaoMouseTabela extends MouseAdapter{
         @Override

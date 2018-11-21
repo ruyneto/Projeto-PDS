@@ -6,6 +6,7 @@
 package mvc;
 
 import control.CoordenadorPesquisarMonitoriaControle;
+import model.Coordenador;
 import model.Monitoria;
 import view.CoordenadorPesquisarMonitoriaTela;
 

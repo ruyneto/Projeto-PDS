@@ -8,6 +8,7 @@ package view;
 import javax.swing.JButton;
 import javax.swing.JTable;
 import javax.swing.JTextField;
+import mvc.LoginMVC2;
 
 /**
  *
@@ -40,8 +41,15 @@ public class CoordenadorPesquisarMonitoriaTela extends javax.swing.JFrame {
         btExcluir = new javax.swing.JButton();
         btDetalhar = new javax.swing.JButton();
         jButton1 = new javax.swing.JButton();
+        cabecalhoUsuarioComponente1 = new view.CabecalhoUsuarioComponente();
+        jSeparator1 = new javax.swing.JSeparator();
+        btGerenciarMaterias = new javax.swing.JButton();
+        btGerenciarMonitores = new javax.swing.JButton();
+        btGerenciarSalas = new javax.swing.JButton();
+        btRelatorios = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("Gerenciar Monitoria");
         setResizable(false);
         addWindowFocusListener(new java.awt.event.WindowFocusListener() {
             public void windowGainedFocus(java.awt.event.WindowEvent evt) {
@@ -81,6 +89,44 @@ public class CoordenadorPesquisarMonitoriaTela extends javax.swing.JFrame {
             }
         });
 
+        jSeparator1.setOrientation(javax.swing.SwingConstants.VERTICAL);
+
+        btGerenciarMaterias.setText("<html>Gerenciar <br/>Matérias</html>");
+        btGerenciarMaterias.setActionCommand("Gerenciar  Monitores");
+        btGerenciarMaterias.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        btGerenciarMaterias.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btGerenciarMateriasActionPerformed(evt);
+            }
+        });
+
+        btGerenciarMonitores.setText("<html>Gerenciar <br/>Monitores</html>");
+        btGerenciarMonitores.setActionCommand("Gerenciar  Monitores");
+        btGerenciarMonitores.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        btGerenciarMonitores.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btGerenciarMonitoresActionPerformed(evt);
+            }
+        });
+
+        btGerenciarSalas.setText("<html>Gerenciar <br/>Salas</html>");
+        btGerenciarSalas.setActionCommand("Gerenciar  Monitores");
+        btGerenciarSalas.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        btGerenciarSalas.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btGerenciarSalasActionPerformed(evt);
+            }
+        });
+
+        btRelatorios.setText("<html>Relatórios</html>");
+        btRelatorios.setActionCommand("Gerenciar  Monitores");
+        btRelatorios.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        btRelatorios.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btRelatoriosActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -88,40 +134,74 @@ public class CoordenadorPesquisarMonitoriaTela extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(btGerenciarMonitores, javax.swing.GroupLayout.DEFAULT_SIZE, 84, Short.MAX_VALUE)
+                    .addComponent(btGerenciarMaterias)
+                    .addComponent(btGerenciarSalas)
+                    .addComponent(btRelatorios))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 4, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(cpPesquisa, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(btPesquisar))
-                    .addComponent(jLabel1)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                        .addGroup(layout.createSequentialGroup()
-                            .addComponent(btCadastar)
-                            .addGap(52, 52, 52)
-                            .addComponent(btDetalhar)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                            .addComponent(btExcluir)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jButton1))
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 375, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(15, Short.MAX_VALUE))
+                        .addComponent(jLabel1)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(cabecalhoUsuarioComponente1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(cpPesquisa, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(btPesquisar))
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                .addGroup(layout.createSequentialGroup()
+                                    .addComponent(btCadastar)
+                                    .addGap(52, 52, 52)
+                                    .addComponent(btDetalhar)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                    .addComponent(btExcluir)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(jButton1))
+                                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 375, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(0, 0, Short.MAX_VALUE)))
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(29, 29, 29)
-                .addComponent(jLabel1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(cpPesquisa, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btPesquisar))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 141, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 42, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btCadastar)
-                    .addComponent(btExcluir)
-                    .addComponent(btDetalhar)
-                    .addComponent(jButton1))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(29, 29, 29)
+                                .addComponent(jLabel1))
+                            .addGroup(layout.createSequentialGroup()
+                                .addContainerGap()
+                                .addComponent(cabecalhoUsuarioComponente1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(cpPesquisa, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btPesquisar))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 141, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 42, Short.MAX_VALUE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(btCadastar)
+                            .addComponent(btExcluir)
+                            .addComponent(btDetalhar)
+                            .addComponent(jButton1)))
+                    .addGroup(layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jSeparator1))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(31, 31, 31)
+                        .addComponent(btGerenciarMonitores, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(btGerenciarMaterias, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(btGerenciarSalas, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(btRelatorios, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
 
@@ -134,8 +214,24 @@ public class CoordenadorPesquisarMonitoriaTela extends javax.swing.JFrame {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         this.dispose();
-        new CoordenadorOpcoes().setVisible(true);
+        LoginMVC2.main(null);
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void btGerenciarMateriasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btGerenciarMateriasActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btGerenciarMateriasActionPerformed
+
+    private void btGerenciarMonitoresActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btGerenciarMonitoresActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btGerenciarMonitoresActionPerformed
+
+    private void btGerenciarSalasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btGerenciarSalasActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btGerenciarSalasActionPerformed
+
+    private void btRelatoriosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btRelatoriosActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btRelatoriosActionPerformed
 
     public JButton getBtCadastar() {
         return btCadastar;
@@ -160,7 +256,23 @@ public class CoordenadorPesquisarMonitoriaTela extends javax.swing.JFrame {
     public JButton getBtDetalhar() {
         return btDetalhar;
     }
-
+    
+    public CabecalhoUsuarioComponente getUsuarioComponente(){
+        return cabecalhoUsuarioComponente1;
+    }
+    
+    public JButton getBtGerenciarMonitor(){
+        return btGerenciarMonitores;
+    }
+    public JButton getBtGerenciarMaterias(){
+        return btGerenciarMaterias;
+    }
+    public JButton getBtGerenciarSalas(){
+        return btGerenciarSalas;
+    }
+    public JButton getBtRelatórios(){
+        return btRelatorios;
+    }
 
     /**
      * @param args the command line arguments
@@ -204,11 +316,17 @@ public class CoordenadorPesquisarMonitoriaTela extends javax.swing.JFrame {
     private javax.swing.JButton btCadastar;
     private javax.swing.JButton btDetalhar;
     private javax.swing.JButton btExcluir;
+    private javax.swing.JButton btGerenciarMaterias;
+    private javax.swing.JButton btGerenciarMonitores;
+    private javax.swing.JButton btGerenciarSalas;
     private javax.swing.JButton btPesquisar;
+    private javax.swing.JButton btRelatorios;
+    private view.CabecalhoUsuarioComponente cabecalhoUsuarioComponente1;
     private javax.swing.JTextField cpPesquisa;
     private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JSeparator jSeparator1;
     private javax.swing.JTable tabela;
     // End of variables declaration//GEN-END:variables
 }

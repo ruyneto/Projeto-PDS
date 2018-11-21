@@ -10,5 +10,12 @@ package model;
  * @author sandr
  */
 public class Coordenador extends Usuario{
+
+    public Coordenador(String cpf, String nome) {
+        super(cpf, nome);
+    }
+
+    public Coordenador() {
+    }
     
 }
