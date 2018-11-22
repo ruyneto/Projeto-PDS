@@ -25,6 +25,7 @@ import model.Monitor;
 import model.Usuario;
 import mvc.AlunoGerenciarAgendamentoMVC;
 import mvc.LoginMVC2;
+import view.AlterarSenhaTela;
 import view.AlunoGerenciarAgendamentoTela;
 import view.CabecalhoUsuarioComponente;
 import view.CoordenadorOpcoes;
@@ -142,7 +143,9 @@ public class CabecalhoUsuarioControle {
 
         @Override
         public void actionPerformed(ActionEvent e) {
-            
+         AlterarSenhaTela view= new AlterarSenhaTela();
+         new AlterarSenhaControle(usuario, view);
+         view.setVisible(true);
         }
     
     }

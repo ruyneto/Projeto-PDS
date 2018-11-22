@@ -55,6 +55,12 @@ public class Gerador {
         } catch (DocumentException ex) {
             Logger.getLogger(Gerador.class.getName()).log(Level.SEVERE, null, ex);
         }
+        
+        try {
+            java.awt.Desktop.getDesktop().open(file);
+        } catch (IOException ex) {
+            Logger.getLogger(Gerador.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
     
     

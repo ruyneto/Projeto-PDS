@@ -50,4 +50,20 @@ public class UsuarioDAO {
  
        return linha;
     }
+
+    public boolean alterarSenha(Usuario usuario){
+         String sql = "UPDATE usuario SET ususenha = ? WHERE usucpf = ?";        
+        try {
+            PreparedStatement ps = connection.prepareStatement(sql);
+            ps.setString(1, usuario.getSenha());
+            ps.setString(2,usuario.getCpf());
+            ps.execute();
+            
+            connection.close();
+            return true;
+        } catch (SQLException e) {
+            System.out.println(e);
+            return false;
+        }
+    }
 }
