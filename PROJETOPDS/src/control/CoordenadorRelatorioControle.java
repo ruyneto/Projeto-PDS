@@ -31,6 +31,9 @@ public class CoordenadorRelatorioControle {
         for(String str: dao.periodo()){
             tela.getCbPeriodo().addItem(str);
         }
+        if(dao.periodo().isEmpty()){
+            tela.getBtGerar().setEnabled(false);
+        }
     }
     
     class BtGerar implements ActionListener{

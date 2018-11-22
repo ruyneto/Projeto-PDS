@@ -82,10 +82,6 @@ values ('111.111.111-11', 1, '2018-10-17', null),
 use sigem;
 insert into tipousuario (tususucpf, tusfcoid, tusdatainicio, tusmatid) values('111.111.111-11', 3, '2018-10-17', 2);
 
-insert into usuario(usucpf, usunome, usulogin, ususenha) select mpibd_2018.cliente.clicodigo, mpibd_2018.cliente.clinome, '', '' from mpibd_2018.cliente;
-insert into tipousuario(tususucpf, tusfcoid, tusdatainicio, tusmatid) select usucpf, 1, curdate(), null from usuario;
-
-
 create table monitoria(
 miaid int primary key auto_increment,
 miavagas tinyint default 12,
@@ -101,13 +97,13 @@ foreign key (miausucpf) references usuario(usucpf),
 foreign key (miadiaid) references diadasemana(diaid),
 foreign key (miahorhora) references horario(horhora)
 );
-insert into monitoria(miasalid,miadiaid,miausucpf,miahorhora, miadatainicio) values
-(1, 1, '', '11:00-12:00', curdate()),
-(1, 1, '', '12:00-13:00', curdate()),
-(1, 2, '', '11:00-12:00', curdate()),
+-- insert into monitoria(miasalid,miadiaid,miausucpf,miahorhora, miadatainicio) values
+-- (1, 1, '', '11:00-12:00', curdate()),
+-- (1, 1, '', '12:00-13:00', curdate()),
+-- (1, 2, '', '11:00-12:00', curdate()),
 -- (2, 2, '555.555.555-55', '11:00-12:00', curdate()),
 -- (2, 2, '555.555.555-55', '12:00-13:00', curdate()),
-(1, 2, '444.444.444-44', '12:00-13:00', curdate());
+-- (1, 2, '444.444.444-44', '12:00-13:00', curdate());
 
 
 create table inscricao(

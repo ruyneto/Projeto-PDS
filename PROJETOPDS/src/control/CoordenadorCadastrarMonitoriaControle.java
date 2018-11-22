@@ -34,7 +34,8 @@ public class CoordenadorCadastrarMonitoriaControle {
         carregarComboHorario((Sala)tela.getCbSala().getSelectedItem(),
                             (DiaDaSemana)tela.getCbDia().getSelectedItem());
         adicionarListener();
-        tela.getBtnCadastrar().addActionListener(new addListenerBtSalvar());
+        tela.getBtnCadastrar().addActionListener(new AcaoBtSalvar());
+        tela.getBtnCancelar().addActionListener(new AcaoBtCancelar());
     }
     
     public void carregarComboSala(){
@@ -73,7 +74,7 @@ public class CoordenadorCadastrarMonitoriaControle {
         tela.getCbSala().addActionListener(combo);
     }
     
-    class addListenerBtSalvar implements ActionListener{
+    class AcaoBtSalvar implements ActionListener{
 
         @Override
         public void actionPerformed(ActionEvent ae) {
@@ -89,12 +90,21 @@ public class CoordenadorCadastrarMonitoriaControle {
             if(cadastrou){
                 JOptionPane.showMessageDialog(null, "Aula de monitoria cadastrada\n"+
                                                     "com sucesso");
+                carregarComboHorario(sala, dia);
             }
             else{
                 JOptionPane.showMessageDialog(null, "Err ao cadastrar Aula de monitoria");
             }
+        }
+        
+    }
+    
+    class AcaoBtCancelar implements ActionListener{
+
+        @Override
+        public void actionPerformed(ActionEvent e) {
             tela.dispose();
-            CoordenadorCadastrarMonitoriaMVC.main(null);
+            tela=null;
         }
         
     }
