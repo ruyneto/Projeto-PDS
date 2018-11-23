@@ -98,11 +98,11 @@ public class LoginControle2 {
                     }
                     
                 }.start();
-                /*JOptionPane.showMessageDialog(null, "Não foi possível efetuar o login."
+                JOptionPane.showMessageDialog(null, "Não foi possível efetuar o login."
                                                     + "\nVerifique suas credenciais"
                                                     + "\ne o tipo de usuário");
                 tela.getCpUsuario().setText("");
-                tela.getCpSenha().setText("");*/
+                tela.getCpSenha().setText("");
             }
         }
         else{
