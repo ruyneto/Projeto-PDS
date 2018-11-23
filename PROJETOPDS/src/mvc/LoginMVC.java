@@ -3,21 +3,23 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package projetopds;
+package mvc;
+
+import control.LoginControle;
+import view.LoginTela;
 
 /**
  *
- * @author ruyneto
+ * @author sandr
  */
-public class PROJETOPDS {
+public class LoginMVC {
 
     /**
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        // TODO code application logic here
-        
-        System.out.println("Izaltino!!!!!!!");
+        LoginTela tela = new LoginTela();
+        new LoginControle(tela);
+        tela.setVisible(true);
     }
-    
 }
