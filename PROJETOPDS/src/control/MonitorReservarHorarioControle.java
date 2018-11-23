@@ -58,6 +58,7 @@ public class MonitorReservarHorarioControle {
         tela.getBtDireita().addActionListener(averins);
         tela.getjScrollPane2().setVisible(false);
         qtdMonitoriasOfertadas = new MonitoriaDAO().numeroDeMonitorias(monitor);
+        System.out.println(qtdMonitoriasOfertadas);
         tela.setTitle("Horários Livres");
         this.tela.pack();
     }
@@ -156,7 +157,7 @@ public class MonitorReservarHorarioControle {
                     tela.getBtEsquerda().setEnabled(true);
                 }
                 else{
-                    if(monitoriasSelecionadas.size()>=6 ||
+                    if(monitoriasSelecionadas.size()>=6 &&
                             monitoriasSelecionadas.size()<=12){
                         tela.getBtEsquerda().setEnabled(true);
                     }
@@ -186,6 +187,7 @@ public class MonitorReservarHorarioControle {
                     tela.getBtEsquerda().setEnabled(false);
                 }
                 else{
+                    System.out.println("Entrou no else");
                     if(qtdMonitoriasOfertadas+monitoriasSelecionadas.size()>12){
                         JOptionPane.showMessageDialog(null,"Você só pode reservar no"+
                                                         "\nmáximo 12 horários!");
@@ -226,6 +228,13 @@ public class MonitorReservarHorarioControle {
                 if(qtdMonitoriasOfertadas==0 &&
                         monitoriasSelecionadas.size()<6){
                     tela.getBtEsquerda().setEnabled(false);
+                }
+                else{
+                    if(qtdMonitoriasOfertadas==0 &&
+                        monitoriasSelecionadas.size()>=6 &&
+                        monitoriasSelecionadas.size()<=12){
+                        tela.getBtEsquerda().setEnabled(true);
+                    }
                 }
             }
         }
@@ -339,6 +348,7 @@ public class MonitorReservarHorarioControle {
             tela.getBtEsquerda().addActionListener(ains);           
             JOptionPane.showMessageDialog(null,"Salvo com sucesso");
             tela.setTitle("Horários Livres");
+            qtdMonitoriasOfertadas = new MonitoriaDAO().numeroDeMonitorias(monitor);
             tela.pack();
         }
         
@@ -362,6 +372,7 @@ public class MonitorReservarHorarioControle {
             tela.getBtEsquerda().setText("Alterar");
             tela.getBtEsquerda().removeActionListener(asalalt);
             tela.getBtEsquerda().addActionListener(aalt);
+            qtdMonitoriasOfertadas = new MonitoriaDAO().numeroDeMonitorias(monitor);
             tela.setTitle("Meus Horários");
         }
         
